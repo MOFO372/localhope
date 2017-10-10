@@ -70,7 +70,7 @@ public class UserD {
 	@Column(length=200)					
 	private String charityName = "NA";         // if(ein != null && !ein.isEmpty())   charityName has to be populated ??
 	
-	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690 - it's a String, really
+	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
 	@Column(length=10)   // unique?
 	private String ein = "00-0000000";
 	
@@ -116,11 +116,33 @@ public class UserD {
 	}
 
 
+	
+	public void addNeed(Need need) { 
+		if (needs==null) {
+			needs = new ArrayList<Need>();
+		}
+		needs.add(need);
+		need.getUsers().add(this);
+	}	
+	
+
+	public void addFollowedCharities(UserD charity) throws ThisIsNotACharityException {
+		
+		if (!charity.getRole().equals("Charity")) {
+			throw new ThisIsNotACharityException();		
+		}
+
+		this.followedCharities += " " + charity.getCharityName();
+	}
+
+	
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -129,8 +151,6 @@ public class UserD {
 	public String getFirstName() {
 		return firstName;
 	}
-
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -139,8 +159,6 @@ public class UserD {
 	public String getLastName() {
 		return lastName;
 	}
-
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -149,8 +167,6 @@ public class UserD {
 	public String getStreetAddress() {
 		return streetAddress;
 	}
-
-
 	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
@@ -292,9 +308,5 @@ public class UserD {
 	public void setFollowedCharities(String followedCharities) {
 		this.followedCharities = followedCharities;
 	}
-
-
-		
-
 
 }

@@ -44,16 +44,16 @@ public class SeedData {
 //				String charityPreference, String followedCharities, String charityName, String ein, String charityUserRole, String charityType)
 //		
 		
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "Peter", "Allison", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "ABC H", "01-1234999", "Assistant", "health"));	
 		
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "Peter", "Markov", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Civic-1", "01-1234999", "Assistant", "civic"));	
 
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "Peter", "Chebyshev", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Civic-2", "01-1234999", "Assistant", "civic"));	
 	
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "Peter", "Kolmogorov", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Educ", "01-1234999", "Assistant", "education"));	
 	
 					

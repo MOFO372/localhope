@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.Need;
+import com.libertymutual.goforcode.localhope.models.ThisIsNotACharityException;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
@@ -26,8 +27,8 @@ import io.swagger.annotations.ApiOperation;
 
 
 @RestController
-@RequestMapping("")
-public class HomeController {
+@RequestMapping("user")
+public class UserApiController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
@@ -35,16 +36,15 @@ public class HomeController {
 	
 	
 	// add: PasswordEncoder encoder as parameter
-	public HomeController(NeedRepository needRepository, UserRepository userRepository) {
+	public UserApiController(NeedRepository needRepository, UserRepository userRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 	}
 
-	@GetMapping("")
-	public List<UserD> getAll(){
-		return userRepository.findAll();	
-	}
-	
+//	@GetMapping("")
+//	public List<UserD> getAll(){
+//		return userRepository.findAll();	
+//	}
 		
 //	@GetMapping("all")
 //	public String getAll(Model model){
@@ -73,10 +73,22 @@ public class HomeController {
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.findOne(need.getId());
 		user.addNeed(need);
-		userRepository.save(user);
+//		userRepository.save(user);
+		needRepository.save(need);
 		return user;
 	}
 
+	@PostMapping("{dogooderid}/charity")
+	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity) throws ThisIsNotACharityException{
+		UserD user = userRepository.findOne(dogooderid);
+				System.out.println(" Charity ID: " + charity.getId());
+		charity = userRepository.findOne(charity.getId());
+				System.out.println(" Charity Last Name: " + charity.getLastName());
+				System.out.println(" User role: " + charity.getRole());
+		user.addFollowedCharities(charity);
+		userRepository.save(user);
+		return user;
+	}
 		
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
