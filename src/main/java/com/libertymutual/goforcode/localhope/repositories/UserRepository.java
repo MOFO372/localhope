@@ -11,7 +11,7 @@ import com.libertymutual.goforcode.localhope.models.UserD;
 @Repository
 public interface UserRepository extends JpaRepository <UserD, Long>{
 	
-//	List<UserD> findByRole(boolean isCharity, Sort sort);
+	List<UserD> findByIsCharity(Boolean isCharity, Sort sort);
 	List<UserD> findByCharityTypeEquals(String role);
 	
 	UserD findByUsername(String username);

@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class UserRole {
 
@@ -19,7 +23,6 @@ public class UserRole {
 	
 	@ManyToOne
 	private UserD user;
-	
 
 	public UserRole() {}
 	
