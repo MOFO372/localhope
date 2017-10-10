@@ -78,4 +78,11 @@ public class HomeController {
 		}
 		return mv;
 	}
+	@GetMapping("needs")
+	public String getAllNeeds(Model model){
+		model.addAttribute("message", "List of charity needs");
+		model.addAttribute("needs", needRepository.findAll(new Sort("type")));
+		return "list";
+	}
+	
 }

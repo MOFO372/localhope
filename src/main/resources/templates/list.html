@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Users</title>
+</head>
+
+<body>
+	<h3>{{ message }}</h3>
+
+		<table>
+		  <thead>
+		    <tr>
+		      <th>Role</th>
+		      <th>Donation Preferences</th>      
+		      <th>Charity Name</th>
+		      <th>Charity Type</th>
+		    </tr>
+		  </thead>
+		  
+		  <tbody>
+		    {{#users}}
+		      <tr>
+		        <td>{{ role }}</td>
+		        <td>{{ donationPreferences }}</td>
+		        <td>{{ charityName }}</td>
+		        <td>{{ charityType }}</td> 
+		       </tr>
+		    {{/users}}
+		  </tbody>  
+		</table>
+		
+		
+		<table>
+			<thead>
+				<tr>
+					<th>Charity Name<th>
+					<!-- <th>Need Category</th> commented out, from API -->
+					<!-- <th>Charity Rating</th> commented out, from API -->
+					<th>Type</th>
+					<th>Amount Needed</th>
+					<th>Date Needed</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			{{#needs}}
+				<tr>
+					<td>{{ type }}</td> <!-- THIS IS A PLACEHOLDER UNTIL WE CREATE RELATIONSHIPS -->
+					<td>{{ type }}</td>
+					<td>{{ originalAmount }}</td>
+					<td>{{ dateNeeded }}</td>
+					<td>{{ description }}</td>
+				</tr>
+			{{/needs}}
+			</tbody>
+		</table>
+		    
+</body>
+</html>
