@@ -82,7 +82,7 @@ public class HomeController {
 			userRepository.save(user);
 			mv.setViewName("needs");
 		} catch (DataIntegrityViolationException dive) {
-			mv.setViewName("/");
+			mv.setViewName("needs");
 			mv.addObject("errorMessage", "Cannot register that username");
 		}
 		return mv;
