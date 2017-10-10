@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -23,6 +24,7 @@ public class HomeController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
+	private UserD user = new UserD(); 
 	// private PasswordEncoder encoder;
 	
 	
@@ -51,6 +53,13 @@ public class HomeController {
 	public String getCharitiesByType(Model model, @PathVariable String charityType){
 		model.addAttribute("message", "List Charities of type: " + charityType);
 		model.addAttribute("users", userRepository.findByCharityTypeEquals(charityType));
+		return "list";
+	}
+	
+	@GetMapping("needs")
+	public String getAllNeeds(Model model){
+		model.addAttribute("message", "List of charity needs");
+		model.addAttribute("needs", needRepository.findAll(new Sort("type")));
 		return "list";
 	}
 	

@@ -62,7 +62,8 @@ public class UserD {
 	@Column(length=100)						// select from charityType values?
 	private String charityPreference;	
 	
-	// Followed Charities   
+	// Followed Charities 
+	@Column
 	private String  followedCharities;
 	
 	
