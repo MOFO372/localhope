@@ -2,6 +2,8 @@ package com.libertymutual.goforcode.localhope.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
@@ -63,13 +65,13 @@ public class HomeController {
 	@GetMapping("registration")
     public ModelAndView registration() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("");
+        mv.setViewName("registration");
         return mv;
     }
 	
 	//JSON
 	@PostMapping("registration")
-	public ModelAndView register(@RequestBody UserD user) {
+	public ModelAndView register(@RequestBody UserD user, HttpServletResponse response) {
 		
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -78,7 +80,7 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView();
 		try { 
 			userRepository.save(user);
-			mv.setViewName("");
+			mv.setViewName("needs");
 		} catch (DataIntegrityViolationException dive) {
 			mv.setViewName("/registration");
 			mv.addObject("errorMessage", "Cannot register that username");
