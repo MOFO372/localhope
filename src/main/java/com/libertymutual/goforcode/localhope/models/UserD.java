@@ -1,29 +1,41 @@
 package com.libertymutual.goforcode.localhope.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-
-
 @Entity
-public class UserD {
+public class UserD implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-		
 	
+	@Column(nullable=false, unique=true)
+	private String username;
+	
+	@Column(nullable=false) 
+	private String password;
 	
 	@Column(length=200, nullable=false)
 	private String firstName;
@@ -50,9 +62,11 @@ public class UserD {
 	@Column(length=100, nullable=false)
 	private String email;
 	
-	@Column(length=10, nullable=false)
-	private String role;
+	@Column(nullable=false)
+	private Boolean isCharity;
 	
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
+	private List<UserRole> roles;
 	
 	// User only  -----------------------------------	
 	@Column(length=200)
@@ -63,7 +77,8 @@ public class UserD {
 	private String charityPreference;	
 	
 	// Followed Charities   
-	private String  followedCharities;
+	@Column
+	private String followedCharities;
 	
 	
 	// Charity only  -----------------------------------
@@ -85,16 +100,19 @@ public class UserD {
 	@JsonIgnore  
 	@ManyToMany(mappedBy="users")
 	private List<Need> needs;
-	
+
 	
 	public UserD() {}
 
     // List<Need> needs
-	public UserD(Long id, String firstName, String lastName, String streetAddress, String city, String state,
+	public UserD(Long id, String username, String password, String roleName, Boolean isCharity, String firstName, String lastName, String streetAddress, String city, String state,
 			String zipCode, String phone, String email, String role, String donationPreferences,
 			String charityPreference, String followedCharities, String charityName, String ein, String charityUserRole, String charityType) {
 		
 		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.isCharity = isCharity;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.streetAddress = streetAddress;
@@ -103,7 +121,7 @@ public class UserD {
 		this.zipCode = zipCode;
 		this.phone = phone;
 		this.email = email;
-		this.role = role;
+//		this.role = role;
 		
 		this.donationPreferences = donationPreferences;
 		this.charityPreference = charityPreference;
@@ -113,6 +131,9 @@ public class UserD {
 		this.ein = ein;
 		this.charityUserRole = charityUserRole;
 		this.charityType = charityType;
+		
+		roles = new ArrayList<UserRole>();
+		roles.add(new UserRole(roleName, this));
 	}
 
 
@@ -206,13 +227,13 @@ public class UserD {
 	}
 
 
-	public String getRole() {
-		return role;
+	public Boolean getIsCharity() {
+		return isCharity;
 	}
 
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setIsCharity(Boolean isCharity) {
+		this.isCharity = isCharity;
 	}
 
 
@@ -293,8 +314,58 @@ public class UserD {
 		this.followedCharities = followedCharities;
 	}
 
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-		
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<String> roleNames = roles.stream()
+				.map(userRole -> "ROLE_" + userRole.getName())
+				.collect(Collectors.toList());
+			
+			String authorityString = String.join(",", roleNames); 
+			return AuthorityUtils.commaSeparatedStringToAuthorityList(authorityString);
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+	public List<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<UserRole> roles) {
+		this.roles = roles;
+	}
 }

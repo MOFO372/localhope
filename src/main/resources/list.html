@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Users</title>
+</head>
+
+<body>
+	<h3>{{ message }}</h3>
+
+		<table>
+		  <thead>
+		    <tr>
+		      <th>Role</th>
+		      <th>Donation Preferences</th>      
+		      <th>Charity Name</th>
+		      <th>Charity Type</th>
+		    </tr>
+		  </thead>
+		  
+		  <tbody>
+		    {{#users}}
+		      <tr>
+		        <td>{{ role }}</td>
+		        <td>{{ donationPreferences }}</td>
+		        <td>{{ charityName }}</td>
+		        <td>{{ charityType }}</td> 
+		       </tr>
+		    {{/users}}
+		  </tbody>  
+		</table>
+		    
+</body>
+</html>

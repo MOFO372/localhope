@@ -25,7 +25,7 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 public class SeedData {
 	
 	// , PasswordEncoder encoder
-	public SeedData(UserRepository userRepository, NeedRepository needRepository) {
+	public SeedData(UserRepository userRepository, NeedRepository needRepository, PasswordEncoder encoder) {
 	
         
         java.util.Date utilDate = new java.util.Date();
@@ -36,24 +36,23 @@ public class SeedData {
 		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, sqlDate));
 		
 		
-		userRepository.save(new UserD(11L, "John", "Dee", "123 Main", "Seattle", "WA", "98199",
+		userRepository.save(new UserD(11L, "JohnD", encoder.encode("password"), "USER", false, "John", "Dee", "123 Main", "Seattle", "WA", "98199",
 				"(206) 444-4444", "find.me@if.you.can", "DoGooder", "money", "health", "", "", "", "", ""));
 		
-//		public UserD(Long id, String firstName, String lastName, String streetAddress, String city, String state,
+//		public UserD(Long id, String username, String password, String roleName, Boolean isCharity, String firstName, String lastName, String streetAddress, String city, String state,
 //				String zipCode, String phone, String email, String role, String donationPreferences,
-//				String charityPreference, String followedCharities, String charityName, String ein, String charityUserRole, String charityType)
-//		
+//				String charityPreference, String followedCharities, String charityName, String ein, String charityUserRole, String charityType) 	
 		
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "Peter", encoder.encode("password"), "USER", false, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "ABC H", "01-1234999", "Assistant", "health"));	
 		
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "PeterTheGreat", encoder.encode("password"), "USER", false, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Civic-1", "01-1234999", "Assistant", "civic"));	
 
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "PeterTheThird", encoder.encode("password"), "USER", false, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Civic-2", "01-1234999", "Assistant", "civic"));	
 	
-		userRepository.save(new UserD(12L, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "NotPeter", encoder.encode("password"), "Peter", false, "USER", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Educ", "01-1234999", "Assistant", "education"));	
 	
 					
