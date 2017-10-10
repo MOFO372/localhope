@@ -21,6 +21,7 @@ public class UserRole {
 	@Column(nullable=false)
 	private String name;
 	
+	@JsonIgnore
 	@ManyToOne
 	private UserD user;
 

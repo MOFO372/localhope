@@ -1,11 +1,13 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.util.List;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
 public class HomeController {
@@ -35,32 +38,36 @@ public class HomeController {
 	}
 
 
-	@GetMapping("all")
-	public String getAll(Model model){
-		model.addAttribute("message", "List all users: Charities & DoGooders - useless ...");
-		model.addAttribute("users", userRepository.findAll(new Sort("charityType")));
-		return "list";
+	@GetMapping("")
+	public List<UserD> getAll(){
+		return userRepository.findByIsCharity(true);
+		//return userRepository.findAll(); 
 	}	
 
-	@GetMapping("charity")
-	public String getCharities(Model model){
-		model.addAttribute("message", "List all Charities, sorted by type.");
-		model.addAttribute("users", userRepository.findByIsCharity(true, new Sort(new Order("charityType"))));
-		return "list";
-	}
+//	@GetMapping("charity")
+//	public String getCharities(Model model){
+//		model.addAttribute("message", "List all Charities, sorted by type.");
+//		model.addAttribute("users", userRepository.findByIsCharity(true, new Sort(new Order("charityType"))));
+//		return "list";
+//	}
+//	
+//	@GetMapping("charity/{charityType}")
+//	public String getCharitiesByType(Model model, @PathVariable String charityType){
+//		model.addAttribute("message", "List Charities of type: " + charityType);
+//		model.addAttribute("users", userRepository.findByCharityTypeEquals(charityType));
+//		return "list";
+//	} 
 	
-	@GetMapping("charity/{charityType}")
-	public String getCharitiesByType(Model model, @PathVariable String charityType){
-		model.addAttribute("message", "List Charities of type: " + charityType);
-		model.addAttribute("users", userRepository.findByCharityTypeEquals(charityType));
-		return "list";
-	}
+	
 	
 	@GetMapping("registration")
-	public String registration() {
-		return "registration";
-	}
+    public ModelAndView registration() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("");
+        return mv;
+    }
 	
+	//JSON
 	@PostMapping("registration")
 	public ModelAndView register(@RequestBody UserD user) {
 		
@@ -78,11 +85,12 @@ public class HomeController {
 		}
 		return mv;
 	}
-	@GetMapping("needs")
-	public String getAllNeeds(Model model){
-		model.addAttribute("message", "List of charity needs");
-		model.addAttribute("needs", needRepository.findAll(new Sort("type")));
-		return "list";
-	}
+	
+//	@GetMapping("needs")
+//	public String getAllNeeds(Model model){
+//		model.addAttribute("message", "List of charity needs");
+//		model.addAttribute("needs", needRepository.findAll(new Sort("type")));
+//		return "list";
+//	}
 	
 }
