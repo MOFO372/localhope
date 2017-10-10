@@ -33,12 +33,12 @@ public class HomeController {
 	}
 
 
-//	@GetMapping("all")
-//	public String getAll(Model model){
-//		model.addAttribute("message", "List all users: Charities & DoGooders - useless ...");
-//		model.addAttribute("users", userRepository.findAll(new Sort("charityType")));
-//		return "list";
-//	}	
+	@GetMapping("all")
+	public String getAll(Model model){
+		model.addAttribute("message", "List all users: Charities & DoGooders - useless ...");
+		model.addAttribute("users", userRepository.findAll(new Sort("charityType")));
+		return "list";
+	}	
 
 	@GetMapping("charity")
 	public String getCharities(Model model){
