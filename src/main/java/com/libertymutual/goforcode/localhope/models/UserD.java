@@ -65,7 +65,7 @@ public class UserD implements UserDetails {
 	private String email;
 	
 	@Column(nullable=false)
-	private Boolean isCharity;
+	private String isCharity;
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
 	private List<UserRole> roles;
@@ -107,7 +107,7 @@ public class UserD implements UserDetails {
 	public UserD() {}
 
     // List<Need> needs
-	public UserD(Long id, String username, String password, String roleName, Boolean isCharity, String firstName, String lastName, String streetAddress, String city, String state,
+	public UserD(Long id, String username, String password, String roleName, String isCharity, String firstName, String lastName, String streetAddress, String city, String state,
 			String zipCode, String phone, String email, String role, String donationPreferences,
 			String charityPreference, String followedCharities, String charityName, String ein, String charityUserRole, String charityType) {
 		
@@ -229,12 +229,12 @@ public class UserD implements UserDetails {
 	}
 
 
-	public Boolean getIsCharity() {
+	public String getIsCharity() {
 		return isCharity;
 	}
 
 
-	public void setIsCharity(Boolean isCharity) {
+	public void setIsCharity(String isCharity) {
 		this.isCharity = isCharity;
 	}
 
