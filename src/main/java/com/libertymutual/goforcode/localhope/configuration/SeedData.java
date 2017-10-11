@@ -24,9 +24,9 @@ public class SeedData {
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         
-		needRepository.save(new Need(1L, "crib",  true, "We need those cribs!", 10, sqlDate));
-		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, sqlDate));
-		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, sqlDate));
+		needRepository.save(new Need(1L, "crib",      true,  "We need those cribs!",           10,  sqlDate));
+		needRepository.save(new Need(2L, "money",     false, "We need to buy more cribs.",     200, sqlDate));
+		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6,   sqlDate));
 		
 		
 //		Long id, 			String username, String password, 
@@ -42,7 +42,7 @@ public class SeedData {
 	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "", "", ""));	
 		
 		userRepository.save(new UserD(11L, "Looser", encoder.encode("password"), "USER", "DoGooder", "Alex", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "01-1234000 01-1234111", "", "", "", ""));	
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "01-1234000 01-1234111 01-1234333", "", "", "", ""));	
 		
 		
 		

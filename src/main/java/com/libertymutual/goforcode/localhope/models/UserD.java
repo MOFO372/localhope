@@ -167,12 +167,11 @@ public class UserD implements UserDetails {
 	public void removeFollowedCharity(UserD charity) throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {		
 		if (!charity.getIsCharity().equals("Charity")) {
 			throw new ThisIsNotACharityException();		
-		}		
-		if (followedCharities.indexOf(charity.getEin()) == 0) {
-			throw new UnableToDeFollowThisCharityException();		
 		}
-		String temp = charity.getEin();                                   // redo
-		followedCharities = followedCharities.replace(temp.trim(), "");   // redo
+		if (followedCharities.indexOf(charity.getEin()) == -1) {
+			throw new UnableToDeFollowThisCharityException();		
+		}                                 
+		followedCharities = followedCharities.replace(charity.getEin(), "");   
 		followedCharities.trim();
 	}
 

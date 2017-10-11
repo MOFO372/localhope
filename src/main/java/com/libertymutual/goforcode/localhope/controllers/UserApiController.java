@@ -44,13 +44,17 @@ public class UserApiController {
 	}
 
 	
+	@PostMapping("")
+	public UserD createUser(@RequestBody UserD user) {
+		return userRepository.save(user);	
+	}
+	
 	
 	@PostMapping("{userid}/need")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need){
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.findOne(need.getId());
 		user.addNeed(need);
-//		userRepository.save(user);
 		needRepository.save(need);
 		return user;
 	}
@@ -87,10 +91,17 @@ public class UserApiController {
 		userRepository.save(user);
 		return user;
 	}
+
+	@PostMapping("{dogooderid}/defollowcharities")
+	public UserD removeDogooderAndCharities(@PathVariable long dogooderid, @RequestBody UserD[] charities) 
+			     throws ThisIsNotACharityException, UnableToDeFollowThisCharityException{
+		UserD user = userRepository.findOne(dogooderid);	
+		for(UserD charity : charities) {
+			charity = userRepository.findOne(charity.getId());			
+			user.removeFollowedCharity(charity);
+			userRepository.save(user);
+		}
+		return user;
+	}
 	
-	
-	@PostMapping("")
-	public UserD createUser(@RequestBody UserD user) {
-		return userRepository.save(user);	
-	}	
 }
