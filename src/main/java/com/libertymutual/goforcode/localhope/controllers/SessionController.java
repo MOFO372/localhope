@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
+@RestController
 @CrossOrigin(origins = "*")
-@Controller
 @RequestMapping("")
 public class SessionController {
 	
@@ -55,7 +56,6 @@ public class SessionController {
 				mv.setViewName("dogooder");
 			} catch (DataIntegrityViolationException dive) {
 				mv.setViewName("needs");
-				mv.addObject("errorMessage", "Cannot register that username");
 			}
 			return mv;
 		}

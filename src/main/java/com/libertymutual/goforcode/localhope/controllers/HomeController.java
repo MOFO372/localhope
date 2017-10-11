@@ -21,6 +21,7 @@ public class HomeController {
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
 	private UserD user; 
+	private Need need; 
 	
 	
 	// add: PasswordEncoder encoder as parameter
@@ -51,7 +52,8 @@ public class HomeController {
 	
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds(){
-		return needRepository.findAll();
+		return needRepository.findByNeedMet(false);
+		
 	}
 	
 }
