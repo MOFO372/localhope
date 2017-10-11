@@ -24,6 +24,7 @@ import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("")
@@ -34,7 +35,6 @@ public class SessionController {
 	private PasswordEncoder encoder;
 	
 
-	// add: PasswordEncoder encoder as parameter
 	public SessionController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
@@ -51,6 +51,8 @@ public class SessionController {
 	}
 
 
+
+
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds() {
 		return needRepository.findAll();
@@ -59,7 +61,9 @@ public class SessionController {
 
 	@PostMapping("registration")
 	public UserD register(@RequestBody UserD user, HttpServletResponse response) {
+
 		
+
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		user.setPassword(encryptedPassword);
@@ -67,13 +71,29 @@ public class SessionController {
 		ModelAndView mv = new ModelAndView();
 		try {
 			userRepository.save(user);
-			System.out.println("user got saved");
+			return user;
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");
 			mv.addObject("errorMessage", "Cannot register that username");
+			return null;
 		}
+	}
+	
 
-		return user;
+	@PostMapping("sessions")
+	public UserD login(@RequestBody LoginModel userLogin, HttpServletResponse response) {
+		UserD user = userRepository.findByUsername(userLogin.getUsername());
+		String username = userLogin.getUsername();
+		String password = userLogin.getPassword();
+		
+		if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+			System.out.println("User is " + user);
+			System.out.println("Username is " + username);
+			System.out.println("Password is " + password);
+			return user;
+		} else {
+		return null;
+		}
 	}
 	
 }
