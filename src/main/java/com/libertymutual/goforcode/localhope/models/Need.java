@@ -22,7 +22,7 @@ public class Need {
 	@Column(length=200, nullable=false)
 	private String type;
 
-	@Column(nullable=false)                  // false by default ??
+	@Column(nullable=false)                  
 	private Boolean needMet = false;
 	
 	@Column(length=1000, nullable=false)
@@ -34,7 +34,7 @@ public class Need {
 	private Date dateNeeded;
 
 	
-
+	// Owner of the rel'p
 	@ManyToMany
 	private List<UserD> users;
 
