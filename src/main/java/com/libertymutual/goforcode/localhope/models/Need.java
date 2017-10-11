@@ -41,7 +41,7 @@ public class Need {
 	
 	public Need () {}
 	
-	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, Date dateNeeded) {
+	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, Date dateNeeded, List<UserD> users) {
 		//super();
 		this.id = id;
 		this.type = type;
@@ -49,6 +49,7 @@ public class Need {
 		this.description = description;
 		this.originalAmount = originalAmount;
 		this.dateNeeded = dateNeeded;
+		this.users = users; 
 	}
 
 	

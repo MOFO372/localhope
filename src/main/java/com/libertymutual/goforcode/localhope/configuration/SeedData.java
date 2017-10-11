@@ -1,6 +1,9 @@
 package com.libertymutual.goforcode.localhope.configuration;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,8 +14,6 @@ import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 
-
-
 @Configuration
 @Profile("development")
 public class SeedData {
@@ -20,13 +21,25 @@ public class SeedData {
 	// , PasswordEncoder encoder
 	public SeedData(UserRepository userRepository, NeedRepository needRepository, PasswordEncoder encoder) {
 	
+        UserD user1 = new UserD();         
+        user1 = userRepository.save(new UserD(13L, "PeterTheGreat2", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Civic-1", "01-1234111", "Assistant", "civic"));
+        
+//        UserD user2 = new UserD();         
+//        user2 = userRepository.save(new UserD(12L, "John", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+//	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "ABC H", "01-1234000", "Assistant", "health"));
+//        
+        
+        ArrayList<UserD> users = new ArrayList<UserD>(); 
+        users.add(user1); 
+            
         
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         
-		needRepository.save(new Need(1L, "crib",  true, "We need those cribs!", 10, sqlDate));
-		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, sqlDate));
-		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, sqlDate));
+		needRepository.save(new Need(1L, "crib",  false, "We need those cribs!", 10, sqlDate, users));
+		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, sqlDate, users));
+		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, sqlDate, users));
 		
 		
 //		Long id, 			String username, String password, 
@@ -46,9 +59,12 @@ public class SeedData {
 		
 		
 		
+		//added to needs seed data
 		userRepository.save(new UserD(12L, "John", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "ABC H", "01-1234000", "Assistant", "health"));	
 		
+		
+		//added to needs seed data
 		userRepository.save(new UserD(13L, "PeterTheGreat", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Civic-1", "01-1234111", "Assistant", "civic"));	
 
