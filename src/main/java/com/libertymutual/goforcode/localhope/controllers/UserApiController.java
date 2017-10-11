@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.ThisIsNotACharityException;
+import com.libertymutual.goforcode.localhope.models.UnableToDeFollowThisCharityException;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
@@ -78,18 +79,26 @@ public class UserApiController {
 		return user;
 	}
 
-	@PostMapping("{dogooderid}/charity")
+	@PostMapping("{dogooderid}/followcharity")
 	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity) throws ThisIsNotACharityException{
-		UserD user = userRepository.findOne(dogooderid);
-				System.out.println(" Charity ID: " + charity.getId());
-		charity = userRepository.findOne(charity.getId());
-				System.out.println(" Charity Last Name: " + charity.getLastName());
-				System.out.println(" User role: " + charity.getRole());
-		user.addFollowedCharities(charity);
+		UserD user = userRepository.findOne(dogooderid);			
+		charity = userRepository.findOne(charity.getId());			
+		user.addFollowedCharity(charity);
 		userRepository.save(user);
 		return user;
 	}
-		
+
+	@PostMapping("{dogooderid}/defollowcharity")
+	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity) 
+			     throws ThisIsNotACharityException, UnableToDeFollowThisCharityException{
+		UserD user = userRepository.findOne(dogooderid);			
+		charity = userRepository.findOne(charity.getId());			
+		user.removeFollowedCharity(charity);
+		userRepository.save(user);
+		return user;
+	}
+	
+	
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);	

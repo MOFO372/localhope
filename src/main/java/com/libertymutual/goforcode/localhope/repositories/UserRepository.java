@@ -12,6 +12,5 @@ public interface UserRepository extends JpaRepository <UserD, Long>{
 	
 	List<UserD> findByRole(String role, Sort sort);
 	List<UserD> findByCharityTypeEquals(String role);
-
-	                           
+	UserD       findByEin(String role);	                           
 }

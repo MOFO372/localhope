@@ -12,12 +12,15 @@ import javax.persistence.ManyToMany;
 
 import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 
 
 
 @Entity
 public class UserD {
+	
+	private UserRepository userRepository;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,7 +62,7 @@ public class UserD {
 	private String donationPreferences;      // multiple?   $, volunteer, items ??  ENUMERATION ??
 	// private ArrayList<String> donationPreferences; 
 	
-	@Column(length=100)						// select from charityType values?
+	@Column(length=100)						
 	private String charityPreference;	
 	
 	// Followed Charities   
@@ -68,7 +71,7 @@ public class UserD {
 	
 	// Charity only  -----------------------------------
 	@Column(length=200)					
-	private String charityName = "NA";         // if(ein != null && !ein.isEmpty())   charityName has to be populated ??
+	private String charityName = "NA"; // VALIDATION?  TODO if(ein != null && !ein.isEmpty()) --> charityName has to be populated ??
 	
 	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
 	@Column(length=10)   // unique?
@@ -116,7 +119,7 @@ public class UserD {
 	}
 
 
-	
+	// Associate a Need with a User (either DoGooder or Charity)
 	public void addNeed(Need need) { 
 		if (needs==null) {
 			needs = new ArrayList<Need>();
@@ -125,19 +128,42 @@ public class UserD {
 		need.getUsers().add(this);
 	}	
 	
-
-	public void addFollowedCharities(UserD charity) throws ThisIsNotACharityException {
-		
+	
+	// Add a Charity to the list of followed charities 
+	public void addFollowedCharity(UserD charity) throws ThisIsNotACharityException {		
 		if (!charity.getRole().equals("Charity")) {
 			throw new ThisIsNotACharityException();		
 		}
+		followedCharities += charity.getEin() + " ";
+		followedCharities.trim();
+	}
 
-		this.followedCharities += " " + charity.getCharityName();
+	// Remove a Charity from the list of followed charities 
+	public void removeFollowedCharity(UserD charity) throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {		
+		if (!charity.getRole().equals("Charity")) {
+			throw new ThisIsNotACharityException();		
+		}		
+		if (followedCharities.indexOf(charity.getEin()) == 0) {
+			throw new UnableToDeFollowThisCharityException();		
+		}
+		String temp = charity.getEin();                                   // redo
+		followedCharities = followedCharities.replace(temp.trim(), "");   // redo
+		followedCharities.trim();
 	}
 
 	
+	// Convert  String followedCharities  to an ArrayList of Charities followed 
+	public ArrayList<UserD> listFollowedCharities(UserD charity)  {		
+		String[] charityNames = followedCharities.trim().split("\\s+");
+		ArrayList<UserD> charities = new ArrayList<UserD>(); 
+		
+		for(int i = 0; i < charityNames.length; i++) {
+			charities.add(userRepository.findByEin(charityNames[i]));	
+		}
+		return charities;
+	}
 	
-	
+	 
 	
 	
 	public Long getId() {
