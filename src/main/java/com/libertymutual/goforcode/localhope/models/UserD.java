@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,12 +26,13 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
 public class UserD implements UserDetails {
 	
+	@Transient
 	private UserRepository userRepository;
 	
 	@Id
