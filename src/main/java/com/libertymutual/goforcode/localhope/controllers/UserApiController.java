@@ -73,7 +73,6 @@ public class UserApiController {
 		return user;
 	}
 	
-	
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);	
