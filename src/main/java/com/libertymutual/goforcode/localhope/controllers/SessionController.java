@@ -52,7 +52,7 @@ public class SessionController {
 			ModelAndView mv = new ModelAndView();
 			try { 
 				userRepository.save(user);
-				mv.setViewName("needs");
+				mv.setViewName("dogooder");
 			} catch (DataIntegrityViolationException dive) {
 				mv.setViewName("needs");
 				mv.addObject("errorMessage", "Cannot register that username");
