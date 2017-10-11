@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,20 +78,20 @@ public class SessionController {
 	}
 	
 	//PLAYING WITH LOGIN METHOD
-	@GetMapping("login")
-	public String login() {
-		UserD user = new UserD(); 
-		String username = user.getUsername(); 
-		String password = user.getPassword(); 
-		
-		userRepository.findByUsername(username); 
-		
+//	@GetMapping("login")
+//	public String login() {
+//		UserD user = new UserD(); 
+//		String username = user.getUsername(); 
+//		String password = user.getPassword(); 
+//		
+//		userRepository.findByUsername(username); 
+//		
 //		if(user != null && BCrypt.checkpw(password, user.getPassword())) { 
 //			req.session().attribute("currentUser", user);
 //		}
 //		
-		return ""; 
-	}
+//		return ""; 
+//	}
 	
 	
 	
