@@ -48,7 +48,6 @@ public class HomeController {
 	private UserD user; 
 	
 	
-	// add: PasswordEncoder encoder as parameter
 	public HomeController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;

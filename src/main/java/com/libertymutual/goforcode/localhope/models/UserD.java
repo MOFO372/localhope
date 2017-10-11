@@ -26,9 +26,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-
-
-
 @Entity
 public class UserD implements UserDetails {
 	
