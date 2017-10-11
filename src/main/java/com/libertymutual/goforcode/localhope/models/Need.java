@@ -1,7 +1,6 @@
 package com.libertymutual.goforcode.localhope.models;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 
