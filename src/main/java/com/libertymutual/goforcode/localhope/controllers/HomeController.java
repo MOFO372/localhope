@@ -1,11 +1,18 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
@@ -48,10 +55,6 @@ public class HomeController {
 //		return "list";
 //	} 
 	
-	
-	@GetMapping("dogooder")
-	public List<Need> getAllNeeds(){
-		return needRepository.findAll();
-	}
-	
+
+
 }
