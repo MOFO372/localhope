@@ -58,7 +58,6 @@ public class HomeController {
 
 	@GetMapping("")
 	public List<UserD> getAll(){
-
 		return userRepository.findAll();	
 	}
 
@@ -79,8 +78,7 @@ public class HomeController {
 		return userRepository.save(user);	
 	}	
 
-		return userRepository.findAll(); 
-	}	
+	
 
 	@GetMapping("charity")
 	public List<UserD> getCharities(){

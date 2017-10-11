@@ -52,7 +52,7 @@ public class SessionController {
 	}
 
 	@PostMapping("registration")
-	public String register(@RequestBody UserD user, HttpServletResponse response) {
+	public UserD register(@RequestBody UserD user, HttpServletResponse response) {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -65,7 +65,6 @@ public class SessionController {
 			System.out.println("there was an error");
 			mv.addObject("errorMessage", "Cannot register that username");
 		}
-//		mv.setViewName("");
-		return "redirect:/doogooder";
+		return user;
 	}
 }
