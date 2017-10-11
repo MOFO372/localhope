@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,24 +23,26 @@ import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
-import springfox.documentation.spring.web.json.Json;
 
-@CrossOrigin(origins = "*")
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("")
 public class SessionController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
+	
 
 	public SessionController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 		this.encoder = encoder;
+		
 	}
 
-	// JSON
+	
 	@GetMapping("registration")
 	public ModelAndView registration() {
 		ModelAndView mv = new ModelAndView();
@@ -49,14 +50,19 @@ public class SessionController {
 		return mv;
 	}
 
-	// JSON
+
+
+
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds() {
 		return needRepository.findAll();
 	}
+	
 
 	@PostMapping("registration")
 	public UserD register(@RequestBody UserD user, HttpServletResponse response) {
+
+		
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -89,4 +95,5 @@ public class SessionController {
 		return null;
 		}
 	}
+	
 }
