@@ -41,16 +41,16 @@ public class SeedData {
 //				String zipCode, String phone, String email, String role, String donationPreferences,
 //				String charityPreference, String followedCharities, String charityName, String ein, String charityUserRole, String charityType) 	
 		
-		userRepository.save(new UserD(12L, "Peter", encoder.encode("password"), "USER", true, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "Peter", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "ABC H", "01-1234999", "Assistant", "health"));	
 		
-		userRepository.save(new UserD(12L, "PeterTheGreat", encoder.encode("password"), "USER", false, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "PeterTheGreat", encoder.encode("password"), "USER", "User", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Civic-1", "01-1234999", "Assistant", "civic"));	
 
-		userRepository.save(new UserD(12L, "PeterTheThird", encoder.encode("password"), "USER", false, "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "PeterTheThird", encoder.encode("password"), "USER", "User", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Civic-2", "01-1234999", "Assistant", "civic"));	
 	
-		userRepository.save(new UserD(12L, "NotPeter", encoder.encode("password"), "Peter", true, "USER", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(12L, "NotPeter", encoder.encode("password"), "Peter", "Charity", "USER", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Charity", "", "", "", "Educ", "01-1234999", "Assistant", "education"));	
 	
 					

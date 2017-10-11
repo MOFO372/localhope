@@ -42,7 +42,7 @@ public class HomeController {
 
 	@GetMapping("")
 	public List<UserD> getAll(){
-		return userRepository.findByIsCharity(true);
+		return userRepository.findByIsCharity("Charity");
 		//return userRepository.findAll(); 
 	}	
 
@@ -80,9 +80,9 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView();
 		try { 
 			userRepository.save(user);
-			mv.setViewName("needs");
+			mv.setViewName("dogooder");
 		} catch (DataIntegrityViolationException dive) {
-			mv.setViewName("/registration");
+			mv.setViewName("/");
 			mv.addObject("errorMessage", "Cannot register that username");
 		}
 		return mv;
