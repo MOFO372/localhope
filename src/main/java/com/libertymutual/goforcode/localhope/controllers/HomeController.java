@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
@@ -19,6 +20,7 @@ public class HomeController {
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
+	private UserD user; 
 	
 	
 	// add: PasswordEncoder encoder as parameter
@@ -31,16 +33,13 @@ public class HomeController {
 
 	@GetMapping("")
 	public List<UserD> getAll(){
-		return userRepository.findByIsCharity("Charity");
-		//return userRepository.findAll(); 
+		return userRepository.findAll(); 
 	}	
 
-//	@GetMapping("charity")
-//	public String getCharities(Model model){
-//		model.addAttribute("message", "List all Charities, sorted by type.");
-//		model.addAttribute("users", userRepository.findByIsCharity(true, new Sort(new Order("charityType"))));
-//		return "list";
-//	}
+	@GetMapping("charity")
+	public List<UserD> getCharities(){
+		return userRepository.findByIsCharity("Charity");
+	}
 //	
 //	@GetMapping("charity/{charityType}")
 //	public String getCharitiesByType(Model model, @PathVariable String charityType){
@@ -48,13 +47,11 @@ public class HomeController {
 //		model.addAttribute("users", userRepository.findByCharityTypeEquals(charityType));
 //		return "list";
 //	} 
-
 	
-//	@GetMapping("needs")
-//	public String getAllNeeds(Model model){
-//		model.addAttribute("message", "List of charity needs");
-//		model.addAttribute("needs", needRepository.findAll(new Sort("type")));
-//		return "list";
-//	}
+	
+	@GetMapping("dogooder")
+	public List<Need> getAllNeeds(){
+		return needRepository.findAll();
+	}
 	
 }
