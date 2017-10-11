@@ -331,8 +331,10 @@ public class UserD implements UserDetails {
 		this.username = username;
 	}
 
+	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
 		List<String> roleNames = roles.stream()
 				.map(userRole -> "ROLE_" + userRole.getName())
 				.collect(Collectors.toList());
