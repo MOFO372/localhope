@@ -55,7 +55,9 @@ public class SessionController {
 	}
 
 	@PostMapping("registration")
-	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws JsonProcessingException {
+
+	public UserD register(@RequestBody UserD user, HttpServletResponse response) {
+
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -69,8 +71,6 @@ public class SessionController {
 			System.out.println("there was an error");
 			mv.addObject("errorMessage", "Cannot register that username");
 		}
-//		mv.setViewName("/dogooder");
-//		return mv;
 
 		return user;
 	}

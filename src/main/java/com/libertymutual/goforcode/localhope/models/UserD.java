@@ -14,17 +14,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.libertymutual.goforcode.localhope.repositories.UserRepository;
+
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 
 @Entity
 public class UserD implements UserDetails {
+	
+	@Transient
+	private UserRepository userRepository;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -69,10 +78,9 @@ public class UserD implements UserDetails {
 	
 	// User only  -----------------------------------	
 	@Column(length=200)
-	private String donationPreferences;      // multiple?   $, volunteer, items ??  ENUMERATION ??
-	// private ArrayList<String> donationPreferences; 
+	private String donationPreferences;      
 	
-	@Column(length=100)						// select from charityType values?
+	@Column(length=100)						
 	private String charityPreference;	
 	
 	// Followed Charities   
@@ -82,9 +90,9 @@ public class UserD implements UserDetails {
 	
 	// Charity only  -----------------------------------
 	@Column(length=200)					
-	private String charityName = "NA";         // if(ein != null && !ein.isEmpty())   charityName has to be populated ??
+	private String charityName = "NA"; // VALIDATION?  TODO if(ein != null && !ein.isEmpty()) --> charityName has to be populated ??
 	
-	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690 - it's a String, really
+	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
 	@Column(length=10)   // unique?
 	private String ein = "00-0000000";
 	
@@ -136,11 +144,56 @@ public class UserD implements UserDetails {
 	}
 
 
+	// Associate a Need with a User (either DoGooder or Charity)
+	public void addNeed(Need need) { 
+		if (needs==null) {
+			needs = new ArrayList<Need>();
+		}
+		needs.add(need);
+		need.getUsers().add(this);
+	}	
+	
+	
+	// Add a Charity to the list of followed charities 
+	public void addFollowedCharity(UserD charity) throws ThisIsNotACharityException {		
+		if (!charity.getIsCharity().equals("Charity")) {
+			throw new ThisIsNotACharityException();		
+		}
+		followedCharities += charity.getEin() + " ";
+		followedCharities.trim();
+	}
+
+	// Remove a Charity from the list of followed charities 
+	public void removeFollowedCharity(UserD charity) throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {		
+		if (!charity.getIsCharity().equals("Charity")) {
+			throw new ThisIsNotACharityException();		
+		}		
+		if (followedCharities.indexOf(charity.getEin()) == 0) {
+			throw new UnableToDeFollowThisCharityException();		
+		}
+		String temp = charity.getEin();                                   // redo
+		followedCharities = followedCharities.replace(temp.trim(), "");   // redo
+		followedCharities.trim();
+	}
+
+	
+	// Convert  String followedCharities  to an ArrayList of Charities followed 
+	public ArrayList<UserD> listFollowedCharities(UserD charity)  {		
+		String[] charityNames = followedCharities.trim().split("\\s+");
+		ArrayList<UserD> charities = new ArrayList<UserD>(); 
+		
+		for(int i = 0; i < charityNames.length; i++) {
+			charities.add(userRepository.findByEin(charityNames[i]));	
+		}
+		return charities;
+	}
+	
+	 
+	
+	
 	public Long getId() {
 		return id;
 	}
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -149,8 +202,6 @@ public class UserD implements UserDetails {
 	public String getFirstName() {
 		return firstName;
 	}
-
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -159,8 +210,6 @@ public class UserD implements UserDetails {
 	public String getLastName() {
 		return lastName;
 	}
-
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -169,8 +218,6 @@ public class UserD implements UserDetails {
 	public String getStreetAddress() {
 		return streetAddress;
 	}
-
-
 	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
@@ -234,10 +281,6 @@ public class UserD implements UserDetails {
 	public void setIsCharity(String isCharity) {
 		this.isCharity = isCharity;
 	}
-
-
-
-
 
 
 
@@ -313,6 +356,7 @@ public class UserD implements UserDetails {
 		this.followedCharities = followedCharities;
 	}
 
+
 	@Override
 	public String getPassword() {
 		return password;
@@ -369,4 +413,5 @@ public class UserD implements UserDetails {
 	public void setRoles(List<UserRole> roles) {
 		this.roles = roles;
 	}
+
 }
