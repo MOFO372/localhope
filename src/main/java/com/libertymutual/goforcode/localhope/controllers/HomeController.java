@@ -48,34 +48,7 @@ public class HomeController {
 //		model.addAttribute("users", userRepository.findByCharityTypeEquals(charityType));
 //		return "list";
 //	} 
-	
-	
-	
-	@GetMapping("registration")
-    public ModelAndView registration() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("registration");
-        return mv;
-    }
-	
-	//JSON
-	@PostMapping("registration")
-	public ModelAndView register(@RequestBody UserD user, HttpServletResponse response) {
-		
-		String password = user.getPassword();
-		String encryptedPassword = encoder.encode(password);
-		user.setPassword(encryptedPassword);
 
-		ModelAndView mv = new ModelAndView();
-		try { 
-			userRepository.save(user);
-			mv.setViewName("dogooder");
-		} catch (DataIntegrityViolationException dive) {
-			mv.setViewName("/");
-			mv.addObject("errorMessage", "Cannot register that username");
-		}
-		return mv;
-	}
 	
 //	@GetMapping("needs")
 //	public String getAllNeeds(Model model){
