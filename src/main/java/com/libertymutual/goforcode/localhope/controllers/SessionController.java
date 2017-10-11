@@ -55,12 +55,11 @@ public class SessionController {
 	public List<Need> getAllNeeds() {
 		return needRepository.findAll();
 	}
+	
 
 	@PostMapping("registration")
-
 	public UserD register(@RequestBody UserD user, HttpServletResponse response) {
-
-
+		
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		user.setPassword(encryptedPassword);
@@ -76,24 +75,5 @@ public class SessionController {
 
 		return user;
 	}
-	
-	//PLAYING WITH LOGIN METHOD
-//	@GetMapping("login")
-//	public String login() {
-//		UserD user = new UserD(); 
-//		String username = user.getUsername(); 
-//		String password = user.getPassword(); 
-//		
-//		userRepository.findByUsername(username); 
-//		
-//		if(user != null && BCrypt.checkpw(password, user.getPassword())) { 
-//			req.session().attribute("currentUser", user);
-//		}
-//		
-//		return ""; 
-//	}
-	
-	
-	
 	
 }
