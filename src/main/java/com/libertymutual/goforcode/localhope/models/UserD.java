@@ -57,7 +57,7 @@ public class UserD implements UserDetails {
 	@Column(length=50, nullable=false)
 	private String city;
 	
-	@Column(length=2, nullable=false)       // ??
+	@Column(length=2, nullable=false)      
 	private String state;	
 	
 	@Column(length=10, nullable=false)
@@ -177,7 +177,7 @@ public class UserD implements UserDetails {
 	}
 
 	
-	// Convert  String followedCharities  to an ArrayList of Charities followed 
+	// Returns an ArrayList populated with EINs from the followedCharities Strings 
 	public ArrayList<UserD> listFollowedCharities(UserD charity)  {		
 		String[] charityNames = followedCharities.trim().split("\\s+");
 		ArrayList<UserD> charities = new ArrayList<UserD>(); 

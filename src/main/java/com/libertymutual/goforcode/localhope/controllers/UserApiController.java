@@ -1,5 +1,6 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -54,6 +55,7 @@ public class UserApiController {
 		return user;
 	}
 
+	
 	@PostMapping("{dogooderid}/followcharity")
 	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity) throws ThisIsNotACharityException{
 		UserD user = userRepository.findOne(dogooderid);			
@@ -63,6 +65,19 @@ public class UserApiController {
 		return user;
 	}
 
+	@PostMapping("{dogooderid}/followcharities")
+	public UserD associateDogooderAndCharities(@PathVariable long dogooderid, @RequestBody UserD[] charities) throws ThisIsNotACharityException{
+		UserD user = userRepository.findOne(dogooderid);
+		for(UserD charity : charities) {			
+			charity = userRepository.findOne(charity.getId());			
+			user.addFollowedCharity(charity);
+			userRepository.save(user);
+		}		
+		return user;
+	}
+	
+	
+	
 	@PostMapping("{dogooderid}/defollowcharity")
 	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity) 
 			     throws ThisIsNotACharityException, UnableToDeFollowThisCharityException{

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.UserD;
@@ -17,7 +18,7 @@ import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 @CrossOrigin(origins = "*")
-@Controller
+@RestController
 @RequestMapping("")
 public class SessionController {
 	
@@ -26,7 +27,6 @@ public class SessionController {
 	private PasswordEncoder encoder;
 	
 	
-	// add: PasswordEncoder encoder as parameter
 	public SessionController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
