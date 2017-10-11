@@ -42,31 +42,6 @@ public class UserApiController {
 		this.userRepository = userRepository;
 	}
 
-//	@GetMapping("")
-//	public List<UserD> getAll(){
-//		return userRepository.findAll();	
-//	}
-		
-//	@GetMapping("all")
-//	public String getAll(Model model){
-//		model.addAttribute("message", "List all users: Charities & DoGooders - useless ...");
-//		model.addAttribute("users", userRepository.findAll(new Sort("charityType")));
-//		return "list";
-//	}	
-//
-//	@GetMapping("charity")
-//	public String getCharities(Model model){
-//		model.addAttribute("message", "List all Charities, sorted by type.");
-//		model.addAttribute("users", userRepository.findByRole("Charity", new Sort(new Order("charityType"))));
-//		return "list";
-//	}
-//	
-//	@GetMapping("charity/{charityType}")
-//	public String getCharitiesByType(Model model, @PathVariable String charityType){
-//		model.addAttribute("message", "List Charities of type: " + charityType);
-//		model.addAttribute("users", userRepository.findByCharityTypeEquals(charityType));
-//		return "list";
-//	}
 	
 	
 	@PostMapping("{userid}/need")
