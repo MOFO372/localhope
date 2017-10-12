@@ -1,8 +1,22 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+=======
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+>>>>>>> fc0babb47e30e3f1904d958ea15865f86fc402fa
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,13 +82,12 @@ public class UserApiController {
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);
 	}
-
-	//to use for my charities link on a dogooder page
+	
 	@GetMapping("followedcharities/{dogooderid}")
-    public List<UserD> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
-            throws ThisIsNotACharityException {
-        UserD user = userRepository.findOne(dogooderid);
-        List<UserD> followedCharities = user.listFollowedCharities(userRepository);
-        return followedCharities;
-    }
+	public List<UserD> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
+			throws ThisIsNotACharityException {
+		UserD user = userRepository.findOne(dogooderid);
+		List<UserD> followedCharities = user.listFollowedCharities(userRepository);
+		return followedCharities;
+	}
 }

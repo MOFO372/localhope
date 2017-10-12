@@ -29,7 +29,8 @@ public class UserD implements UserDetails {
 
 	@Transient
 	private UserRepository userRepository;
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -51,11 +52,19 @@ public class UserD implements UserDetails {
 
 	@Column(length = 50, nullable = false)
 	private String city;
+<<<<<<< HEAD
 
 	@Column(length = 2, nullable = false) // ??
 	private String state;
 
 	@Column(length = 10, nullable = false)
+=======
+	
+	@Column(length=2, nullable=false)      
+	private String state;	
+	
+	@Column(length=10, nullable=false)
+>>>>>>> fc0babb47e30e3f1904d958ea15865f86fc402fa
 	private String zipCode;
 
 	@Column(length = 15, nullable = false)
@@ -70,6 +79,7 @@ public class UserD implements UserDetails {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<UserRole> roles;
+<<<<<<< HEAD
 
 	// User only -----------------------------------
 	@Column(length = 200)
@@ -87,6 +97,27 @@ public class UserD implements UserDetails {
 	private String charityName = "NA"; // VALIDATION? TODO if(ein != null && !ein.isEmpty()) --> charityName has to be
 										// populated ??
 
+=======
+	
+	
+	// User only  -----------------------------------	
+	@Column(length=200)
+	private String donationPreferences;      
+	
+	@Column(length=100)						
+	private String charityPreference;	
+	
+	// Followed Charities   
+	@Column
+	private String followedCharities;
+	
+	
+	
+	// Charity only  -----------------------------------
+	@Column(length=200)					
+	private String charityName = "NA"; // VALIDATION?  TODO if(ein != null && !ein.isEmpty()) --> charityName has to be populated ??
+	
+>>>>>>> fc0babb47e30e3f1904d958ea15865f86fc402fa
 	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
 	@Column(length = 10)
 	private String ein = "00-0000000";
@@ -142,7 +173,13 @@ public class UserD implements UserDetails {
 		if (needs == null) {
 			needs = new ArrayList<Need>();
 		}
+			// System.out.println("Pos 1");
+			
 		needs.add(need);
+		
+			// System.out.println("Pos 2");
+			// System.out.println("Need getId() = " + need.getId());
+			
 		need.getUsers().add(this);
 	}
 
@@ -159,6 +196,7 @@ public class UserD implements UserDetails {
 	public void removeFollowedCharity(UserD charity)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
 		if (!charity.getIsCharity().equals("Charity")) {
+<<<<<<< HEAD
 			throw new ThisIsNotACharityException();
 		}
 		if (followedCharities.indexOf(charity.getEin()) == 0) {
@@ -183,6 +221,29 @@ public class UserD implements UserDetails {
 		return charities;
 	}
 
+=======
+			throw new ThisIsNotACharityException();		
+		}
+		if (followedCharities.indexOf(charity.getEin()) == -1) {
+			throw new UnableToDeFollowThisCharityException();		
+		}                                 
+		followedCharities = followedCharities.replace(charity.getEin(), "");   
+		followedCharities.trim();
+	}
+
+	
+	// Returns an ArrayList populated with EINs from the followedCharities Strings 
+	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository)  {		
+		String[] charityNames = followedCharities.trim().split("\\s+");		
+		ArrayList<UserD> charities = new ArrayList<UserD>(); 
+		for(int i = 0; i < charityNames.length; i++) {
+			charities.add(userRepository.findByEin(charityNames[i]));	
+		}
+		return charities;
+	}
+	
+	 	
+>>>>>>> fc0babb47e30e3f1904d958ea15865f86fc402fa
 	
 	public Long getId() {
 		return id;

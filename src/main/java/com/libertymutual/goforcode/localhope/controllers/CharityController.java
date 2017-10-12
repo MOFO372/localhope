@@ -29,33 +29,44 @@ public class CharityController {
 	}
 
 	// this should save a need belonging to the logged-in charity
-//	@PostMapping("charity")
+//	@PostMapping("charity/{userid}")
 //	public Need saveNeed(@RequestBody Need need) {
 //		return needRepository.save(need);
 //	}
-
-	// this associates a need to the charity and displays all needs associated with the charity
+	
 	@PostMapping("charity/{userid}") // this is the ID of the charity
 	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
+		
 		UserD user = userRepository.findOne(userid);
+		need = needRepository.save(need);
 		
-		System.out.println("User shit: " + user); 
-		System.out.println("User id: " + userid);
+//		    System.out.println("Userid = "       + userid);	
+//			System.out.println("Need getId() = " + need.getId());
 		
-		System.out.println("Need shit: " + need + need.getId()); 
+//		need = needRepository.findOne(need.getId());
 		
-		needRepository.save(need);
-		 
-		System.out.println("BUTTS");
-		
-		need = needRepository.findOne(need.getId());
+//			System.out.println("Orig Amount = " + need.getOriginalAmount());
+//			System.out.println("User EIN = "    + user.getEin());
+			
 		user.addNeed(need);
-		
-		
 		
 		userRepository.save(user);
 		return user.getNeeds();
 	}
+	
+	
+	
+	
+	
+	// this associates a need to the charity and displays all needs associated with the charity
+//	@PostMapping("charity/{userid}") // this is the ID of the charity
+//	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
+//		UserD user = userRepository.findOne(userid);
+//		need = needRepository.findOne(need.getId());
+//		user.addNeed(need);
+//		userRepository.save(user);
+//		return user.getNeeds();
+//	}
 
 	// @GetMapping("{userid}/charity")
 	// public List<Need> addCharityNeed(@PathVariable long userid) {
