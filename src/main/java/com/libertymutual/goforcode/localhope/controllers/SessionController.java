@@ -43,9 +43,10 @@ public class SessionController {
 		return mv;
 	}
 
+	
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds() {
-		return needRepository.findAll();
+		return needRepository.findByNeedMet(false); 
 	}
 
 	@PostMapping("registration")

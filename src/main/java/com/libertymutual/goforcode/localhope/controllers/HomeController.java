@@ -54,7 +54,7 @@ public class HomeController {
 		this.encoder = encoder;
 	}
 
-
+	//show all charities
 	@GetMapping("")
 	public List<UserD> getAll(){
 		return userRepository.findAll();	
@@ -62,7 +62,7 @@ public class HomeController {
 
 
 	
-	@PostMapping("{userid}/need")
+	@PostMapping("need/{userid}")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need){
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.findOne(need.getId());
