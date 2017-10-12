@@ -46,6 +46,8 @@ public class SeedData {
 //		String donationPreferences, String charityPreference, 	String followedCharities, 
 //		String charityName, 		String ein, 				String charityUserRole, 			String charityType) 
 		
+		userRepository.save(new UserD(31L, "ActuallyJasmine", encoder.encode("jasmine"), "USER", "User", "Jasmine", "Stotts", "321 Pine", "Seattle", "WA", "98195",
+	            "(501) 529-0281", "find.me@if.you.can", "Redund", "", "", "", "", "", "", ""));
 
 		userRepository.save(new UserD(11L, "Victor", encoder.encode("password"), "USER", "User", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "", "", ""));	
