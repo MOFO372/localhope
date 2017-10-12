@@ -49,29 +49,32 @@ public class UserApiController {
 		return user;
 	}
 
-	// associates the dogooder with a charity
+	// Associates the DoGooder with a Charity (by way of placing the EIN in a DoGooder followCharity property)
 	@PostMapping("followcharity/{dogooderid}")
-	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity)
-			throws ThisIsNotACharityException {
-		UserD user = userRepository.findOne(dogooderid);
-		charity = userRepository.findOne(charity.getId());
+	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid) throws ThisIsNotACharityException {		
+		UserD user    = userRepository.findOne(dogooderid);
+		UserD charity = userRepository.findOne(charityid);
+		
 		user.addFollowedCharity(charity);
 		userRepository.save(user);
 		return user;
 	}
 
-	// allows a user to unfollow a charity after being associated with it - will
+	
+	// Dis-associates the DoGooder with a Charity (by way of removing the EIN in a DoGooder followCharity property)
 	// remove the association
 	@PostMapping("unfollowcharity/{dogooderid}")
-	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity)
+	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
 		UserD user = userRepository.findOne(dogooderid);
-		charity = userRepository.findOne(charity.getId());
+		UserD charity = userRepository.findOne(charityid);
+		
 		user.removeFollowedCharity(charity);
 		userRepository.save(user);
 		return user;
 	}
 
+	
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);
