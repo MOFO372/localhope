@@ -39,7 +39,7 @@ public class SeedData {
         
 		needRepository.save(new Need(1L, "crib",  false, "We need those cribs!", 10, sqlDate, users));
 		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, sqlDate, users));
-		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, sqlDate, users));
+		needRepository.save(new Need(3L, "volunteer", true, "We need to deliver them cribs.", 6, sqlDate, users));
 		
 		
 //		Long id, 			String username, String password, 
