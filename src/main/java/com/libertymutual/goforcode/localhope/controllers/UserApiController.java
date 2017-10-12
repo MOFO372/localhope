@@ -49,8 +49,7 @@ public class UserApiController {
 		return user;
 	}
 
-	// allows a user to unfollow a charity after being associated with it - will
-	// remove the association
+	// allows a user to unfollow a charity after being associated with it - will remove the association
 	@PostMapping("unfollowcharity/{dogooderid}")
 	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody UserD charity)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
