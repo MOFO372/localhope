@@ -28,8 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/billing-records/**").hasAnyRole("ADMIN", "CLERK")
 //				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated()
-			.and()
-			.formLogin()
+//			.and()
+//			.formLogin()
+				// this forces the /login path to go into UserDetailsService and try to find the user that you entered
 			.and()
 			.csrf()
 			.disable();

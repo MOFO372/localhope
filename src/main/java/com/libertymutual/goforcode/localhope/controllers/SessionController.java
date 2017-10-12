@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,22 +23,26 @@ import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
-@CrossOrigin(origins = "*")
+
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("")
 public class SessionController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
+	
 
 	public SessionController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 		this.encoder = encoder;
+		
 	}
 
-	// JSON
+	
 	@GetMapping("registration")
 	public ModelAndView registration() {
 		ModelAndView mv = new ModelAndView();
@@ -46,17 +50,19 @@ public class SessionController {
 		return mv;
 	}
 
-	// JSON
+
+
 
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds() {
 		return needRepository.findAll();
 	}
+	
 
 	@PostMapping("registration")
-
 	public UserD register(@RequestBody UserD user, HttpServletResponse response) {
 
+		
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -65,12 +71,29 @@ public class SessionController {
 		ModelAndView mv = new ModelAndView();
 		try {
 			userRepository.save(user);
-			System.out.println("user got saved");
+			return user;
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");
 			mv.addObject("errorMessage", "Cannot register that username");
+			return null;
 		}
-
-		return user;
 	}
+	
+
+	@PostMapping("sessions")
+	public UserD login(@RequestBody LoginModel userLogin, HttpServletResponse response) {
+		UserD user = userRepository.findByUsername(userLogin.getUsername());
+		String username = userLogin.getUsername();
+		String password = userLogin.getPassword();
+		
+		if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+			System.out.println("User is " + user);
+			System.out.println("Username is " + username);
+			System.out.println("Password is " + password);
+			return user;
+		} else {
+		return null;
+		}
+	}
+	
 }
