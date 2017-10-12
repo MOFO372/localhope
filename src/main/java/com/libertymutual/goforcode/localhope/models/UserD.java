@@ -180,16 +180,14 @@ public class UserD implements UserDetails {
 		followedCharities.trim();
 	}
 
-	// Convert String followedCharities to an ArrayList of Charities followed
-	// Returns an ArrayList populated with EINs from the followedCharities Strings
-	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository) {
-		String[] charityNames = followedCharities.trim().split("\\s+");
-		ArrayList<UserD> charities = new ArrayList<UserD>();
-
-		System.out.println("IDs: " + charityNames.length + " Element 0: " + charityNames[0]);
-
-		for (int i = 0; i < charityNames.length; i++) {
-			charities.add(userRepository.findByEin(charityNames[i]));
+	
+	// Returns an ArrayList populated with EINs from the followedCharities Strings 
+	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository)  {		
+		String[] charityNames = followedCharities.trim().split("\\s+");		
+		ArrayList<UserD> charities = new ArrayList<UserD>(); 
+		
+		for(int i = 0; i < charityNames.length; i++) {
+			charities.add(userRepository.findByEin(charityNames[i]));	
 		}
 		return charities;
 	}
