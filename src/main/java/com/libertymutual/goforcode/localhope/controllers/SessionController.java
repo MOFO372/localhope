@@ -69,13 +69,9 @@ public class SessionController {
 	@PostMapping("sessions")
 	public UserD login(@RequestBody LoginModel userLogin, HttpServletResponse response) {
 		UserD user = userRepository.findByUsername(userLogin.getUsername());
-		String username = userLogin.getUsername();
 		String password = userLogin.getPassword();
 
 		if (user != null && BCrypt.checkpw(password, user.getPassword())) {
-			System.out.println("User is " + user);
-			System.out.println("Username is " + username);
-			System.out.println("Password is " + password);
 			return user;
 		} else {
 			return null;

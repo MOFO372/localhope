@@ -1,5 +1,8 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,4 +68,13 @@ public class UserApiController {
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);
 	}
+	
+	//to use for my charities link on a dogooder page
+	@GetMapping("followedcharities/{dogooderid}")
+    public List<UserD> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
+            throws ThisIsNotACharityException {
+        UserD user = userRepository.findOne(dogooderid);
+        List<UserD> followedCharities = user.listFollowedCharities(userRepository);
+        return followedCharities;
+    }
 }
