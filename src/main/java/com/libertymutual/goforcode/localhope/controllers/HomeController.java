@@ -29,8 +29,7 @@ import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
-
-
+import com.libertymutual.goforcode.localhope.services.SMSTest;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -46,6 +45,7 @@ public class HomeController {
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
 	private UserD user; 
+	private SMSTest service;
 	
 	
 	public HomeController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
