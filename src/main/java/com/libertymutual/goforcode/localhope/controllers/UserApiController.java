@@ -1,22 +1,9 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
-<<<<<<< HEAD
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-=======
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
->>>>>>> fc0babb47e30e3f1904d958ea15865f86fc402fa
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
