@@ -23,7 +23,7 @@ public class SeedData {
 	
         UserD user1 = new UserD();         
         user1 = userRepository.save(new UserD(13L, "PeterTheGreat2", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Civic-1", "01-1234111", "Assistant", "civic"));
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Civic-1", "01-1234777", "Assistant", "civic"));
               
         
         ArrayList<UserD> users = new ArrayList<UserD>(); 

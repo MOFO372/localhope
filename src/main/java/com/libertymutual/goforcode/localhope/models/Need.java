@@ -1,6 +1,7 @@
 package com.libertymutual.goforcode.localhope.models;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -38,7 +39,8 @@ public class Need {
 	private List<UserD> users;
 
 	
-	public Need () {}
+	public Need () {
+	}
 	
 	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, Date dateNeeded, List<UserD> users) {
 		//super();
@@ -123,13 +125,15 @@ public class Need {
 		this.description = description;
 	}
 
+	// Create User(s), if there are none 
 	public List<UserD> getUsers() {
+		if (users == null) {
+			users = new ArrayList<UserD>();
+		}
 		return users;
 	}
 
 	public void setUsers(List<UserD> users) {
 		this.users = users;
 	}
-
-
 }

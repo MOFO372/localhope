@@ -33,6 +33,7 @@ public class UserD implements UserDetails {
 	@Transient
 	private UserRepository userRepository;
 	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -74,6 +75,7 @@ public class UserD implements UserDetails {
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade=CascadeType.ALL)
 	private List<UserRole> roles;
 	
+	
 	// User only  -----------------------------------	
 	@Column(length=200)
 	private String donationPreferences;      
@@ -84,6 +86,7 @@ public class UserD implements UserDetails {
 	// Followed Charities   
 	@Column
 	private String followedCharities;
+	
 	
 	
 	// Charity only  -----------------------------------
@@ -147,7 +150,13 @@ public class UserD implements UserDetails {
 		if (needs==null) {
 			needs = new ArrayList<Need>();
 		}
+			// System.out.println("Pos 1");
+			
 		needs.add(need);
+		
+			// System.out.println("Pos 2");
+			// System.out.println("Need getId() = " + need.getId());
+			
 		need.getUsers().add(this);
 	}	
 	
@@ -175,18 +184,16 @@ public class UserD implements UserDetails {
 
 	
 	// Returns an ArrayList populated with EINs from the followedCharities Strings 
-	public ArrayList<UserD> listFollowedCharities(UserD charity)  {		
-		String[] charityNames = followedCharities.trim().split("\\s+");
+	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository)  {		
+		String[] charityNames = followedCharities.trim().split("\\s+");		
 		ArrayList<UserD> charities = new ArrayList<UserD>(); 
-		
 		for(int i = 0; i < charityNames.length; i++) {
 			charities.add(userRepository.findByEin(charityNames[i]));	
 		}
 		return charities;
 	}
 	
-	 
-	
+	 	
 	
 	public Long getId() {
 		return id;

@@ -1,6 +1,6 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +10,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-=======
->>>>>>> 18c306093fed2456ac7d1bdb3cc95bd1df5cd644
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,5 +75,13 @@ public class UserApiController {
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);
+	}
+	
+	@GetMapping("followedcharities/{dogooderid}")
+	public List<UserD> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
+			throws ThisIsNotACharityException {
+		UserD user = userRepository.findOne(dogooderid);
+		List<UserD> followedCharities = user.listFollowedCharities(userRepository);
+		return followedCharities;
 	}
 }
