@@ -30,7 +30,6 @@ public class Need {
 	
 	private int originalAmount;
 	
-	// @JsonFormat(pattern = "YYYY-MM-dd")
 	private Date dateNeeded;
 
 	
