@@ -187,6 +187,7 @@ public class UserD implements UserDetails {
 	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository)  {		
 		String[] charityNames = followedCharities.trim().split("\\s+");		
 		ArrayList<UserD> charities = new ArrayList<UserD>(); 
+		
 		for(int i = 0; i < charityNames.length; i++) {
 			charities.add(userRepository.findByEin(charityNames[i]));	
 		}

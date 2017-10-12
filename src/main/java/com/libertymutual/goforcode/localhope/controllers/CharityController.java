@@ -28,35 +28,28 @@ public class CharityController {
 
 	}
 
-	// this should save a need belonging to the logged-in charity
-//	@PostMapping("charity/{userid}")
-//	public Need saveNeed(@RequestBody Need need) {
-//		return needRepository.save(need);
-//	}
-	
+
+	// Associate a newly-created Need with a Charity & display all Needs for this Charity 
 	@PostMapping("charity/{userid}") // this is the ID of the charity
 	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
 		
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.save(need);
-		
-//		    System.out.println("Userid = "       + userid);	
-//			System.out.println("Need getId() = " + need.getId());
-		
+				
 //		need = needRepository.findOne(need.getId());
 		
-//			System.out.println("Orig Amount = " + need.getOriginalAmount());
-//			System.out.println("User EIN = "    + user.getEin());
-			
-		user.addNeed(need);
-		
+		user.addNeed(need);		
 		userRepository.save(user);
 		return user.getNeeds();
 	}
 	
 	
 	
-	
+	// this should save a need belonging to the logged-in charity
+//	@PostMapping("charity/{userid}")
+//	public Need saveNeed(@RequestBody Need need) {
+//		return needRepository.save(need);
+//	}	
 	
 	// this associates a need to the charity and displays all needs associated with the charity
 //	@PostMapping("charity/{userid}") // this is the ID of the charity

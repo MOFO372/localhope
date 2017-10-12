@@ -37,15 +37,7 @@ public class SeedData {
 		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, sqlDate, users));
 		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, sqlDate, users));
 		
-		
-//		Long id, 			String username, String password, 
-//		String roleName, 	
-		// String isCharity, 
-//		String firstName, 	String lastName, String streetAddress, String city, String state, String zipCode, String phone, String email, 
-//		String role,   ?????? 
-//		String donationPreferences, String charityPreference, 	String followedCharities, 
-//		String charityName, 		String ein, 				String charityUserRole, 			String charityType) 
-		
+			
 
 		userRepository.save(new UserD(11L, "Victor", encoder.encode("password"), "USER", "DoGooder", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "", "", ""));	
