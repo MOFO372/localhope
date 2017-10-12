@@ -50,7 +50,7 @@ public class SeedData {
 		userRepository.save(new UserD(11L, "Victor", encoder.encode("password"), "USER", "User", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "", "", ""));	
 		
-		userRepository.save(new UserD(11L, "Looser", encoder.encode("password"), "USER", "DoGooder", "Alex", "Alson", "321 Pine", "Seattle", "WA", "98195",
+		userRepository.save(new UserD(11L, "Looser", encoder.encode("password"), "USER", "User", "Alex", "Alson", "321 Pine", "Seattle", "WA", "98195",
 	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "01-1234000 01-1234111 01-1234333", "", "", "", ""));	
 		
 		
