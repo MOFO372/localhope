@@ -154,11 +154,15 @@ public class UserD implements UserDetails {
 
 	
 	// Add a Charity to the list of followed charities
-	public void addFollowedCharity(UserD charity) throws ThisIsNotACharityException {
+	public void addFollowedCharity(UserD charity) throws ThisIsNotACharityException, FollowUniqueCharitiesOnlyException {
+		
 		if (!charity.getIsCharity().equals("Charity")) {
 			throw new ThisIsNotACharityException();
 		}
-		followedCharities += charity.getEin() + " ";
+		if (followedCharities.indexOf(charity.getEin()) > -1) {
+			throw new FollowUniqueCharitiesOnlyException();
+		}
+		followedCharities +=  " " + charity.getEin();
 		followedCharities.trim();
 	}
 
@@ -170,7 +174,7 @@ public class UserD implements UserDetails {
 		if (!charity.getIsCharity().equals("Charity")) {
 			throw new ThisIsNotACharityException();
 		}
-		if (followedCharities.indexOf(charity.getEin()) == 0) {
+		if (followedCharities.indexOf(charity.getEin()) < 0) {
 			throw new UnableToDeFollowThisCharityException();
 		}
 		
