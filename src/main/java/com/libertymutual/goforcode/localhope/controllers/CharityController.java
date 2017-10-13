@@ -51,5 +51,19 @@ public class CharityController {
 	 UserD user = userRepository.findOne(userid);
 	 return user.getNeeds();
 	 }
+	 
+// Provide a list of all users who have followed the charity
+	 @GetMapping("followers/{charityid}")
+	 public List<UserD> listFollowers(@PathVariable long charityid) {
+		 System.out.println("You gave me id " + charityid);
+		 
+		 UserD charity = userRepository.findOne(charityid);
+		 System.out.println("You found this user " + charity.getCharityName());
+		 
+		 List<UserD> followers = charity.listFollowers(userRepository);
+		 System.out.println("You have these followers " + followers);
+		 
+		 return followers;
+	 }
 
 }

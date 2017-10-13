@@ -46,8 +46,6 @@ public class NeedController {
 		
 		need.setNeedMet(!need.getNeedMet());			
 		need = needRepository.save(need);
-
-		//return user.getNeeds();
 	}
 	
 	

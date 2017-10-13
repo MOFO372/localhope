@@ -85,7 +85,9 @@ public class UserD implements UserDetails {
 	@Column
 	private String followedCharities;
 	
-	
+	// Followers
+	@Column
+	private String followers;
 	
 	// Charity only  -----------------------------------
 	@Column(length=200)					
@@ -111,7 +113,7 @@ public class UserD implements UserDetails {
 	// List<Need> needs
 	public UserD(Long id, String username, String password, String roleName, String isCharity, String firstName,
 			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
-			String email, String role, String donationPreferences, String charityPreference, String followedCharities,
+			String email, String role, String donationPreferences, String charityPreference, String followedCharities, String followers, 
 			String charityName, String ein, String charityUserRole, String charityType) {
 
 		this.id = id;
@@ -131,6 +133,7 @@ public class UserD implements UserDetails {
 		this.donationPreferences = donationPreferences;
 		this.charityPreference = charityPreference;
 		this.followedCharities = followedCharities;
+		this.followers = followers;
 
 		this.charityName = charityName;
 		this.ein = ein;
@@ -166,6 +169,15 @@ public class UserD implements UserDetails {
 		followedCharities.trim();
 	}
 
+	// Add a DoGooder to the list of a charity's followers
+	public void addFollowers(UserD user) throws ThisIsNotAUserException {
+		if (!user.getIsCharity().equals("User")) {
+			throw new ThisIsNotAUserException();
+		}
+		
+		followers += " " + user.getUsername();
+		followers.trim();
+	}
 	
 	// Remove a Charity from the list of followed charities
 	public void removeFollowedCharity(UserD charity)
@@ -183,6 +195,17 @@ public class UserD implements UserDetails {
 		followedCharities.trim();
 	}
 
+	// Returns an ArrayList populated with Users who have followed this charity 
+	public ArrayList<UserD> listFollowers(UserRepository userRepository)  {				
+		String[] userNames = followers.trim().split("\\s+");
+		
+		ArrayList<UserD> users = new ArrayList<UserD>(); 
+		
+		for(int i = 0; i < userNames.length; i++) {
+			users.add(userRepository.findByUsername(userNames[i]));
+		}
+		return users;
+	}
 	
 	// Returns an ArrayList populated with EINs from the followedCharities Strings 
 	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository)  {		
