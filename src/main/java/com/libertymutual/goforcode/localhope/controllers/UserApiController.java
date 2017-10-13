@@ -50,7 +50,7 @@ public class UserApiController {
 
 	// Associates the DoGooder with a Charity (by way of placing the EIN in a DoGooder followCharity property)
 	@PostMapping("followcharity/{dogooderid}")
-	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid) throws ThisIsNotACharityException, ThisIsNotAUserException {		
+	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid) throws ThisIsNotACharityException, ThisIsNotAUserException, FollowUniqueCharitiesOnlyException {		
 		UserD user    = userRepository.findOne(dogooderid);
 		UserD charity = userRepository.findOne(charityid);		
 		user.addFollowedCharity(charity);
