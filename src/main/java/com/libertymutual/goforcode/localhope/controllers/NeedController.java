@@ -31,13 +31,11 @@ public class NeedController {
 
 	// Change the needMet status of a Need to the opposite  
 	@PostMapping("needstatus/{needid}") 
-	public List<Need> resetNeedMetStatus(@PathVariable long needid, @RequestBody UserD user) {				
+	public void resetNeedMetStatus(@PathVariable long needid, @RequestBody UserD user) {				
 		Need need = needRepository.findOne(needid);		
 		user = userRepository.findOne(user.getId());
 		
 		need.setNeedMet(!need.getNeedMet());			
 		need = needRepository.save(need);
-
-		return user.getNeeds();
 	}
 }
