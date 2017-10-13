@@ -37,7 +37,6 @@ public class CharityController {
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.save(need);
 				
-//		need = needRepository.findOne(need.getId());
 		
 		user.addNeed(need);		
 		userRepository.save(user);
@@ -46,21 +45,6 @@ public class CharityController {
 	
 	
 	
-	// this should save a need belonging to the logged-in charity
-//	@PostMapping("charity/{userid}")
-//	public Need saveNeed(@RequestBody Need need) {
-//		return needRepository.save(need);
-//	}	
-	
-	// this associates a need to the charity and displays all needs associated with the charity
-//	@PostMapping("charity/{userid}") // this is the ID of the charity
-//	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
-//		UserD user = userRepository.findOne(userid);
-//		need = needRepository.findOne(need.getId());
-//		user.addNeed(need);
-//		userRepository.save(user);
-//		return user.getNeeds();
-//	}
 
 	 @GetMapping("charity/{userid}")
 	 public List<Need> addCharityNeed(@PathVariable long userid) {

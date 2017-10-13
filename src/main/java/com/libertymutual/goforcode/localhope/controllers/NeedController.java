@@ -30,7 +30,7 @@ public class NeedController {
 
 	}
 
-	// Update a Need
+	// Get a Need
 	@GetMapping("need/{needid}")
 	public Need listANeed(@PathVariable long needid) {
 		return needRepository.findOne(needid);	
