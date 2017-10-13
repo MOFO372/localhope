@@ -1,5 +1,8 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,17 +34,23 @@ public class MessageController {
 	
 	@PostMapping("message/{userid}")
 	public String sendMessage(@PathVariable long userid, @RequestBody Need need) {
-		
-		UserD user = userRepository.findOne(userid);
-		
-		String needMessage = "What we need: " + need.getDescription();
-		String userPhone = user.getPhone();
-
-		
 		String ACCOUNT_SID = "AC30b2203fa2ba1ca8bbec30eb6b90f28b";
 		String AUTH_TOKEN = "641d50e26cc03dba2048ec3a8cab7550";
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-		Message message = Message.creator(new PhoneNumber(userPhone), new PhoneNumber("+15018304032"), needMessage).create();
+		
+		UserD charity = userRepository.findOne(userid);
+				
+		String needMessage = "What we need: " + need.getDescription();
+		
+		ArrayList <UserD> followers = charity.listFollowers(userRepository);
+		
+		for(int i = 0; i < followers.size(); i++) {
+		  	UserD follower = followers.get(i);
+		  	String phone = follower.getPhone();
+			Message message = Message.creator(new PhoneNumber(phone),
+	        new PhoneNumber("+15018304032"), 
+	        needMessage).create();
+		}
 		
 		return "message sent";
 	}
