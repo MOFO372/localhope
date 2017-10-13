@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.ThisIsNotACharityException;
+import com.libertymutual.goforcode.localhope.models.ThisIsNotAUserException;
 import com.libertymutual.goforcode.localhope.models.UnableToDeFollowThisCharityException;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
@@ -43,11 +44,12 @@ public class UserApiController {
 
 	// Associates the DoGooder with a Charity (by way of placing the EIN in a DoGooder followCharity property)
 	@PostMapping("followcharity/{dogooderid}")
-	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid) throws ThisIsNotACharityException {		
+	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid) throws ThisIsNotACharityException, ThisIsNotAUserException {		
 		UserD user    = userRepository.findOne(dogooderid);
 		UserD charity = userRepository.findOne(charityid);
 		
 		user.addFollowedCharity(charity);
+		charity.addFollowers(user);
 		userRepository.save(user);
 		return user;
 	}

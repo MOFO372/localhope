@@ -23,7 +23,7 @@ public class SeedData {
 	
         UserD user1 = new UserD();         
         user1 = userRepository.save(new UserD(13L, "PeterTheGreat2", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Civic-1", "01-1234777", "Assistant", "civic"));
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "Civic-1", "01-1234777", "Assistant", "civic"));
               
         
         ArrayList<UserD> users = new ArrayList<UserD>(); 
@@ -47,30 +47,42 @@ public class SeedData {
 //		String charityName, 		String ein, 				String charityUserRole, 			String charityType) 
 		
 		userRepository.save(new UserD(31L, "ActuallyJasmine", encoder.encode("jasmine"), "USER", "User", "Jasmine", "Stotts", "321 Pine", "Seattle", "WA", "98195",
-	            "(501) 529-0281", "find.me@if.you.can", "Redund", "", "", "", "", "", "", ""));
+	            "(501) 529-0281", "find.me@if.you.can", "Redund", "", "", "01-1234111", "", "", "", "", ""));
+		
+		userRepository.save(new UserD(32L, "Mofo", encoder.encode("bitch"), "USER", "User", "Rachel", "Fakey", "321 Pine", "Seattle", "WA", "98195",
+	            "(206) 218-2753", "find.me@if.you.can", "Redund", "", "", "01-1234111", "", "", "", "", ""));
+
 
 		userRepository.save(new UserD(11L, "Victor", encoder.encode("password"), "USER", "User", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "", "", ""));	
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "", "", "", ""));	
 		
 		userRepository.save(new UserD(11L, "Looser", encoder.encode("password"), "USER", "User", "Alex", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "01-1234000 01-1234111 01-1234333", "", "", "", ""));	
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "01-1234000 01-1234111 01-1234333", "",  "", "", "", ""));	
 		
 		
 		
 		//added to needs seed data
-		userRepository.save(new UserD(12L, "John", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "ABC H", "01-1234001", "Assistant", "health"));	
+		userRepository.save(new UserD(12L, 
+			//login name	
+				"John", 
+			//password	
+				encoder.encode("password"), 
+			//role	
+				"USER", 
+			//User or Charity	
+				"Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "ActuallyJasmine", "ABC H", "01-1234111", "Assistant", "health"));	
 		
 		
 		//added to needs seed data
 		userRepository.save(new UserD(13L, "PeterTheGreat", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Civic-1", "01-1234111", "Assistant", "civic"));	
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "ActuallyJasmine Mofo", "Civic-1", "01-1234111", "Assistant", "civic"));	
 
 		userRepository.save(new UserD(14L, "PeterTheThird", encoder.encode("password"), "USER", "Charity", "James", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Civic-2", "01-1234000", "Assistant", "civic"));	
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "Civic-2", "01-1234000", "Assistant", "civic"));	
 	
 		userRepository.save(new UserD(15L, "NotPeter", encoder.encode("password"), "USER", "Charity", "Jay", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "Educ", "01-1234333", "Assistant", "education"));	
+	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "Educ", "01-1234333", "Assistant", "education"));	
 	
 					
 	}

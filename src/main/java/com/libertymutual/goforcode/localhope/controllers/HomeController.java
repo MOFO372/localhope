@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
@@ -32,9 +31,6 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 import com.libertymutual.goforcode.localhope.services.SMSTest;
 
 import io.swagger.annotations.ApiOperation;
-
-
-
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,26 +40,23 @@ public class HomeController {
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
-	private UserD user; 
+	private UserD user;
 	private SMSTest service;
-	
-	
+
 	public HomeController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 		this.encoder = encoder;
 	}
 
-	//show all charities
+	// show all charities
 	@GetMapping("")
-	public List<UserD> getAll(){
-		return userRepository.findAll();	
+	public List<UserD> getAll() {
+		return userRepository.findAll();
 	}
 
-
-	
 	@PostMapping("need/{userid}")
-	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need){
+	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need) {
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.findOne(need.getId());
 		user.addNeed(need);
@@ -71,26 +64,23 @@ public class HomeController {
 		return user;
 	}
 
-		
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
-		return userRepository.save(user);	
-	}	
-
-	
+		return userRepository.save(user);
+	}
 
 	@GetMapping("charity")
-	public List<UserD> getCharities(){
+	public List<UserD> getCharities() {
 		return userRepository.findByIsCharity("Charity");
 	}
-//	
-//	@GetMapping("charity/{charityType}")
-//	public String getCharitiesByType(Model model, @PathVariable String charityType){
-//		model.addAttribute("message", "List Charities of type: " + charityType);
-//		model.addAttribute("users", userRepository.findByCharityTypeEquals(charityType));
-//		return "list";
-//	} 
-	
-
+	//
+	// @GetMapping("charity/{charityType}")
+	// public String getCharitiesByType(Model model, @PathVariable String
+	// charityType){
+	// model.addAttribute("message", "List Charities of type: " + charityType);
+	// model.addAttribute("users",
+	// userRepository.findByCharityTypeEquals(charityType));
+	// return "list";
+	// }
 
 }
