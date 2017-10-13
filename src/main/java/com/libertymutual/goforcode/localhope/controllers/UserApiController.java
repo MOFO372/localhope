@@ -29,6 +29,11 @@ public class UserApiController {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 	}
+	
+	@GetMapping("{userid}")
+	public UserD getOneUser(@PathVariable long userid) {
+		return userRepository.findOne(userid); 
+	}
 
 	// associates a need with a dogooder once button is clicked
 	@PostMapping("need/{userid}")
