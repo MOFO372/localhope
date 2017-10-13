@@ -15,6 +15,7 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
@@ -30,23 +31,17 @@ public class MessageController {
 	
 	@PostMapping("message/{userid}")
 	public String sendMessage(@PathVariable long userid, @RequestBody Need need) {
-		System.out.println("hit the method with userid " + userid + " and need " + need);
 		
 		UserD user = userRepository.findOne(userid);
-		System.out.println("user will be " + user.getFirstName());
 		
 		String needMessage = "What we need: " + need.getDescription();
-		System.out.println("need is " + needMessage);
 		String userPhone = user.getPhone();
-		System.out.println("user number is " + userPhone);
+
 		
 		String ACCOUNT_SID = "AC30b2203fa2ba1ca8bbec30eb6b90f28b";
 		String AUTH_TOKEN = "641d50e26cc03dba2048ec3a8cab7550";
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-		Message message = Message.creator(new PhoneNumber(userPhone),
-		        new PhoneNumber("+15018304032"), 
-		        needMessage).create();
-
+		Message message = Message.creator(new PhoneNumber(userPhone), new PhoneNumber("+15018304032"), needMessage).create();
 		
 		return "message sent";
 	}

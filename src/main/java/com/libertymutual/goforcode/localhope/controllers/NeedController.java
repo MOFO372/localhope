@@ -2,6 +2,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,14 @@ public class NeedController {
 
 	}
 
-
+	// Update a Need
+	@GetMapping("need/{needid}")
+	public Need listANeed(@PathVariable long needid) {
+		return needRepository.findOne(needid);	
+	}
+		
+		
+	
 	// Change the needMet status of a Need to its opposite  
 	@PostMapping("needstatus/{needid}") 
 	public List<Need> resetNeedMetStatus(@PathVariable long needid, @RequestBody UserD user) {				
