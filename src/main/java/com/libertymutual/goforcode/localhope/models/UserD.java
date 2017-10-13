@@ -141,21 +141,18 @@ public class UserD implements UserDetails {
 		roles.add(new UserRole(roleName, this));
 	}
 
+	
 	// Associate a Need with a User (either DoGooder or Charity)
 	public void addNeed(Need need) {
 		if (needs == null) {
 			needs = new ArrayList<Need>();
 		}
-			// System.out.println("Pos 1");
-			
-		needs.add(need);
-		
-			// System.out.println("Pos 2");
-			// System.out.println("Need getId() = " + need.getId());
-			
+
+		needs.add(need);			
 		need.getUsers().add(this);
 	}
 
+	
 	// Add a Charity to the list of followed charities
 	public void addFollowedCharity(UserD charity) throws ThisIsNotACharityException {
 		if (!charity.getIsCharity().equals("Charity")) {
@@ -165,16 +162,18 @@ public class UserD implements UserDetails {
 		followedCharities.trim();
 	}
 
+	
 	// Remove a Charity from the list of followed charities
 	public void removeFollowedCharity(UserD charity)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
+		
 		if (!charity.getIsCharity().equals("Charity")) {
-
 			throw new ThisIsNotACharityException();
 		}
 		if (followedCharities.indexOf(charity.getEin()) == 0) {
 			throw new UnableToDeFollowThisCharityException();
 		}
+		
 		String temp = charity.getEin(); // redo
 		followedCharities = followedCharities.replace(temp.trim(), ""); // redo
 		followedCharities.trim();
@@ -192,10 +191,10 @@ public class UserD implements UserDetails {
 		return charities;
 	}
 	
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
