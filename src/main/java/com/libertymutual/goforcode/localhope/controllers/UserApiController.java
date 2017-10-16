@@ -24,20 +24,19 @@ public class UserApiController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
-	// private PasswordEncoder encoder;
 
-	// add: PasswordEncoder encoder as parameter
 	public UserApiController(NeedRepository needRepository, UserRepository userRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 	}
+	
 	
 	@GetMapping("{userid}")
 	public UserD getOneUser(@PathVariable long userid) {
 		return userRepository.findOne(userid); 
 	}
 
-	// associates a need with a dogooder once button is clicked
+	// Associates a need with a DoGooder
 	@PostMapping("need/{userid}")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need) {
 		UserD user = userRepository.findOne(userid);
