@@ -22,6 +22,7 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -67,7 +68,7 @@ public class UserD implements UserDetails {
 	@Column(length = 100, nullable = false)
 	private String email;
 
-	@Column(nullable = false)
+	@Column(name="role_name", nullable = false)
 	private String isCharity;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
@@ -111,9 +112,9 @@ public class UserD implements UserDetails {
 	}
 
 	// List<Need> needs
-	public UserD(Long id, String username, String password, String roleName, String isCharity, String firstName,
+	public UserD(Long id, String username, String password, String isCharity, String firstName,
 			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
-			String email, String role, String donationPreferences, String charityPreference, String followedCharities, String followers, 
+			String email, String donationPreferences, String charityPreference, String followedCharities, String followers, 
 			String charityName, String ein, String charityUserRole, String charityType) {
 
 		this.id = id;
@@ -140,8 +141,6 @@ public class UserD implements UserDetails {
 		this.charityUserRole = charityUserRole;
 		this.charityType = charityType;
 
-		roles = new ArrayList<UserRole>();
-		roles.add(new UserRole(roleName, this));
 	}
 
 	
@@ -383,11 +382,10 @@ public class UserD implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-		List<String> roleNames = roles.stream().map(userRole -> "ROLE_" + userRole.getName())
-				.collect(Collectors.toList());
+		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
+		roles.add(new SimpleGrantedAuthority("ROLE_" + isCharity));
 
-		String authorityString = String.join(",", roleNames);
-		return AuthorityUtils.commaSeparatedStringToAuthorityList(authorityString);
+		return roles;
 	}
 
 	@Override
