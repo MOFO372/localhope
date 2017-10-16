@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.models.UserRole;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -55,6 +56,7 @@ public class SessionController {
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		user.setPassword(encryptedPassword);
+		user.setFollowedCharities("");
 
 		ModelAndView mv = new ModelAndView();
 		try {
