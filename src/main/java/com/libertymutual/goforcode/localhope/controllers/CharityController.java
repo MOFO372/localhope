@@ -29,39 +29,31 @@ public class CharityController {
 
 	}
 
-
-	// Associate a newly-created Need with a Charity & display all Needs for this Charity 
+	// Associate a newly-created Need with a Charity & display all Needs for this
+	// Charity
 	@PostMapping("charity/{userid}") // this is the ID of the charity
 	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
-		
+
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.save(need);
-						
-		user.addNeed(need);		
+
+		user.addNeed(need);
 		userRepository.save(user);
 		return user.getNeeds();
 	}
-		
 
-	 @GetMapping("charity/{userid}")
-	 public List<Need> addCharityNeed(@PathVariable long userid) {
-	 UserD user = userRepository.findOne(userid);
-	 return user.getNeeds();
-	 }
-	 
-	 
-	 // Provide a list of all users who have followed the charity
-	 @GetMapping("followers/{charityid}")
-	 public List<UserD> listFollowers(@PathVariable long charityid) {
-		 System.out.println("You gave me id " + charityid);
-		 
-		 UserD charity = userRepository.findOne(charityid);
-		 System.out.println("You found this user " + charity.getCharityName());
-		 
-		 List<UserD> followers = charity.listFollowers(userRepository);
-		 System.out.println("You have these followers " + followers);
-		 
-		 return followers;
-	 }
+	@GetMapping("charity/{userid}")
+	public List<Need> addCharityNeed(@PathVariable long userid) {
+		UserD user = userRepository.findOne(userid);
+		return user.getNeeds();
+	}
+
+	// Provide a list of all users who have followed the charity
+	@GetMapping("followers/{charityid}")
+	public List<UserD> listFollowers(@PathVariable long charityid) {
+		UserD charity = userRepository.findOne(charityid);
+		List<UserD> followers = charity.listFollowers(userRepository);
+		return followers;
+	}
 
 }

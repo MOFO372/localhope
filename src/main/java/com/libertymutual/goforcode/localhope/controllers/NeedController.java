@@ -43,6 +43,7 @@ public class NeedController {
 	@PostMapping("needstatus/{needid}") 
 	public String resetNeedMetStatus(@PathVariable long needid, @RequestBody long id) {				
 		Need need = needRepository.findOne(needid);		
+		// To be possibly used later if we want to return a list of needs the user has filled
 		UserD user = userRepository.findOne(id);
 		
 		need.setNeedMet(!need.getNeedMet());			

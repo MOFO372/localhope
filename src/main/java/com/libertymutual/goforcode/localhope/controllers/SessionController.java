@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
-import com.libertymutual.goforcode.localhope.models.UserRole;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -45,10 +44,9 @@ public class SessionController {
 		return mv;
 	}
 
-	
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds() {
-		return needRepository.findByNeedMet(false); 
+		return needRepository.findByNeedMet(false);
 	}
 
 	@PostMapping("registration")
@@ -56,8 +54,8 @@ public class SessionController {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
-		user.setPassword(encryptedPassword);	
-		
+		user.setPassword(encryptedPassword);
+
 		try {
 			userRepository.save(user);
 			return user;
@@ -65,8 +63,6 @@ public class SessionController {
 			System.out.println("there was an error");
 			return null;
 		}
-		
-		
 	}
 
 	@PostMapping("sessions")
