@@ -3,7 +3,6 @@ package com.libertymutual.goforcode.localhope.models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -168,6 +166,7 @@ public class UserD implements UserDetails {
 		followedCharities.trim();
 	}
 
+	
 	// Add a DoGooder to the list of a charity's followers
 	public void addFollowers(UserD user) throws ThisIsNotAUserException {
 		if (!user.getIsCharity().equals("User")) {
@@ -176,6 +175,7 @@ public class UserD implements UserDetails {
 		followers += " " + user.getUsername();
 		followers.trim();
 	}
+	
 	
 	// Remove a Charity from the list of followed charities
 	public void removeFollowedCharity(UserD charity)
@@ -193,6 +193,7 @@ public class UserD implements UserDetails {
 		followedCharities.trim();
 	}
 
+	
 	// Returns an ArrayList populated with Users who have followed this charity 
 	public ArrayList<UserD> listFollowers(UserRepository userRepository)  {				
 		String[] userNames = followers.trim().split("\\s+");
@@ -206,12 +207,14 @@ public class UserD implements UserDetails {
 		return users;
 	}
 	
+	
 	// Returns an ArrayList populated with EINs from the followedCharities Strings 
 	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository)  {		
 		String[] charityNames = followedCharities.trim().split("\\s+");		
 		ArrayList<UserD> charities = new ArrayList<UserD>(); 
 		
 		for(int i = 0; i < charityNames.length; i++) {
+			// For a DoGooder who is not following any Charities - return [] 
 			if (charityNames[i].length() > 0) {
 				charities.add(userRepository.findByEin(charityNames[i]));	
 			}

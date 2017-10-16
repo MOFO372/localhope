@@ -1,6 +1,8 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+
 import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +33,19 @@ public class NeedController {
 
 	}
 
-	// Get a Need
+	// Get a Need, by id
 	@GetMapping("need/{needid}")
 	public Need listANeed(@PathVariable long needid) {
 		return needRepository.findOne(needid);	
 	}
 		
-		
+	
+	// Get all unfulfilled needs 
+	@GetMapping("dogooder")
+	public List<Need> getAllNeeds() {
+		return needRepository.findByNeedMet(false);
+	}	
+	
 	
 	// Change the needMet status of a Need to its opposite  
 	@PostMapping("needstatus/{needid}") 
@@ -59,6 +67,7 @@ public class NeedController {
 		need.setId(needid);
 		return needRepository.save(need);	
 	}
+	
 	
 	// Delete a Need
 	@DeleteMapping("deleteneed/{needid}")

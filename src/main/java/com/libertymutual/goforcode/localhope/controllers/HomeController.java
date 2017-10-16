@@ -30,12 +30,14 @@ public class HomeController {
 		this.userRepository = userRepository;
 	}
 
+	
 	// show all charities
 	@GetMapping("")
 	public List<UserD> getAll() {
 		return userRepository.findAll();
 	}
 
+	
 	@PostMapping("need/{userid}")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need) {
 		UserD user = userRepository.findOne(userid);
@@ -45,6 +47,7 @@ public class HomeController {
 		return user;
 	}
 
+	
 	@GetMapping("charity")
 	public List<UserD> getCharities() {
 		return userRepository.findByIsCharity("Charity");

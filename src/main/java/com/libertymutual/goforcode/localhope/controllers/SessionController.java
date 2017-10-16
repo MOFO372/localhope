@@ -46,10 +46,6 @@ public class SessionController {
 		return mv;
 	}
 
-	@GetMapping("dogooder")
-	public List<Need> getAllNeeds() {
-		return needRepository.findByNeedMet(false);
-	}
 
 	@PostMapping("registration")
 	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException {
