@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.ThisIsNotACharityException;
+import com.libertymutual.goforcode.localhope.models.ThisIsNotADogooderException;
 import com.libertymutual.goforcode.localhope.models.ThisIsNotAUserException;
 import com.libertymutual.goforcode.localhope.models.UnableToDeFollowThisCharityException;
 import com.libertymutual.goforcode.localhope.models.UserD;
@@ -60,7 +61,6 @@ public class UserApiController {
 
 	
 	// Dis-associates the DoGooder with a Charity (by way of removing the EIN in a DoGooder followCharity property)
-	// remove the association
 	@PostMapping("unfollowcharity/{dogooderid}")
 	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
@@ -84,5 +84,22 @@ public class UserApiController {
 		UserD user = userRepository.findOne(dogooderid);
 		List<UserD> followedCharities = user.listFollowedCharities(userRepository);
 		return followedCharities;
+	}
+	
+	// Compare ZIP of a DoGooder and a Charity
+	@PostMapping("zip/{dogooderid}")
+	public boolean compareZips(@PathVariable long dogooderid, @RequestBody long charityid) 
+			throws ThisIsNotACharityException, ThisIsNotADogooderException {
+		
+		UserD user    = userRepository.findOne(dogooderid);
+		UserD charity = userRepository.findOne(charityid);	
+		
+		if (!charity.getIsCharity().equals("Charity")) {
+			throw new ThisIsNotACharityException();
+		}
+		if (user.getIsCharity().equals("Charity")) {
+			throw new ThisIsNotADogooderException();
+		}				
+		return user.getZipCode().equals(charity.getZipCode());
 	}
 }

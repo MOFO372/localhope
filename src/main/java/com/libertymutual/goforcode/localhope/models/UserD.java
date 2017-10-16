@@ -173,8 +173,7 @@ public class UserD implements UserDetails {
 	public void addFollowers(UserD user) throws ThisIsNotAUserException {
 		if (!user.getIsCharity().equals("User")) {
 			throw new ThisIsNotAUserException();
-		}
-		
+		}		
 		followers += " " + user.getUsername();
 		followers.trim();
 	}
