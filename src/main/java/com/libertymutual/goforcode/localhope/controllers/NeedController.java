@@ -63,7 +63,10 @@ public class NeedController {
 	// Update a Need
 	@PutMapping("updateneed/{needid}")
 	public Need update(@RequestBody Need need, @PathVariable long needid) {
+		Need thisNeed = needRepository.findOne(needid);
+		List<UserD> thisUser = thisNeed.getUsers();
 		need.setId(needid);
+		need.setUsers(thisUser);
 		return needRepository.save(need);	
 	}
 	
