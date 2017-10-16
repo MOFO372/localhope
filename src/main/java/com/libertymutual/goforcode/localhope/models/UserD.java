@@ -83,7 +83,7 @@ public class UserD implements UserDetails {
 	
 	// Followed Charities   
 	@Column
-	private String followedCharities;
+	private String followedCharities= "";
 	
 	// Followers
 	@Column
