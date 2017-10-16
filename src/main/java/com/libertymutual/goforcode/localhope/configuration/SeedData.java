@@ -105,7 +105,7 @@ public class SeedData {
 	            "", 
 	            // charity preferences (do-gooders only)
 	            "", 
-	            // followed charities (do-gooders only)    
+	            // followed charities (do-gooders only)         
 	            "01-1234111", 
 	            // followers (charities only)    
 	            "", 
@@ -280,7 +280,7 @@ public class SeedData {
 			    // charity name (charities only)
 			    "ABC H", 
 			    // ein (charities only)
-			    "01-1234111", 
+			    "01-1234110",                                 // AK
 			    // charity user role (charities only)
 			    "Assistant", 
 			    // charity type (charities only)

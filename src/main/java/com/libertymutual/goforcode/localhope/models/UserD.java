@@ -200,6 +200,7 @@ public class UserD implements UserDetails {
 		ArrayList<UserD> users = new ArrayList<UserD>(); 
 		
 		for(int i = 0; i < userNames.length; i++) {
+							System.out.println(userRepository.findByUsername(userNames[i]));
 			users.add(userRepository.findByUsername(userNames[i]));
 		}
 		return users;
@@ -211,7 +212,9 @@ public class UserD implements UserDetails {
 		ArrayList<UserD> charities = new ArrayList<UserD>(); 
 		
 		for(int i = 0; i < charityNames.length; i++) {
-			charities.add(userRepository.findByEin(charityNames[i]));	
+			if (charityNames[i].length() > 0) {
+				charities.add(userRepository.findByEin(charityNames[i]));	
+			}
 		}
 		return charities;
 	}
