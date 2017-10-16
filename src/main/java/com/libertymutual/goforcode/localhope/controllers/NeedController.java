@@ -61,7 +61,7 @@ public class NeedController {
 	
 	// Delete a Need
 	@DeleteMapping("deleteneed/{needid}")
-	public void delete(@RequestBody Need need, @PathVariable long needid) {
+	public void delete(@PathVariable long needid) {
 		needRepository.delete(needid);	
 	}
 		
