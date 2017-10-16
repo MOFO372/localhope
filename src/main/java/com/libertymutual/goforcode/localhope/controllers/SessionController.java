@@ -56,8 +56,10 @@ public class SessionController {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
-		user.setPassword(encryptedPassword);		
-
+		user.setPassword(encryptedPassword);	
+		
+		
+		
 		ModelAndView mv = new ModelAndView();
 		try {
 			userRepository.save(user);
@@ -67,6 +69,8 @@ public class SessionController {
 			mv.addObject("errorMessage", "Cannot register that username");
 			return null;
 		}
+		
+		
 	}
 
 	@PostMapping("sessions")

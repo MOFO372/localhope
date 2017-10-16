@@ -29,8 +29,6 @@ public class SeedData {
         		"PeterTheGreat2", 
         	// password	
         		encoder.encode("password"), 
-        	// role	
-        		"USER", 
         	// user type	
         		"Charity", 
         	// first name	
@@ -49,8 +47,6 @@ public class SeedData {
 	            "(206) 333-4444", 
 	        // email    
 	            "find.me@if.you.can", 
-	        // role?    
-	            "Redund", 
 	        // donation preferences (do-gooders only)
 	            "", 
 	        // charity preferences (do-gooders only)       
@@ -87,8 +83,6 @@ public class SeedData {
 				"ActuallyJasmine", 
 				// password	
 				encoder.encode("jasmine"), 
-				// role	 
-				"USER", 
 				// user type	
 				"User", 
 				// first name	
@@ -107,8 +101,6 @@ public class SeedData {
 	            "(501) 529-0281", 
 	            // email     
 	            "find.me@if.you.can", 
-	            // role?     
-	            "Redund", 
 	            // donation preferences (do-gooders only)
 	            "", 
 	            // charity preferences (do-gooders only)
@@ -132,8 +124,6 @@ public class SeedData {
 				"Mofo", 
 				// password				
 				encoder.encode("bitch"), 
-				// role					
-				"USER", 
 				// user type				
 				"User", 
 				// first name				
@@ -152,8 +142,6 @@ public class SeedData {
 	            "(206) 218-2753", 
 	    	    // email	            
 	            "find.me@if.you.can", 
-	    	    // role?	            
-	            "Redund", 
 	    	    // donation preferences (do-gooders only)	            
 	            "", 
 	    	    // charity preferences (do-gooders only)	            
@@ -177,8 +165,6 @@ public class SeedData {
 				"Victor", 
 				// password		
 				encoder.encode("password"), 
-				// role	 
-				"USER", 
 				// user type	
 				"User", 
 				// first name	
@@ -197,8 +183,6 @@ public class SeedData {
 	            "(206) 333-4444", 
 	            // email     
 			    "find.me@if.you.can", 
-			    // role?     
-			    "Redund", 
 			    // donation preferences (do-gooders only)
 			    "", 
 			    // charity preferences (do-gooders only)       
@@ -222,8 +206,6 @@ public class SeedData {
 				"Looser", 
 				// password	
 				encoder.encode("password"), 
-				// role	 
-				"USER", 
 				// user type	
 				"User", 
 				// first name	
@@ -242,8 +224,6 @@ public class SeedData {
 	            "(206) 333-4444", 
 	            // email     
 			    "find.me@if.you.can", 
-			    // role?     
-			    "Redund", 
 			    // donation preferences (do-gooders only)
 			    "",
 			    // charity preferences (do-gooders only)       
@@ -271,8 +251,6 @@ public class SeedData {
 				"John", 
 				// password	
 				encoder.encode("password"), 
-				// role	
-				"USER", 
 				// user type	
 				"Charity", 
 				// first name	
@@ -291,8 +269,6 @@ public class SeedData {
 			    "(206) 333-4444", 
 			    // email     
 			    "find.me@if.you.can", 
-			    // role?     
-			    "Redund", 
 			    // donation preferences (do-gooders only)
 			    "", 
 			    // charity preferences (do-gooders only)       
@@ -317,8 +293,6 @@ public class SeedData {
 				"PeterTheGreat", 
 				// password	
 				encoder.encode("password"), 
-				// role	 
-				"USER", 
 				// user type	
 				"Charity", 
 				// first name	
@@ -337,8 +311,6 @@ public class SeedData {
 	            "(206) 333-4444", 
 	            // email     
 			    "find.me@if.you.can", 
-			    // role?     
-			    "Redund", 
 			    // donation preferences (do-gooders only)
 			    "", 
 			    // charity preferences (do-gooders only)       
@@ -362,8 +334,6 @@ public class SeedData {
 				"PeterTheThird", 
 				// password	
 				encoder.encode("password"), 
-				// role	 
-				"USER", 
 				// user type	
 				"Charity", 
 				// first name	
@@ -382,8 +352,6 @@ public class SeedData {
 	            "(206) 333-4444", 
 	            // email     
 			    "find.me@if.you.can", 
-			    // role?     
-			    "Redund", 
 			    // donation preferences (do-gooders only)
 			    "", 
 			    // charity preferences (do-gooders only)       
@@ -407,8 +375,6 @@ public class SeedData {
 				"NotPeter", 
 				// password
 				encoder.encode("password"), 
-				// role	 
-				"USER", 
 				// user type	
 				"Charity", 
 				// first name	
@@ -427,8 +393,6 @@ public class SeedData {
 			    "(206) 333-4444", 
 			    // email     
 			    "find.me@if.you.can", 
-			    // role?     
-			    "Redund", 
 			    // donation preferences (do-gooders only)
 			    "", 
 			    // charity preferences (do-gooders only)       
