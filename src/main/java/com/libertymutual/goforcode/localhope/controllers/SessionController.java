@@ -58,15 +58,11 @@ public class SessionController {
 		String encryptedPassword = encoder.encode(password);
 		user.setPassword(encryptedPassword);	
 		
-		
-		
-		ModelAndView mv = new ModelAndView();
 		try {
 			userRepository.save(user);
 			return user;
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");
-			mv.addObject("errorMessage", "Cannot register that username");
 			return null;
 		}
 		
