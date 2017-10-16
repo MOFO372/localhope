@@ -2,6 +2,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.libertymutual.goforcode.localhope.models.Need;
+import com.libertymutual.goforcode.localhope.models.ThisIsNotACharityException;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.models.YouCannotDeleteThisNeedException;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -69,9 +72,42 @@ public class NeedController {
 	
 	
 	// Delete a Need
+//	@DeleteMapping("deleteneed/{needid}")
+//	public void delete(@PathVariable long needid) {
+//		needRepository.delete(needid);	
+//	}
+
+	
+	// Delete a Need   
 	@DeleteMapping("deleteneed/{needid}")
-	public void delete(@PathVariable long needid) {
-		needRepository.delete(needid);	
-	}
-		
+	public void deleteA(@PathVariable long needid, @RequestBody long userid) throws YouCannotDeleteThisNeedException {
+		Need  need = needRepository.findOne(needid);
+
+		if (userid != need.getUsers().get(0).getId()) {
+			throw new YouCannotDeleteThisNeedException();};
+				
+		try{needRepository.delete(needid);	
+		} catch (EmptyResultDataAccessException err) {
+			System.out.println("You cannot delete a Need you did not create.");
+		}
+			
+	}	
+	
+	
+	
+	
+//	@DeleteMapping("deleteneed/{needid}")
+//	public void delete(@PathVariable long needid) throws YouCannotDeleteThisNeedException {
+//		Need  need = needRepository.findOne(needid);	
+//	
+//		
+////		System.out.println(" "  + need.getUsers().get(0).getId()); 
+////		
+////		
+////		if (needid != need.getUsers().get(0).getId()) {
+////			throw new YouCannotDeleteThisNeedException();
+////		};
+//				
+//		needRepository.delete(needid);	
+//	}
 }
