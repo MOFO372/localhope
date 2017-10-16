@@ -2,7 +2,6 @@ package com.libertymutual.goforcode.localhope.configuration;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -62,7 +61,7 @@ public class SeedData {
 	        // charity user role (charities only)    
 	            "Assistant", 
 	        // charity type (charities only)    
-        		"civic"));
+        		"Human Rights"));
               
         
         ArrayList<UserD> users = new ArrayList<UserD>(); 
@@ -90,17 +89,17 @@ public class SeedData {
 				// last name	
 				"Stotts", 
 				// address	
-				"321 Pine", 
+				"530 Broadway East", 
 				// city	 
 				"Seattle", 
 				// state	
 				"WA", 
 				// zip	
-				"98191",
+				"98102",
 				// phone ***verified in Twilio***
 	            "(501) 529-0281", 
 	            // email     
-	            "find.me@if.you.can", 
+	            "jasmine@if.you.can", 
 	            // donation preferences (do-gooders only)
 	            "", 
 	            // charity preferences (do-gooders only)
@@ -131,17 +130,17 @@ public class SeedData {
 				// last name				
 				"Fakey", 
 				// address				
-				"321 Pine", 
+				"6034 Palatine Ave N", 
 				// city					
 				"Seattle", 
 				// state				
 				"WA", 
 				// zip	
-				"98195",
+				"98103",
 				// phone ***verified in Twilio***				
 	            "(206) 218-2753", 
 	    	    // email	            
-	            "find.me@if.you.can", 
+	            "rachel@if.you.can", 
 	    	    // donation preferences (do-gooders only)	            
 	            "", 
 	    	    // charity preferences (do-gooders only)	            
@@ -168,21 +167,21 @@ public class SeedData {
 				// user type	
 				"User", 
 				// first name	
-				"Peter", 
+				"Seth", 
 				// last name	
-				"Alson", 
+				"Slaughter", 
 				// address	
-				"321 Pine", 
+				"516 High Street", 
 				// city	 
 				"Seattle", 
 				// state	
 				"WA", 
 				// zip	
-				"98195",
+				"98225",
 				// phone 
 	            "(206) 333-4444", 
 	            // email     
-			    "find.me@if.you.can", 
+			    "seth@if.you.can", 
 			    // donation preferences (do-gooders only)
 			    "", 
 			    // charity preferences (do-gooders only)       
@@ -213,13 +212,13 @@ public class SeedData {
 				// last name	
 				"Alson", 
 				// address	
-				"321 Pine", 
+				"6211 77th Ave SE", 
 				// city	 
-				"Seattle", 
+				"Mercer Island", 
 				// state	
 				"WA", 
 				// zip	
-				"98195",
+				"98040",
 				// phone 
 	            "(206) 333-4444", 
 	            // email     
@@ -284,7 +283,7 @@ public class SeedData {
 			    // charity user role (charities only)
 			    "Assistant", 
 			    // charity type (charities only)
-				"health"));	
+				"Health"));	
 		    
 		
 		//added to needs seed data
@@ -326,7 +325,7 @@ public class SeedData {
 			    // charity user role (charities only)    
 			    "Assistant", 
 			    // charity type (charities only)
-			    "civic"));	
+			    "Human Rights"));	
 
 
 		userRepository.save(new UserD(14L, 
@@ -367,7 +366,7 @@ public class SeedData {
 			    // charity user role (charities only)    
 			    "Assistant", 
 			    // charity type (charities only)    
-				"civic"));	
+				"Human Rights"));	
 				    
 			    
 		userRepository.save(new UserD(15L, 
@@ -408,10 +407,129 @@ public class SeedData {
 			    // charity user role (charities only)    
 			    "Assistant", 
 			    // charity type (charities only)    
-				"education"));	
+				"Education"));	
 		
 					
-			    				
+			    // actual live charities
+		userRepository.save(new UserD(99L, 
+				// username	
+				"Cancer", 
+				// password	
+				encoder.encode("password"), 
+				// user type	
+				"Charity", 
+				// first name	
+				"Chad", 
+				// last name
+				"Chase", 
+				// address	
+				"1425 Broadway, Ste 260", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98122",
+				// phone 
+			    "(206) 867-5309", 
+			    // email     
+			    "acs@if.you.can", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)
+			    "",
+			    // followers (charities only)
+			    "", 
+			    // charity name (charities only)
+			    "American Cancer Society", 
+			    // ein (charities only)
+			    "81-4392579",                                 // AK
+			    // charity user role (charities only)
+			    "Assistant", 
+			    // charity type (charities only)
+				"Health"));	
+
+		userRepository.save(new UserD(98L, 
+				// username	
+				"Puppies", 
+				// password	
+				encoder.encode("password"), 
+				// user type	
+				"Charity", 
+				// first name	
+				"Doug", 
+				// last name
+				"Doggo", 
+				// address	
+				"371 Williamson Way", 
+				// city	 
+				"Bellingham", 
+				// state	
+				"WA", 
+				// zip	
+				"98226",
+				// phone 
+			    "(206) 867-5309", 
+			    // email     
+			    "puppies@if.you.can", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)
+			    "",
+			    // followers (charities only)
+			    "", 
+			    // charity name (charities only)
+			    "Whatcom Humane Society", 
+			    // ein (charities only)
+			    "91-0677564",                                 
+			    // charity user role (charities only)
+			    "Puppy Wrangler", 
+			    // charity type (charities only)
+				"Animals"));	
+		
+		userRepository.save(new UserD(97L, 
+				// username	
+				"Smart", 
+				// password	
+				encoder.encode("password"), 
+				// user type	
+				"Charity", 
+				// first name	
+				"Ms", 
+				// last name
+				"Teacher", 
+				// address	
+				"4701 Southwest Admiral Way, Box 149", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98116",
+				// phone 
+			    "(206) 867-5309", 
+			    // email     
+			    "smart@if.you.can", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)
+			    "",
+			    // followers (charities only)
+			    "", 
+			    // charity name (charities only)
+			    "Education First", 
+			    // ein (charities only)
+			    "91-1699248",                                 
+			    // charity user role (charities only)
+			    "Teacher", 
+			    // charity type (charities only)
+				"Education"));
 	}
 }
 
