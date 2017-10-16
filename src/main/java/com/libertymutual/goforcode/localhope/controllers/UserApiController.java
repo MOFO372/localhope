@@ -37,7 +37,8 @@ public class UserApiController {
 		return userRepository.findOne(userid); 
 	}
 
-	// Associates a need with a DoGooder
+	
+	// Associates a Need with a DoGooder
 	@PostMapping("need/{userid}")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need) {
 		UserD user = userRepository.findOne(userid);
@@ -48,6 +49,7 @@ public class UserApiController {
 		return user;
 	}
 
+	
 	// Associates the DoGooder with a Charity (by way of placing the EIN in a DoGooder followCharity property)
 	@PostMapping("followcharity/{dogooderid}")
 	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid) throws ThisIsNotACharityException, ThisIsNotAUserException, FollowUniqueCharitiesOnlyException {		
@@ -60,7 +62,7 @@ public class UserApiController {
 	}
 
 	
-	// Dis-associates the DoGooder with a Charity (by way of removing the EIN in a DoGooder followCharity property)
+	// Dis-associates the DoGooder from a Charity (by way of removing the EIN in a DoGooder followCharity property)
 	@PostMapping("unfollowcharity/{dogooderid}")
 	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
@@ -78,6 +80,7 @@ public class UserApiController {
 		return userRepository.save(user);
 	}
 	
+	
 	@GetMapping("followedcharities/{dogooderid}")
 	public List<UserD> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
 			throws ThisIsNotACharityException {
@@ -85,6 +88,7 @@ public class UserApiController {
 		List<UserD> followedCharities = user.listFollowedCharities(userRepository);
 		return followedCharities;
 	}
+	
 	
 	// Compare ZIP of a DoGooder and a Charity
 	@PostMapping("zip/{dogooderid}")
