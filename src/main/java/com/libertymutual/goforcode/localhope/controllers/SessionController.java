@@ -1,5 +1,6 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -55,8 +56,7 @@ public class SessionController {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
-		user.setPassword(encryptedPassword);
-		user.setFollowedCharities("");
+		user.setPassword(encryptedPassword);		
 
 		ModelAndView mv = new ModelAndView();
 		try {
