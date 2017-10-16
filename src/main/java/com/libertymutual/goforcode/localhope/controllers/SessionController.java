@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
 import com.libertymutual.goforcode.localhope.models.Need;
+import com.libertymutual.goforcode.localhope.models.UniqueEinForCharitiesException;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.models.UserRole;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
@@ -52,20 +54,20 @@ public class SessionController {
 	}
 
 	@PostMapping("registration")
-	public UserD register(@RequestBody UserD user, HttpServletResponse response) {
+	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		user.setPassword(encryptedPassword);	
-		
-		
-		
+		// Uniqueness request		
 		ModelAndView mv = new ModelAndView();
 		try {
+			if (user.getEin() != null && !user.getEin().isEmpty() && userRepository.findByEin(user.getEin()) != null) {
+				throw new UniqueEinForCharitiesException();
+			}
 			userRepository.save(user);
 			return user;
 		} catch (DataIntegrityViolationException dive) {
-			System.out.println("there was an error");
 			mv.addObject("errorMessage", "Cannot register that username");
 			return null;
 		}
