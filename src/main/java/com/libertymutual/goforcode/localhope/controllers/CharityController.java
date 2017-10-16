@@ -36,15 +36,12 @@ public class CharityController {
 		
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.save(need);
-				
-		
+						
 		user.addNeed(need);		
 		userRepository.save(user);
 		return user.getNeeds();
 	}
-	
-	
-	
+		
 
 	 @GetMapping("charity/{userid}")
 	 public List<Need> addCharityNeed(@PathVariable long userid) {
@@ -52,7 +49,8 @@ public class CharityController {
 	 return user.getNeeds();
 	 }
 	 
-// Provide a list of all users who have followed the charity
+	 
+	 // Provide a list of all users who have followed the charity
 	 @GetMapping("followers/{charityid}")
 	 public List<UserD> listFollowers(@PathVariable long charityid) {
 		 System.out.println("You gave me id " + charityid);

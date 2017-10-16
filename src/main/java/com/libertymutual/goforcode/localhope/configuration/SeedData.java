@@ -44,7 +44,7 @@ public class SeedData {
         	// state	
         		"WA", 
         	// zip	
-        		"98195",
+        		"98191",
         	// phone
 	            "(206) 333-4444", 
 	        // email    
@@ -102,7 +102,7 @@ public class SeedData {
 				// state	
 				"WA", 
 				// zip	
-				"98195",
+				"98191",
 				// phone ***verified in Twilio***
 	            "(501) 529-0281", 
 	            // email     
