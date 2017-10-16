@@ -2,6 +2,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,12 @@ public class NeedController {
 	public Need update(@RequestBody Need need, @PathVariable long needid) {
 		need.setId(needid);
 		return needRepository.save(need);	
+	}
+	
+	// Delete a Need
+	@DeleteMapping("deleteneed/{needid}")
+	public void delete(@RequestBody Need need, @PathVariable long needid) {
+		needRepository.delete(needid);	
 	}
 		
 }
