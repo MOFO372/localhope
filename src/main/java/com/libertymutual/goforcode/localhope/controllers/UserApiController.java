@@ -19,6 +19,7 @@ import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
+
 @RestController
 @RequestMapping("user")
 public class UserApiController {
@@ -31,24 +32,24 @@ public class UserApiController {
 		this.userRepository = userRepository;
 	}
 
+	
 	@GetMapping("{userid}")
 	public UserD getOneUser(@PathVariable long userid) {
 		return userRepository.findOne(userid);
 	}
 
+	
 	// Associates a Need with a DoGooder
 	@PostMapping("need/{userid}")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need) {
 		UserD user = userRepository.findOne(userid);
 		need = needRepository.findOne(need.getId());
 		user.addNeed(need);
-		// userRepository.save(user);
 		needRepository.save(need);
 		return user;
 	}
 
-	// Associates the DoGooder with a Charity (by way of placing the EIN in a
-	// DoGooder followCharity property)
+	// Associates the DoGooder with a Charity (by placing the EIN in DoGooder followCharity property)
 	@PostMapping("followcharity/{dogooderid}")
 	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
 			throws ThisIsNotACharityException, ThisIsNotAUserException, FollowUniqueCharitiesOnlyException {
@@ -60,8 +61,8 @@ public class UserApiController {
 		return user;
 	}
 
-	// Dis-associates the DoGooder from a Charity (by way of removing the EIN in a
-	// DoGooder followCharity property)
+	
+	// Dis-associates the DoGooder from a Charity (by removing the EIN in DoGooder followCharity property)
 	@PostMapping("unfollowcharity/{dogooderid}")
 	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
@@ -73,11 +74,13 @@ public class UserApiController {
 		return user;
 	}
 
+	
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);
 	}
 
+	
 	@GetMapping("followedcharities/{dogooderid}")
 	public List<UserD> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
 			throws ThisIsNotACharityException {
@@ -86,6 +89,7 @@ public class UserApiController {
 		return followedCharities;
 	}
 
+	
 	// Compare ZIP of a DoGooder and a Charity
 	@PostMapping("zip/{dogooderid}")
 	public boolean compareZips(@PathVariable long dogooderid, @RequestBody long charityid)

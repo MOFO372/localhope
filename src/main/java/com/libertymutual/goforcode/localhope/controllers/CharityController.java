@@ -29,24 +29,13 @@ public class CharityController {
 
 	}
 
-	// Associate a newly-created Need with a Charity & display all Needs for this
-	// Charity
-	@PostMapping("charity/{userid}") // this is the ID of the charity
-	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
-
-		UserD user = userRepository.findOne(userid);
-		need = needRepository.save(need);
-
-		user.addNeed(need);
-		userRepository.save(user);
-		return user.getNeeds();
-	}
-
+	
 	@GetMapping("charity/{userid}")
 	public List<Need> addCharityNeed(@PathVariable long userid) {
 		UserD user = userRepository.findOne(userid);
 		return user.getNeeds();
 	}
+	
 
 	// Provide a list of all users who have followed the charity
 	@GetMapping("followers/{charityid}")
@@ -55,5 +44,19 @@ public class CharityController {
 		List<UserD> followers = charity.listFollowers(userRepository);
 		return followers;
 	}
+
+	
+	
+	// Associate a newly-created Need with a Charity & display all Needs for this
+	@PostMapping("charity/{userid}") // this is the ID of the charity
+	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
+		UserD user = userRepository.findOne(userid);
+		need = needRepository.save(need);
+
+		user.addNeed(need);
+		userRepository.save(user);
+		return user.getNeeds();
+	}
+
 
 }
