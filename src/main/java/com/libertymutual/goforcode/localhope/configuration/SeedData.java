@@ -18,12 +18,55 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 @Profile("development")
 public class SeedData {
 	
-	// , PasswordEncoder encoder
+	// PasswordEncoder encoder
 	public SeedData(UserRepository userRepository, NeedRepository needRepository, PasswordEncoder encoder) {
 	
-        UserD user1 = new UserD();         
-        user1 = userRepository.save(new UserD(13L, "PeterTheGreat2", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "Civic-1", "01-1234777", "Assistant", "civic"));
+        UserD user1 = new UserD();
+    
+    // why is this one separate from the rest?
+        user1 = userRepository.save(new UserD(13L,
+        	// username
+        		"PeterTheGreat2", 
+        	// password	
+        		encoder.encode("password"), 
+        	// role	
+        		"USER", 
+        	// user type	
+        		"Charity", 
+        	// first name	
+        		"Peter", 
+        	// last name	
+        		"Alson", 
+        	// address	
+        		"321 Pine", 
+        	// city	
+        		"Seattle", 
+        	// state	
+        		"WA", 
+        	// zip	
+        		"98195",
+        	// phone
+	            "(206) 333-4444", 
+	        // email    
+	            "find.me@if.you.can", 
+	        // role?    
+	            "Redund", 
+	        // donation preferences (do-gooders only)
+	            "", 
+	        // charity preferences (do-gooders only)       
+	            "", 
+	        // followed charities (do-gooders only)    
+	            "", 
+	        // followers (charities only)    
+	            "", 
+	        // charity name (charities only)    
+	            "Civic-1", 
+	        // ein (charities only)    
+	            "01-1234777", 
+	        // charity user role (charities only)    
+	            "Assistant", 
+	        // charity type (charities only)    
+        		"civic"));
               
         
         ArrayList<UserD> users = new ArrayList<UserD>(); 
@@ -37,54 +80,374 @@ public class SeedData {
 		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, sqlDate, users));
 		needRepository.save(new Need(3L, "volunteer", true, "We need to deliver them cribs.", 6, sqlDate, users));
 		
+				
+		userRepository.save(new UserD(31L, 
+				
+				// username		
+				"ActuallyJasmine", 
+				// password	
+				encoder.encode("jasmine"), 
+				// role	 
+				"USER", 
+				// user type	
+				"User", 
+				// first name	
+				"Jasmine", 
+				// last name	
+				"Stotts", 
+				// address	
+				"321 Pine", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98195",
+				// phone ***verified in Twilio***
+	            "(501) 529-0281", 
+	            // email     
+	            "find.me@if.you.can", 
+	            // role?     
+	            "Redund", 
+	            // donation preferences (do-gooders only)
+	            "", 
+	            // charity preferences (do-gooders only)
+	            "", 
+	            // followed charities (do-gooders only)    
+	            "01-1234111", 
+	            // followers (charities only)    
+	            "", 
+	            // charity name (charities only)    
+	            "", 
+	            // ein (charities only)	            
+	            "", 
+	            // charity user role (charities only)	            
+	            "", 
+	            // charity type (charities only)    	            
+				""));
+	
 		
-//		Long id, 			String username, String password, 
-//		String roleName, 	
-		// String isCharity, 
-//		String firstName, 	String lastName, String streetAddress, String city, String state, String zipCode, String phone, String email, 
-//		String role,   ?????? 
-//		String donationPreferences, String charityPreference, 	String followedCharities, 
-//		String charityName, 		String ein, 				String charityUserRole, 			String charityType) 
-		
-		userRepository.save(new UserD(31L, "ActuallyJasmine", encoder.encode("jasmine"), "USER", "User", "Jasmine", "Stotts", "321 Pine", "Seattle", "WA", "98195",
-	            "(501) 529-0281", "find.me@if.you.can", "Redund", "", "", "01-1234111", "", "", "", "", ""));
-		
-		userRepository.save(new UserD(32L, "Mofo", encoder.encode("bitch"), "USER", "User", "Rachel", "Fakey", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 218-2753", "find.me@if.you.can", "Redund", "", "", "01-1234111", "", "", "", "", ""));
+		userRepository.save(new UserD(32L, 
+				// username
+				"Mofo", 
+				// password				
+				encoder.encode("bitch"), 
+				// role					
+				"USER", 
+				// user type				
+				"User", 
+				// first name				
+				"Rachel", 
+				// last name				
+				"Fakey", 
+				// address				
+				"321 Pine", 
+				// city					
+				"Seattle", 
+				// state				
+				"WA", 
+				// zip	
+				"98195",
+				// phone ***verified in Twilio***				
+	            "(206) 218-2753", 
+	    	    // email	            
+	            "find.me@if.you.can", 
+	    	    // role?	            
+	            "Redund", 
+	    	    // donation preferences (do-gooders only)	            
+	            "", 
+	    	    // charity preferences (do-gooders only)	            
+	            "", 
+	    	    // followed charities (do-gooders only)	            
+	            "01-1234111", 
+	    	    // followers (charities only)	            
+	            "", 
+	    	    // charity name (charities only)        
+	            "", 
+	    	    // ein (charities only)	            
+	            "", 
+	    	    // charity user role (charities only)	            
+	            "", 
+	    	    // charity type (charities only)	            
+				""));
 
 
-		userRepository.save(new UserD(11L, "Victor", encoder.encode("password"), "USER", "User", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "", "", "", ""));	
+		userRepository.save(new UserD(11L, 
+				// username		
+				"Victor", 
+				// password		
+				encoder.encode("password"), 
+				// role	 
+				"USER", 
+				// user type	
+				"User", 
+				// first name	
+				"Peter", 
+				// last name	
+				"Alson", 
+				// address	
+				"321 Pine", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98195",
+				// phone 
+	            "(206) 333-4444", 
+	            // email     
+			    "find.me@if.you.can", 
+			    // role?     
+			    "Redund", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)    
+			    "", 
+			    // followers (charities only)    
+			    "", 
+			    // charity name (charities only)    
+			    "", 
+			    // ein (charities only)    
+			    "",
+			    // charity user role (charities only)     
+			    "",
+				// charity type (charities only)    
+			    ""));	
+			
+
+		userRepository.save(new UserD(11L, 
+				// username				
+				"Looser", 
+				// password	
+				encoder.encode("password"), 
+				// role	 
+				"USER", 
+				// user type	
+				"User", 
+				// first name	
+				"Alex", 
+				// last name	
+				"Alson", 
+				// address	
+				"321 Pine", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98195",
+				// phone 
+	            "(206) 333-4444", 
+	            // email     
+			    "find.me@if.you.can", 
+			    // role?     
+			    "Redund", 
+			    // donation preferences (do-gooders only)
+			    "",
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)    
+			    "01-1234000 01-1234111 01-1234333", 
+			    // followers (charities only)    
+			    "",  
+			    // charity name (charities only)    
+			    "", 
+			    // ein (charities only)    
+			    "", 
+			    // charity user role (charities only)    
+			    "", 
+			    // charity type (charities only)
+			    ""));	
 		
-		userRepository.save(new UserD(11L, "Looser", encoder.encode("password"), "USER", "User", "Alex", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "01-1234000 01-1234111 01-1234333", "",  "", "", "", ""));	
-		
+
+				    
 		
 		
 		//added to needs seed data
 		userRepository.save(new UserD(12L, 
-			//login name	
+				// username	
 				"John", 
-			//password	
+				// password	
 				encoder.encode("password"), 
-			//role	
+				// role	
 				"USER", 
-			//User or Charity	
-				"Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "ActuallyJasmine", "ABC H", "01-1234111", "Assistant", "health"));	
-		
+				// user type	
+				"Charity", 
+				// first name	
+				"Peter", 
+				// last name
+				"Alson", 
+				// address	
+				"321 Pine", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98195",
+				// phone 
+			    "(206) 333-4444", 
+			    // email     
+			    "find.me@if.you.can", 
+			    // role?     
+			    "Redund", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)
+			    "",
+			    // followers (charities only)
+			    "ActuallyJasmine", 
+			    // charity name (charities only)
+			    "ABC H", 
+			    // ein (charities only)
+			    "01-1234111", 
+			    // charity user role (charities only)
+			    "Assistant", 
+			    // charity type (charities only)
+				"health"));	
+		    
 		
 		//added to needs seed data
-		userRepository.save(new UserD(13L, "PeterTheGreat", encoder.encode("password"), "USER", "Charity", "Peter", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "ActuallyJasmine Mofo", "Civic-1", "01-1234111", "Assistant", "civic"));	
+		userRepository.save(new UserD(13L, 
+				// username				
+				"PeterTheGreat", 
+				// password	
+				encoder.encode("password"), 
+				// role	 
+				"USER", 
+				// user type	
+				"Charity", 
+				// first name	
+				"Peter", 
+				// last name	
+				"Alson", 
+				// address	
+				"321 Pine", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98195",
+				// phone 
+	            "(206) 333-4444", 
+	            // email     
+			    "find.me@if.you.can", 
+			    // role?     
+			    "Redund", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)    
+			    "", 
+			    // followers (charities only)    
+			    "ActuallyJasmine Mofo", 
+			    // charity name (charities only)    
+			    "Civic-1", 
+			    // ein (charities only)
+			    "01-1234111", 
+			    // charity user role (charities only)    
+			    "Assistant", 
+			    // charity type (charities only)
+			    "civic"));	
 
-		userRepository.save(new UserD(14L, "PeterTheThird", encoder.encode("password"), "USER", "Charity", "James", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "Civic-2", "01-1234000", "Assistant", "civic"));	
-	
-		userRepository.save(new UserD(15L, "NotPeter", encoder.encode("password"), "USER", "Charity", "Jay", "Alson", "321 Pine", "Seattle", "WA", "98195",
-	            "(206) 333-4444", "find.me@if.you.can", "Redund", "", "", "", "", "Educ", "01-1234333", "Assistant", "education"));	
-	
+
+		userRepository.save(new UserD(14L, 
+				// username
+				"PeterTheThird", 
+				// password	
+				encoder.encode("password"), 
+				// role	 
+				"USER", 
+				// user type	
+				"Charity", 
+				// first name	
+				"James", 
+				// last name	
+				"Alson", 
+				// address	
+				"321 Pine", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98195",
+				// phone 
+	            "(206) 333-4444", 
+	            // email     
+			    "find.me@if.you.can", 
+			    // role?     
+			    "Redund", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)    
+			    "", 
+			    // followers (charities only)    
+			    "", 
+			    // charity name (charities only)
+			    "Civic-2", 
+			    // ein (charities only)    
+			    "01-1234000", 
+			    // charity user role (charities only)    
+			    "Assistant", 
+			    // charity type (charities only)    
+				"civic"));	
+				    
+			    
+		userRepository.save(new UserD(15L, 
+				// username		
+				"NotPeter", 
+				// password
+				encoder.encode("password"), 
+				// role	 
+				"USER", 
+				// user type	
+				"Charity", 
+				// first name	
+				"Jay", 
+				// last name	
+				"Alson", 
+				// address	
+				"321 Pine", 
+				// city	 
+				"Seattle", 
+				// state	
+				"WA", 
+				// zip	
+				"98195",
+				// phone 
+			    "(206) 333-4444", 
+			    // email     
+			    "find.me@if.you.can", 
+			    // role?     
+			    "Redund", 
+			    // donation preferences (do-gooders only)
+			    "", 
+			    // charity preferences (do-gooders only)       
+			    "", 
+			    // followed charities (do-gooders only)    
+			    "", 
+			    // followers (charities only)    
+			    "", 
+			    // charity name (charities only)    
+			    "Educ", 
+			    // ein (charities only)    
+			    "01-1234333", 
+			    // charity user role (charities only)    
+			    "Assistant", 
+			    // charity type (charities only)    
+				"education"));	
+		
 					
+			    				
 	}
 }
 
