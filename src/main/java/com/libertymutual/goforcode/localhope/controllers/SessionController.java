@@ -20,7 +20,6 @@ import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyExc
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UniqueEinForCharitiesException;
 import com.libertymutual.goforcode.localhope.models.UserD;
-import com.libertymutual.goforcode.localhope.models.UserRole;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -47,10 +46,9 @@ public class SessionController {
 		return mv;
 	}
 
-	
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds() {
-		return needRepository.findByNeedMet(false); 
+		return needRepository.findByNeedMet(false);
 	}
 
 	@PostMapping("registration")
@@ -58,9 +56,8 @@ public class SessionController {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
-		user.setPassword(encryptedPassword);	
-		// Uniqueness is requested		
-		ModelAndView mv = new ModelAndView();
+		user.setPassword(encryptedPassword);
+
 		try {
 			if (user.getEin() != null && !user.getEin().isEmpty() && userRepository.findByEin(user.getEin()) != null) {
 				throw new UniqueEinForCharitiesException();
@@ -68,11 +65,9 @@ public class SessionController {
 			userRepository.save(user);
 			return user;
 		} catch (DataIntegrityViolationException dive) {
-			mv.addObject("errorMessage", "Cannot register that username");
+			System.out.println("there was an error");
 			return null;
 		}
-		
-		
 	}
 
 	@PostMapping("sessions")
