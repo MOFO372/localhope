@@ -93,8 +93,7 @@ public class NeedController {
 		try{needRepository.delete(needid);	
 		} catch (EmptyResultDataAccessException err) {
 			System.out.println("You cannot delete a Need you did not create.");
-		}
-			
+		}			
 	}	
 
 }
