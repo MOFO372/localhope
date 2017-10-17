@@ -62,7 +62,6 @@ public class UserD implements UserDetails {
 	@Column(length = 15, nullable = false)
 	private String phone;
 
-	@Email
 	@Column(length = 100, nullable = false)
 	private String email;
 
