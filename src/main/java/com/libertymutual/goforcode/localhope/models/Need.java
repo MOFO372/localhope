@@ -63,59 +63,38 @@ public class Need {
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
 
-
 	public String getType() {
 		return type;
 	}
-
-
-
 	public void setType(String type) {
 		this.type = type;
 	}
 
 
-
 	public Boolean getNeedMet() {
 		return needMet;
 	}
-
-
-
 	public void setNeedMet(Boolean needMet) {
 		this.needMet = needMet;
 	}
 
 
-
-
-
-
-
 	public int getOriginalAmount() {
 		return originalAmount;
 	}
-
-
-
 	public void setOriginalAmount(int originalAmount) {
 		this.originalAmount = originalAmount;
 	}
 
 
-
 	public Date getDateNeeded() {
 		return dateNeeded;
 	}
-
-
-
 	public void setDateNeeded(Date dateNeeded) {
 		this.dateNeeded = dateNeeded;
 	}
@@ -123,7 +102,6 @@ public class Need {
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -143,7 +121,6 @@ public class Need {
 	public String getUnits() {
 		return units;
 	}
-
 	public void setUnits(String units) {
 		this.units = units;
 	}

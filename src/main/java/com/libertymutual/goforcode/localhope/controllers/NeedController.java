@@ -46,7 +46,7 @@ public class NeedController {
 		return needRepository.findByNeedMet(false);
 	}	
 	
-	
+
 	// Change the needMet status of a Need to its opposite  
 	@PostMapping("needstatus/{needid}") 
 	public String resetNeedMetStatus(@PathVariable long needid, @RequestBody long id) {				
@@ -61,6 +61,16 @@ public class NeedController {
 	}
 	
 	
+	// Change the needMet status of a Need to its opposite  
+	@PostMapping("needreduce/{needid}") 
+	public void reduceNeedAmount(@PathVariable long needid, @RequestBody int reduceBy) {				
+		Need need = needRepository.findOne(needid);		
+		need.setOriginalAmount(Math.max(need.getOriginalAmount() - reduceBy, 0));
+		if (need.getOriginalAmount() == 0) need.setNeedMet(true);
+		need = needRepository.save(need);		
+	}
+	
+	
 	// Update a Need
 	@PutMapping("updateneed/{needid}")
 	public Need update(@RequestBody Need need, @PathVariable long needid) {
@@ -70,13 +80,6 @@ public class NeedController {
 		need.setUsers(thisUser);
 		return needRepository.save(need);	
 	}
-	
-	
-	// Delete a Need
-//	@DeleteMapping("deleteneed/{needid}")
-//	public void delete(@PathVariable long needid) {
-//		needRepository.delete(needid);	
-//	}
 
 	
 	// Delete a Need   
@@ -93,22 +96,5 @@ public class NeedController {
 		}
 			
 	}	
-	
-	
-	
-	
-//	@DeleteMapping("deleteneed/{needid}")
-//	public void delete(@PathVariable long needid) throws YouCannotDeleteThisNeedException {
-//		Need  need = needRepository.findOne(needid);	
-//	
-//		
-////		System.out.println(" "  + need.getUsers().get(0).getId()); 
-////		
-////		
-////		if (needid != need.getUsers().get(0).getId()) {
-////			throw new YouCannotDeleteThisNeedException();
-////		};
-//				
-//		needRepository.delete(needid);	
-//	}
+
 }
