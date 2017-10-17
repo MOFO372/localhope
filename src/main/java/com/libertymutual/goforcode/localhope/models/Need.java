@@ -39,10 +39,10 @@ public class Need {
 	
 	@JsonFormat(timezone="PST")
 	@Column
-	private Date dateNeeded;
+	private Date dateNeeded; 
 	
 	@Column
-	private Boolean hasFollowers;
+	private Boolean hasFollowers = false;
 
 	
 	// Owner of the rel'p
