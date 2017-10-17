@@ -72,13 +72,6 @@ public class NeedController {
 		need.setUsers(thisUser);
 		return needRepository.save(need);	
 	}
-	
-	
-	// Delete a Need
-//	@DeleteMapping("deleteneed/{needid}")
-//	public void delete(@PathVariable long needid) {
-//		needRepository.delete(needid);	
-//	}
 
 	
 	// Delete a Need   
@@ -95,22 +88,5 @@ public class NeedController {
 		}
 			
 	}	
-	
-	
-	
-	
-//	@DeleteMapping("deleteneed/{needid}")
-//	public void delete(@PathVariable long needid) throws YouCannotDeleteThisNeedException {
-//		Need  need = needRepository.findOne(needid);	
-//	
-//		
-////		System.out.println(" "  + need.getUsers().get(0).getId()); 
-////		
-////		
-////		if (needid != need.getUsers().get(0).getId()) {
-////			throw new YouCannotDeleteThisNeedException();
-////		};
-//				
-//		needRepository.delete(needid);	
-//	}
+
 }
