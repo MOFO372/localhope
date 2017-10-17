@@ -31,6 +31,8 @@ public class Need {
 	
 	private int originalAmount;
 	
+	private String units;
+	
 	private Date dateNeeded;
 
 	
@@ -42,13 +44,14 @@ public class Need {
 	public Need () {
 	}
 	
-	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, Date dateNeeded, List<UserD> users) {
+	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units, Date dateNeeded, List<UserD> users) {
 		//super();
 		this.id = id;
 		this.type = type;
 		this.needMet = needMet;
 		this.description = description;
 		this.originalAmount = originalAmount;
+		this.units = units;
 		this.dateNeeded = dateNeeded;
 		this.users = users; 
 	}
@@ -135,5 +138,13 @@ public class Need {
 
 	public void setUsers(List<UserD> users) {
 		this.users = users;
+	}
+
+	public String getUnits() {
+		return units;
+	}
+
+	public void setUnits(String units) {
+		this.units = units;
 	}
 }
