@@ -67,7 +67,7 @@ public class GoogleDistanceAPIController {
 	                .await()
 	                ;
 	        
-	        return trix.;
+	        return trix;
 
 	    } 
 //	    catch(ApiException e){
