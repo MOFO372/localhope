@@ -49,12 +49,17 @@ public class GoogleDistanceAPIController {
 		final String MY_API_KEY = "AIzaSyDXUd3vSC0dj5xs1-HLoc1BFRyy69U5ZEc";
 		DistanceMatrix trixA = null;
 		
+		UserD doGooder = userRepository.findOne(userid);
+		
+		
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
 		
 	    try {
 	        DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
 	        
-	        DistanceMatrix trix = req.origins("4203 29th Ave W","Seattle")
+	        
+	        
+	        DistanceMatrix trix = req.origins(doGooder.getStreetAddress(), doGooder.getCity())
 	                .destinations("1001 4th Ave", "Seattle")
 	                .mode(TravelMode.DRIVING)
 	                .avoid(RouteRestriction.HIGHWAYS)
@@ -62,7 +67,7 @@ public class GoogleDistanceAPIController {
 	                .await()
 	                ;
 	        
-	        return trix;
+	        return trix.;
 
 	    } 
 //	    catch(ApiException e){
