@@ -106,4 +106,19 @@ public class UserApiController {
 		}
 		return user.getZipCode().equals(charity.getZipCode());
 	}
+	
+	
+	// Return Charities with the same ZIP that a DoGooder has
+	@GetMapping("zipall/{dogooderid}")
+	public List<UserD> extractZips(@PathVariable long dogooderid)
+			throws ThisIsNotACharityException, ThisIsNotADogooderException {
+
+		UserD user = userRepository.findOne(dogooderid);
+		if (user.getIsCharity().equals("Charity")) {
+			throw new ThisIsNotADogooderException();
+		}
+				
+		List<UserD> zipCharities = userRepository.findByZipCodeStartingWithAndIsCharity(user.getZipCode(), "Charity");
+		return zipCharities;
+	}
 }

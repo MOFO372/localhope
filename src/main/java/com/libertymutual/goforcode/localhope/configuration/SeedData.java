@@ -218,7 +218,7 @@ public class SeedData {
 				// state	
 				"WA", 
 				// zip	
-				"98040",
+				"98195",
 				// phone 
 	            "(206) 333-4444", 
 	            // email     

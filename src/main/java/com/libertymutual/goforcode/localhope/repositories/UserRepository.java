@@ -15,5 +15,6 @@ public interface UserRepository extends JpaRepository <UserD, Long>{
 
 	UserD findByEin(String role);	                           	
 	UserD findByUsername(String username);
-	                           
+	
+	List<UserD> findByZipCodeStartingWithAndIsCharity(String zipCode, String Charity);	                           
 }

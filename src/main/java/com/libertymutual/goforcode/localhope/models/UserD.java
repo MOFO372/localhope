@@ -222,6 +222,8 @@ public class UserD implements UserDetails {
 		return charities;
 	}
 	
+
+	
 	
 	public Long getId() {
 		return id;
