@@ -59,8 +59,16 @@ public class CharityController {
 	@PostMapping("charity/{userid}") // this is the ID of the charity
 	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
 		UserD user = userRepository.findOne(userid);
+		
+		int sizeFollowers = user.getFollowers().length();
+		if (sizeFollowers == 0) {
+			need.setHasFollowers(false);
+			}
+		else {
+			need.setHasFollowers(true);
+			}
+		
 		need = needRepository.save(need);
-
 		user.addNeed(need);
 		userRepository.save(user);
 		return user.getNeeds();
