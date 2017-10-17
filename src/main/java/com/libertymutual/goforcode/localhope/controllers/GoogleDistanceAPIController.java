@@ -62,11 +62,15 @@ public class GoogleDistanceAPIController {
 	        DistanceMatrix trix = req.origins(doGooder.getStreetAddress(), doGooder.getCity())
 	                .destinations("1001 4th Ave", "Seattle")
 	                .mode(TravelMode.DRIVING)
-	                .avoid(RouteRestriction.HIGHWAYS)
+	                //.avoid(RouteRestriction.HIGHWAYS)
 	                //.language("en-US")
 	                .await()
 	                ;
 	        
+	        String s = trix.rows[0].elements[0].distance.humanReadable;
+	        double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
+	        	System.out.println(" -------------------------->" + s);
+	        	System.out.println(" -------------------------->" + distance);
 	        return trix;
 
 	    } 
