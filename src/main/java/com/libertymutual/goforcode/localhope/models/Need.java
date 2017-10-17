@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 @Entity
@@ -29,13 +31,18 @@ public class Need {
 	@Column(length=1000, nullable=false)
 	private String description;
 	
+	@Column
 	private int originalAmount;
 	
+	@Column
 	private String units;
 	
-	private Date dateNeeded;
+	@JsonFormat(timezone="PST")
+	@Column
+	private Date dateNeeded; 
 	
-	private Boolean hasFollowers;
+	@Column
+	private Boolean hasFollowers = false;
 
 	
 	// Owner of the rel'p
@@ -93,7 +100,6 @@ public class Need {
 	public void setOriginalAmount(int originalAmount) {
 		this.originalAmount = originalAmount;
 	}
-
 
 	public Date getDateNeeded() {
 		return dateNeeded;

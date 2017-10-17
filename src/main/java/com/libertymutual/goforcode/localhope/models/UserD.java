@@ -62,6 +62,7 @@ public class UserD implements UserDetails {
 	@Column(length = 15, nullable = false)
 	private String phone;
 
+	
 	@Column(length = 100, nullable = false)
 	private String email;
 
@@ -220,6 +221,8 @@ public class UserD implements UserDetails {
 		}
 		return charities;
 	}
+	
+
 	
 	
 	public Long getId() {
