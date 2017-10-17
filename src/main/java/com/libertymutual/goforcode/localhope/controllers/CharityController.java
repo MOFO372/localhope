@@ -1,6 +1,5 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
-import static org.mockito.Matchers.intThat;
 
 import java.util.List;
 
