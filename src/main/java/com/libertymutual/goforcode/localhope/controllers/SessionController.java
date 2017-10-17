@@ -53,6 +53,9 @@ public class SessionController {
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		user.setPassword(encryptedPassword);
+		user.setCharityPreference("");
+		user.setDonationPreferences("");
+		user.setFollowers("");
 
 		try {
 			if (user.getEin() != null && !user.getEin().isEmpty() && userRepository.findByEin(user.getEin()) != null) {
