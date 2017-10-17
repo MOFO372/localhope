@@ -46,7 +46,7 @@ public class NeedController {
 		return needRepository.findByNeedMet(false);
 	}	
 	
-	
+
 	// Change the needMet status of a Need to its opposite  
 	@PostMapping("needstatus/{needid}") 
 	public String resetNeedMetStatus(@PathVariable long needid, @RequestBody long id) {				
@@ -58,6 +58,16 @@ public class NeedController {
 		need = needRepository.save(need);
 		
 		return "Ok it worked!";
+	}
+	
+	
+	// Change the needMet status of a Need to its opposite  
+	@PostMapping("needreduce/{needid}") 
+	public void reduceNeedAmount(@PathVariable long needid, @RequestBody int reduceBy) {				
+		Need need = needRepository.findOne(needid);		
+		need.setOriginalAmount(Math.max(need.getOriginalAmount() - reduceBy, 0));
+		if (need.getOriginalAmount() == 0) need.setNeedMet(true);
+		need = needRepository.save(need);		
 	}
 	
 	
