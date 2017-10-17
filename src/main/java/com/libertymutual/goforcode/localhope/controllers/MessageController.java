@@ -32,15 +32,17 @@ public class MessageController {
 		this.userRepository = userRepository;
 	}
 	
-	
-	@PostMapping("message/{userid}")
-	public String sendMessage(@PathVariable long userid, @RequestBody Need need) {
+	@PostMapping("message/{charityid}")
+	public String sendMessage(@PathVariable long charityid, @RequestBody long needid) {
 		String ACCOUNT_SID = "AC30b2203fa2ba1ca8bbec30eb6b90f28b";
 		String AUTH_TOKEN = "641d50e26cc03dba2048ec3a8cab7550";
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 		
-		UserD charity      = userRepository.findOne(userid);	
-		String needMessage = "What we need: " + need.getDescription();
+		Need need = needRepository.findOne(needid);
+		
+		UserD charity = userRepository.findOne(charityid);
+				
+		String needMessage = "What we need: " + need.getOriginalAmount() + " of " + need.getDescription() + " by " + need.getDateNeeded();
 		
 		ArrayList <UserD> followers = charity.listFollowers(userRepository);
 		

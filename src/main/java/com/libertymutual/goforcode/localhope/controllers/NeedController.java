@@ -19,8 +19,6 @@ import com.libertymutual.goforcode.localhope.models.YouCannotDeleteThisNeedExcep
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
-
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
