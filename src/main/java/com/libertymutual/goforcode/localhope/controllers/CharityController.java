@@ -1,5 +1,7 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import static org.mockito.Matchers.intThat;
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +34,18 @@ public class CharityController {
 	@GetMapping("charity/{userid}")
 	public List<Need> addCharityNeed(@PathVariable long userid) {
 		UserD user = userRepository.findOne(userid);
+		List<Need> needs = user.getNeeds();
+		int sizeFollowers = user.getFollowers().length();
+		if (sizeFollowers == 0) {
+			for (int i = 0; i < needs.size(); i++) {
+				needs.get(i).setHasFollowers(false);
+			}
+		} else {
+			for (int i = 0; i < needs.size(); i++) {
+				needs.get(i).setHasFollowers(true);
+			}
+		}
+
 		return user.getNeeds();
 	}
 

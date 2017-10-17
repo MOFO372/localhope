@@ -34,6 +34,8 @@ public class Need {
 	private String units;
 	
 	private Date dateNeeded;
+	
+	private Boolean hasFollowers;
 
 	
 	// Owner of the rel'p
@@ -44,7 +46,7 @@ public class Need {
 	public Need () {
 	}
 	
-	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units, Date dateNeeded, List<UserD> users) {
+	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units, Date dateNeeded, List<UserD> users, Boolean hasFollowers) {
 		//super();
 		this.id = id;
 		this.type = type;
@@ -54,6 +56,7 @@ public class Need {
 		this.units = units;
 		this.dateNeeded = dateNeeded;
 		this.users = users; 
+		this.hasFollowers = hasFollowers;
 	}
 
 	
@@ -123,5 +126,13 @@ public class Need {
 	}
 	public void setUnits(String units) {
 		this.units = units;
+	}
+
+	public Boolean getHasFollowers() {
+		return hasFollowers;
+	}
+
+	public void setHasFollowers(Boolean hasFollowers) {
+		this.hasFollowers = hasFollowers;
 	}
 }
