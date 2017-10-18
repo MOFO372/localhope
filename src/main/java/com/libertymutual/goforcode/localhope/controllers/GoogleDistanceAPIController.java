@@ -33,7 +33,7 @@ public class GoogleDistanceAPIController {
 	@PostMapping("distance/{userid}")
 	public List<UserD> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
 
-		final String MY_API_KEY = "AIzaSyDXUd3vSC0dj5xs1-HLoc1BFRyy69U5ZEc";
+		final String MY_API_KEY = "AIzaSyAxpehF6uSYc8LfvOnN83rYvIUwVbK5pyw"; //AIzaSyDXUd3vSC0dj5xs1-HLoc1BFRyy69U5ZEc";
 
 		UserD doGooder = userRepository.findOne(userid);
 
