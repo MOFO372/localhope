@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 import com.google.maps.*;
@@ -25,15 +27,17 @@ import com.google.maps.model.DistanceMatrix;
 public class GoogleDistanceAPIController {
 
 	private UserRepository userRepository;
+	private NeedRepository needRepository; 
 
-	public GoogleDistanceAPIController (UserRepository userRepository) {
+	public GoogleDistanceAPIController (UserRepository userRepository, NeedRepository needRepository) {
 		this.userRepository = userRepository;
+		this.needRepository = needRepository; 
 	}
 
 	@PostMapping("distance/{userid}")
-	public List<UserD> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
+	public List<Need> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
 
-		final String MY_API_KEY = "AIzaSyAxpehF6uSYc8LfvOnN83rYvIUwVbK5pyw"; //AIzaSyDXUd3vSC0dj5xs1-HLoc1BFRyy69U5ZEc";
+		final String MY_API_KEY = "AIzaSyAxpehF6uSYc8LfvOnN83rYvIUwVbK5pyw";
 
 		UserD doGooder = userRepository.findOne(userid);
 
@@ -41,7 +45,9 @@ public class GoogleDistanceAPIController {
 
 		int repoSize = (int) userRepository.count();
 		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
+		ArrayList<Need> nearbyNeeds = new ArrayList<Need>(); 
 		List<UserD> allCharities = userRepository.findAll();
+		List<Need> allNeeds = needRepository.findAll();
 		UserD charity;
 
 		
@@ -57,8 +63,6 @@ public class GoogleDistanceAPIController {
 			try {
 				DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
 
-				System.out.println(charity.getStreetAddress());
-
 				DistanceMatrix trix = req.origins(doGooder.getStreetAddress(), doGooder.getCity())
 						.destinations(charity.getStreetAddress(), charity.getCity())
 						// .mode(TravelMode.DRIVING)
@@ -71,7 +75,17 @@ public class GoogleDistanceAPIController {
 
 				if (distance <= range) {
 					nearbyCharities.add(charity);
+					
+					for(int j=0; j < needRepository.count(); j++) {
+					
+						Need thisNeed = allNeeds.get(j); 
+						
+						if(thisNeed.getUsers().get(0).getId() == charity.getId()) {
+							nearbyNeeds.add(thisNeed); 
+						}
+					}
 				}
+				
 
 			}
 
@@ -80,7 +94,9 @@ public class GoogleDistanceAPIController {
 			}
 
 		}
+		
+	
 
-		return nearbyCharities;
+		return nearbyNeeds;
 	}
 }
