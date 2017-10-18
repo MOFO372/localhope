@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.libertymutual.goforcode.localhope.models.Need;
-import com.libertymutual.goforcode.localhope.models.ThisIsNotACharityException;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.models.YouCannotDeleteThisNeedException;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
