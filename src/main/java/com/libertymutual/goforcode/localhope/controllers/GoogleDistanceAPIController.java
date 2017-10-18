@@ -53,12 +53,7 @@ public class GoogleDistanceAPIController {
 		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
 		ArrayList<Need> nearbyNeeds = new ArrayList<Need>(); 
 		List<UserD> allCharities = userRepository.findAll();
-<<<<<<< HEAD
-		List<Need> nearbyNeeds = new ArrayList<Need>();
-=======
-		List<Need> allNeeds = needRepository.findAll();
->>>>>>> f97ffeaf2fe05dce123aa3131841e9486acb28b0
-		UserD charity;
+
 
 		for (int i = 0; i < repoSize; i++) {
 
