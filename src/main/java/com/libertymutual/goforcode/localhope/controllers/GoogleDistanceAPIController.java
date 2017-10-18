@@ -25,15 +25,22 @@ import com.google.maps.model.DistanceMatrix;
 public class GoogleDistanceAPIController {
 
 	private UserRepository userRepository;
-	private NeedRepository needRepository; 
+	private NeedRepository needRepository;
 
-	public GoogleDistanceAPIController (UserRepository userRepository, NeedRepository needRepository) {
+	public GoogleDistanceAPIController(UserRepository userRepository, NeedRepository needRepository) {
 		this.userRepository = userRepository;
-		this.needRepository = needRepository; 
+		this.needRepository = needRepository;
+	}
+
+	public double milesToKm(double range) {
+		range = range * 1.60934;
+		return range;
 	}
 
 	@PostMapping("distance/{userid}")
 	public List<Need> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
+
+		range = milesToKm(range);
 
 		final String MY_API_KEY = "AIzaSyAxpehF6uSYc8LfvOnN83rYvIUwVbK5pyw";
 
@@ -43,7 +50,7 @@ public class GoogleDistanceAPIController {
 
 		int repoSize = (int) userRepository.count();
 		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
-		ArrayList<Need> nearbyNeeds = new ArrayList<Need>(); 
+		ArrayList<Need> nearbyNeeds = new ArrayList<Need>();
 		List<UserD> allCharities = userRepository.findAll();
 		List<Need> allNeeds = needRepository.findAll();
 		UserD charity;
@@ -72,17 +79,16 @@ public class GoogleDistanceAPIController {
 
 				if (distance <= range) {
 					nearbyCharities.add(charity);
-					
-					for(int j=0; j < needRepository.count(); j++) {
-					
-						Need thisNeed = allNeeds.get(j); 
-						
-						if(thisNeed.getUsers().get(0).getId() == charity.getId()) {
-							nearbyNeeds.add(thisNeed); 
+
+					for (int j = 0; j < needRepository.count(); j++) {
+
+						Need thisNeed = allNeeds.get(j);
+
+						if (thisNeed.getUsers().get(0).getId() == charity.getId()) {
+							nearbyNeeds.add(thisNeed);
 						}
 					}
 				}
-				
 
 			}
 
@@ -91,8 +97,6 @@ public class GoogleDistanceAPIController {
 			}
 
 		}
-		
-	
 
 		return nearbyNeeds;
 	}
