@@ -59,7 +59,7 @@ public class NeedController {
 	}
 	
 	
-	// Change the needMet status of a Need to its opposite  
+	// Decrements the need quantity when someone donates time/money/stuff 
 	@PostMapping("needreduce/{needid}") 
 	public void reduceNeedAmount(@PathVariable long needid, @RequestBody int reduceBy) {				
 		Need need = needRepository.findOne(needid);		
