@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -94,7 +93,7 @@ public class UserD implements UserDetails {
 	
 	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
 	@Column(length = 10)
-	private String ein = "00-0000000";
+	private String ein;
 
 	@Column(length = 20)
 	private String charityUserRole = "NA";
