@@ -83,7 +83,7 @@ public class NeedController {
 	// Delete a Need  
 	//Changed to a Put mapping so that front-end can send a message body
 	@PutMapping("deleteneed/{needid}")
-	public void deleteA(@PathVariable long needid, @RequestBody long userid) throws YouCannotDeleteThisNeedException {
+	public String deleteA(@PathVariable long needid, @RequestBody long userid) throws YouCannotDeleteThisNeedException {
 		Need  need = needRepository.findOne(needid);
 
 		if (userid != need.getUsers().get(0).getId()) {
@@ -93,6 +93,8 @@ public class NeedController {
 		} catch (EmptyResultDataAccessException err) {
 			System.out.println("You cannot delete a Need you did not create.");
 		}			
+		
+		return "Your need has been deleted.  Have a nice day!";
 	}	
 
 }
