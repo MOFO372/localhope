@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 @Entity
@@ -29,11 +31,18 @@ public class Need {
 	@Column(length=1000, nullable=false)
 	private String description;
 	
+	@Column
 	private int originalAmount;
 	
+	@Column
 	private String units;
 	
-	private Date dateNeeded;
+	@JsonFormat(timezone="PST")
+	@Column
+	private Date dateNeeded; 
+	
+	@Column
+	private Boolean hasFollowers = false;
 
 	
 	// Owner of the rel'p
@@ -44,7 +53,7 @@ public class Need {
 	public Need () {
 	}
 	
-	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units, Date dateNeeded, List<UserD> users) {
+	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units, Date dateNeeded, List<UserD> users, Boolean hasFollowers) {
 		//super();
 		this.id = id;
 		this.type = type;
@@ -54,6 +63,7 @@ public class Need {
 		this.units = units;
 		this.dateNeeded = dateNeeded;
 		this.users = users; 
+		this.hasFollowers = hasFollowers;
 	}
 
 	
@@ -91,7 +101,6 @@ public class Need {
 		this.originalAmount = originalAmount;
 	}
 
-
 	public Date getDateNeeded() {
 		return dateNeeded;
 	}
@@ -123,5 +132,13 @@ public class Need {
 	}
 	public void setUnits(String units) {
 		this.units = units;
+	}
+
+	public Boolean getHasFollowers() {
+		return hasFollowers;
+	}
+
+	public void setHasFollowers(Boolean hasFollowers) {
+		this.hasFollowers = hasFollowers;
 	}
 }

@@ -46,6 +46,10 @@ public class MessageController {
 		
 		ArrayList <UserD> followers = charity.listFollowers(userRepository);
 		
+		if(followers.get(0) == null) {
+		return "You can't send any messages because you don't have any followers.  How sad.  :(";
+		}
+		
 		for(int i = 0; i < followers.size(); i++) {
 		  	UserD follower = followers.get(i);
 		  	String phone = follower.getPhone();

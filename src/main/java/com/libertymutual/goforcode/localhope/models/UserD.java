@@ -424,4 +424,12 @@ public class UserD implements UserDetails {
 		this.roles = roles;
 	}
 
+	public String getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(String followers) {
+		this.followers = followers;
+	}
+
 }

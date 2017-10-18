@@ -71,9 +71,9 @@ public class SeedData {
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         
-		needRepository.save(new Need(1L, "crib",  false, "We need those cribs!", 10, "units", sqlDate, users));
-		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, "units", sqlDate, users));
-		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, "units", sqlDate, users));
+		needRepository.save(new Need(1L, "crib",  false, "We need those cribs!", 10, "units", sqlDate, users, false));
+		needRepository.save(new Need(2L, "money", false, "We need to buy more cribs.", 200, "units", sqlDate, users, false));
+		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, "units", sqlDate, users, false));
 		
 				
 		userRepository.save(new UserD(31L, 
