@@ -82,8 +82,9 @@ public class NeedController {
 	}
 
 	
-	// Delete a Need   
-	@DeleteMapping("deleteneed/{needid}")
+	// Delete a Need  
+	//Changed to a Put mapping so that front-end can send a message body
+	@PutMapping("deleteneed/{needid}")
 	public void deleteA(@PathVariable long needid, @RequestBody long userid) throws YouCannotDeleteThisNeedException {
 		Need  need = needRepository.findOne(needid);
 
