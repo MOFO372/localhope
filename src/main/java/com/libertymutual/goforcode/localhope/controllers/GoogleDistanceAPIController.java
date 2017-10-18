@@ -17,6 +17,8 @@ import com.google.maps.*;
 
 import com.google.maps.model.DistanceMatrix;
 
+
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
@@ -42,6 +44,7 @@ public class GoogleDistanceAPIController {
 		List<UserD> allCharities = userRepository.findAll();
 		UserD charity;
 
+		
 		for (int i = 0; i < repoSize; i++) {
 
 			charity = allCharities.get(i);
