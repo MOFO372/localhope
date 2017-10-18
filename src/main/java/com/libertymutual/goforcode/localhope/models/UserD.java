@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 

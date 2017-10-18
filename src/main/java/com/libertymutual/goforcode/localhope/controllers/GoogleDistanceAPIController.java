@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.libertymutual.goforcode.localhope.models.UserD;
-import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
-
 
 import com.google.maps.*;
 
 import com.google.maps.model.DistanceMatrix;
-
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -26,10 +23,8 @@ import com.google.maps.model.DistanceMatrix;
 public class GoogleDistanceAPIController {
 
 	private UserRepository userRepository;
-	private NeedRepository needRepository;
 
-	public GoogleDistanceAPIController(NeedRepository needRepository, UserRepository userRepository) {
-		this.needRepository = needRepository;
+	public GoogleDistanceAPIController (UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
@@ -37,7 +32,6 @@ public class GoogleDistanceAPIController {
 	public List<UserD> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
 
 		final String MY_API_KEY = "AIzaSyDXUd3vSC0dj5xs1-HLoc1BFRyy69U5ZEc";
-		//DistanceMatrix trixA = null;
 
 		UserD doGooder = userRepository.findOne(userid);
 
@@ -45,19 +39,15 @@ public class GoogleDistanceAPIController {
 
 		int repoSize = (int) userRepository.count();
 		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
-		List<UserD> allCharities = userRepository.findAll(); 
-		UserD charity = new UserD(); 
-		
+		List<UserD> allCharities = userRepository.findAll();
+		UserD charity;
 
-		//for (long i = 1; i < repoSize; i++) 
-			for (int i = 0; i < repoSize; i++){
-			
-				charity = allCharities.get(i); 
-				
-				
-			
-			if(charity == null || charity.getStreetAddress().isEmpty() || charity.getCity().isEmpty()
-					|| i == userid || !charity.getIsCharity().equals("Charity")) {
+		for (int i = 0; i < repoSize; i++) {
+
+			charity = allCharities.get(i);
+
+			if (charity == null || charity.getStreetAddress().isEmpty() || charity.getCity().isEmpty() || i == userid
+					|| !charity.getIsCharity().equals("Charity")) {
 				continue;
 			}
 
@@ -65,36 +55,28 @@ public class GoogleDistanceAPIController {
 				DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
 
 				System.out.println(charity.getStreetAddress());
-				
+
 				DistanceMatrix trix = req.origins(doGooder.getStreetAddress(), doGooder.getCity())
 						.destinations(charity.getStreetAddress(), charity.getCity())
-						//.mode(TravelMode.DRIVING)
+						// .mode(TravelMode.DRIVING)
 						// .avoid(RouteRestriction.HIGHWAYS)
 						// .language("en-US")
 						.await();
 
 				String s = trix.rows[0].elements[0].distance.humanReadable;
 				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
-								
-				System.out.println(distance);				
-				System.out.println("range " + range);
-				System.out.println("BEFORE IF: " + charity.getCharityName());
-				
-				
-				nearbyCharities.add(charity);  
-				System.out.println(charity.getCharityName());
-		
+
+				if (distance <= range) {
+					nearbyCharities.add(charity);
+				}
+
 			}
-		
 
 			catch (Exception e) {
 				System.out.println("CATCH");
 			}
 
-			
-			
-			}
-			
+		}
 
 		return nearbyCharities;
 	}

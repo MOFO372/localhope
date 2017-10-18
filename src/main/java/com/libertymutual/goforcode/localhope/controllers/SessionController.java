@@ -26,7 +26,7 @@ public class SessionController {
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
 
-	public SessionController(UserRepository userRepository, PasswordEncoder encoder) {
+	public SessionController (UserRepository userRepository, PasswordEncoder encoder) {
 		this.userRepository = userRepository;
 		this.encoder = encoder;
 
