@@ -35,13 +35,13 @@ public class SeedData {
         	// last name	
         		"Alson", 
         	// address	
-        		"321 Pine", 
+        		"1001 4th Ave", 
         	// city	
         		"Seattle", 
         	// state	
         		"WA", 
         	// zip	
-        		"98191",
+        		"98001",
         	// phone
 	            "(206) 333-4444", 
 	        // email    
