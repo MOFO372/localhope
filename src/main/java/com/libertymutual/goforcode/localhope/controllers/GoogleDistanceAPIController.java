@@ -41,64 +41,65 @@ public class GoogleDistanceAPIController {
 	
 	
 	@PostMapping("distance/{userid}")
-	public DistanceMatrix getCharitiesByDistance(@PathVariable long userid, @RequestBody int range) {
+	public ArrayList<UserD> getCharitiesByDistance(@PathVariable long userid, @RequestBody int range) {
 
-//		setQueryRateLimit(int maxQps)
-//		Sets the maximum number of queries that will be executed during a 1 second interval.
 		
 		final String MY_API_KEY = "AIzaSyDXUd3vSC0dj5xs1-HLoc1BFRyy69U5ZEc";
-		DistanceMatrix trixA = null;
+		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
+		// DistanceMatrix trixA = null;     
 		
 		UserD doGooder = userRepository.findOne(userid);
+		UserD charity = null;
+		double distance;
+		int repoSize = (int) userRepository.count();
+		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
 		
 		
-		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
-		
-	    try {
-	        DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
-	        
-	        
-	        
-	        DistanceMatrix trix = req.origins(doGooder.getStreetAddress(), doGooder.getCity())
-	                .destinations("1001 4th Ave", "Seattle")
-	                .mode(TravelMode.DRIVING)
-	                //.avoid(RouteRestriction.HIGHWAYS)
-	                //.language("en-US")
-	                .await()
-	                ;
-	        
-	        String s = trix.rows[0].elements[0].distance.humanReadable;
-	        double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
-	        	System.out.println(" -------------------------->" + s);
-	        	System.out.println(" -------------------------->" + distance);
-	        return trix;
-
-	    } 
-//	    catch(ApiException e){
-//	        output += this.printError(e);
-//	    } 
-	    
-	    catch(Exception e){
-	        System.out.println(e.getMessage());
-	    } 
-	    
-	    
-//		Request
-//		origins: Vancouver+BC|Seattle
-//		destinations: San+Francisco|Victoria+BC
-//		mode: driving
-//		key: API_KEY
-		
-
-		
-//		for(int i = 0; i < followers.size(); i++) {
-//		  	UserD follower = followers.get(i);
-//		  	String phone = follower.getPhone();
-//			Message message = Message.creator(new PhoneNumber(phone),
-//	        new PhoneNumber("+15018304032"), 
-//	        needMessage).create();
-//		}
-		
-		return trixA;
+		for(long i = 1; i < 20; i++) {
+			
+					System.out.println(" -------------------------->" + i);
+			
+			charity = userRepository.findOne(i);
+			
+			if( charity == null || charity.getStreetAddress().isEmpty() ||  charity.getCity().isEmpty() ||
+				i == userid     || !charity.getIsCharity().equals("Charity") ) {
+					System.out.println(" Ignore this User -------------------------->" + i);
+				continue;
+			}
+			
+					System.out.println(" Update Charity -------------------------->" + charity.getStreetAddress());
+			
+		    try {
+		        DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);	        
+		        DistanceMatrix trix = 
+		        	 req.origins(doGooder.getStreetAddress(), doGooder.getCity())
+		                .destinations(charity.getStreetAddress(), charity.getCity())
+		                //.mode(TravelMode.DRIVING)
+		                //.avoid(RouteRestriction.HIGHWAYS)
+		                //.language("en-US")
+		                .await()
+		                ;
+		        
+		        String s = trix.rows[0].elements[0].distance.humanReadable;
+		        distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
+		                System.out.println(" Distance: ----------------->" + distance);
+		        
+		        if(distance <= (double)range) {
+		        	nearbyCharities.add(charity);
+		        	    System.out.println("Charity is in range: =======>" + charity.getCharityName() + " " + charity.getFirstName());
+		        }
+		                                                  
+		        		System.out.println(" -------------------------->" + charity.getId());
+		        		System.out.println(" -------------------------->" + s);
+		        		System.out.println(" -------------------------->" + distance);
+		        	
+			}    
+		    
+		    
+	         catch(Exception e){
+			        System.out.println(" ERRPR: Cannot determine distance to this object (not a charity, no address, etc.");
+			 } 	    
+		}		
+		return nearbyCharities;
 	}
 }
