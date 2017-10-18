@@ -49,6 +49,7 @@ public class SessionController {
 		user.setCharityPreference("");
 		user.setDonationPreferences("");
 		user.setFollowers("");
+		System.out.println("ein" + user.getEin());
 
 		try {
 			if (user.getEin() != null && !user.getEin().isEmpty() && userRepository.findByEin(user.getEin()) != null) {

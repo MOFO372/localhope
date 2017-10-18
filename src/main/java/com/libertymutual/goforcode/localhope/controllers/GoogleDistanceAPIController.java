@@ -10,20 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
-import com.twilio.Twilio;
-import com.twilio.exception.ApiException;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
+
 
 import com.google.maps.*;
-import com.google.maps.DirectionsApi.RouteRestriction;
+
 import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.TravelMode;
 
 
 @CrossOrigin(origins = "*")
@@ -33,63 +27,75 @@ public class GoogleDistanceAPIController {
 
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
-	
+
 	public GoogleDistanceAPIController(NeedRepository needRepository, UserRepository userRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 	}
-	
-	
+
 	@PostMapping("distance/{userid}")
-	public DistanceMatrix getCharitiesByDistance(@PathVariable long userid, @RequestBody int range) {
+	public List<UserD> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
 
-//		setQueryRateLimit(int maxQps)
-//		Sets the maximum number of queries that will be executed during a 1 second interval.
-		
 		final String MY_API_KEY = "AIzaSyDXUd3vSC0dj5xs1-HLoc1BFRyy69U5ZEc";
-		DistanceMatrix trixA = null;
-		
+		//DistanceMatrix trixA = null;
+
+		UserD doGooder = userRepository.findOne(userid);
+
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
-		
-	    try {
-	        DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
-	        
-	        DistanceMatrix trix = req.origins("4203 29th Ave W","Seattle")
-	                .destinations("1001 4th Ave", "Seattle")
-	                .mode(TravelMode.DRIVING)
-	                .avoid(RouteRestriction.HIGHWAYS)
-	                //.language("en-US")
-	                .await()
-	                ;
-	        
-	        return trix;
 
-	    } 
-//	    catch(ApiException e){
-//	        output += this.printError(e);
-//	    } 
-	    
-	    catch(Exception e){
-	        System.out.println(e.getMessage());
-	    } 
-	    
-	    
-//		Request
-//		origins: Vancouver+BC|Seattle
-//		destinations: San+Francisco|Victoria+BC
-//		mode: driving
-//		key: API_KEY
+		int repoSize = (int) userRepository.count();
+		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
+		List<UserD> allCharities = userRepository.findAll(); 
+		UserD charity = new UserD(); 
 		
 
+		//for (long i = 1; i < repoSize; i++) 
+			for (int i = 0; i < repoSize; i++){
+			
+				charity = allCharities.get(i); 
+				
+				
+			
+			if(charity == null || charity.getStreetAddress().isEmpty() || charity.getCity().isEmpty()
+					|| i == userid || !charity.getIsCharity().equals("Charity")) {
+				continue;
+			}
+
+			try {
+				DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
+
+				System.out.println(charity.getStreetAddress());
+				
+				DistanceMatrix trix = req.origins(doGooder.getStreetAddress(), doGooder.getCity())
+						.destinations(charity.getStreetAddress(), charity.getCity())
+						//.mode(TravelMode.DRIVING)
+						// .avoid(RouteRestriction.HIGHWAYS)
+						// .language("en-US")
+						.await();
+
+				String s = trix.rows[0].elements[0].distance.humanReadable;
+				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
+								
+				System.out.println(distance);				
+				System.out.println("range " + range);
+				System.out.println("BEFORE IF: " + charity.getCharityName());
+				
+				
+				nearbyCharities.add(charity);  
+				System.out.println(charity.getCharityName());
 		
-//		for(int i = 0; i < followers.size(); i++) {
-//		  	UserD follower = followers.get(i);
-//		  	String phone = follower.getPhone();
-//			Message message = Message.creator(new PhoneNumber(phone),
-//	        new PhoneNumber("+15018304032"), 
-//	        needMessage).create();
-//		}
+			}
 		
-		return trixA;
+
+			catch (Exception e) {
+				System.out.println("CATCH");
+			}
+
+			
+			
+			}
+			
+
+		return nearbyCharities;
 	}
 }
