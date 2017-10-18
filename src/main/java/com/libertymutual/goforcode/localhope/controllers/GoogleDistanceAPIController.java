@@ -25,19 +25,11 @@ import com.google.maps.model.DistanceMatrix;
 public class GoogleDistanceAPIController {
 
 	private UserRepository userRepository;
-<<<<<<< HEAD
-	private NeedRepository needRepository;
-
-	public GoogleDistanceAPIController (UserRepository userRepository, NeedRepository needRepository) {
-		this.userRepository = userRepository;
-		this.needRepository = needRepository;
-=======
 	private NeedRepository needRepository; 
 
 	public GoogleDistanceAPIController (UserRepository userRepository, NeedRepository needRepository) {
 		this.userRepository = userRepository;
 		this.needRepository = needRepository; 
->>>>>>> f97ffeaf2fe05dce123aa3131841e9486acb28b0
 	}
 
 	@PostMapping("distance/{userid}")
@@ -53,7 +45,8 @@ public class GoogleDistanceAPIController {
 		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
 		ArrayList<Need> nearbyNeeds = new ArrayList<Need>(); 
 		List<UserD> allCharities = userRepository.findAll();
-
+		List<Need> allNeeds = needRepository.findAll();
+		UserD charity;
 
 		for (int i = 0; i < repoSize; i++) {
 
