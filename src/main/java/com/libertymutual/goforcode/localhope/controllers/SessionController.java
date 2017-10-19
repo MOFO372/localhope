@@ -60,7 +60,7 @@ public class SessionController {
 				throw new UniqueEinForCharitiesException();
 			}
 			userRepository.save(user);
-			sendGridController.main(null);
+			sendGridController.main(user.getUsername());
 			return user;
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");
