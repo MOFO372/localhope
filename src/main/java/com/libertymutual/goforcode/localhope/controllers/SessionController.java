@@ -1,5 +1,7 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,10 +27,12 @@ public class SessionController {
 
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
+	private SendGridController sendGridController; 
 
-	public SessionController (UserRepository userRepository, PasswordEncoder encoder) {
+	public SessionController (UserRepository userRepository, PasswordEncoder encoder, SendGridController sendGridController) {
 		this.userRepository = userRepository;
 		this.encoder = encoder;
+		this.sendGridController = sendGridController; 
 
 	}
 
@@ -41,7 +45,7 @@ public class SessionController {
 
 
 	@PostMapping("registration")
-	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException {
+	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -56,6 +60,7 @@ public class SessionController {
 				throw new UniqueEinForCharitiesException();
 			}
 			userRepository.save(user);
+			sendGridController.main(null);
 			return user;
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");

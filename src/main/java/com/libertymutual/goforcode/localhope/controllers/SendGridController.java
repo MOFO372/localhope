@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SendGridController {
 	
 	@PostMapping("")
-	public static void main(String[] args) throws IOException {
+	public void main(String[] args) throws IOException {
 		Email from = new Email("rsoley92@gmail.com");
 		String subject = "Sending with SendGrid is Fun";
 		Email to = new Email("jasminestotts@gmail.com");
