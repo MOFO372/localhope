@@ -16,8 +16,10 @@ public class SendGridController {
 		Email from = new Email("rsoley92@gmail.com");
 		String subject = "Sending with SendGrid is Fun";
 		Email to = new Email("jasminestotts@gmail.com");
-		Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
+		Content content = new Content("text/html", "and easy to do anywhere, even with Java");
 		Mail mail = new Mail(from, subject, to, content);
+		String dumbTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
+		mail.setTemplateId(dumbTemplate);
 
 		SendGrid sg = new SendGrid("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");
 		Request request = new Request();
