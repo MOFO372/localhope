@@ -9,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -78,6 +80,14 @@ public class SessionController {
 		} else {
 			return null;
 		}
+	}
+	
+	@PutMapping("get_password")
+	public UserD getPassword(@PathVariable long id, @RequestBody String password) { 
+	UserD user = userRepository.getOne(id);
+	String encryptedPassword = encoder.encode(password);
+	user.setPassword(encryptedPassword);
+	return user;
 	}
 
 }
