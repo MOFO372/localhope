@@ -34,6 +34,7 @@ public class HomeController {
 	// show all charities
 	@GetMapping("")
 	public List<UserD> getAll() {
+		System.out.println("in mappint");
 		return userRepository.findAll();
 	}
 
