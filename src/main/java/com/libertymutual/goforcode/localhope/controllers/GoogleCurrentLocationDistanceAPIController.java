@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Coordinate;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
@@ -23,7 +24,7 @@ import com.google.maps.*;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.LatLng;
 
-
+//import com.google.code.gwt.geolocation.client.Coordinates;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -46,12 +47,15 @@ public class GoogleCurrentLocationDistanceAPIController {
 	
 	
 	
-	@PostMapping("distancecurrent")
+	@PostMapping("distancecurrent/{range}")
 	public List<Need> getCharitiesByDistanceFromCurrentLocation
-		(@RequestBody Double range, Double latCurrent, Double longCurrent) {
+//		(@RequestBody double latCurrent, double longCurrent, double range) {
+		(@PathVariable double range, @RequestBody Coordinate coordinate) {
+ // Coordinates
 
 		range = milesToKm(range);
-
+		double latCurrent  = coordinate.getLatitude();
+		double longCurrent = coordinate.getLongitude();
 		
 		final String MY_API_KEY = "AIzaSyDwJj-37b8SUeAdf1FBhqwObKCGroVhBdk";
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
@@ -62,9 +66,6 @@ public class GoogleCurrentLocationDistanceAPIController {
 		List<UserD> allCharities 			= userRepository.findAll();
 		List<Need> allNeeds 				= needRepository.findAll();
 		UserD charity;
-		
-		
-//		Double latCurrent, Double longCurrent, 
 		
 		LatLng coordOr = new LatLng(latCurrent, longCurrent);
 //		LatLng coordOr = new LatLng(47.7,-122.4);
