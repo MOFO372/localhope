@@ -39,15 +39,16 @@ public class MessageController {
 
 	@PostMapping("message/{charityid}")
 	public String sendMessage(@PathVariable long charityid, @RequestBody long needid) {
-			
-		String ACCOUNT_SID = key;
-		String AUTH_TOKEN = auth;
+		
+		
+		String ACCOUNT_SID = auth;
+		String AUTH_TOKEN = key;
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-
+		
 		Need need = needRepository.findOne(needid);
-
+		System.out.println(needid);
 		UserD charity = userRepository.findOne(charityid);
-
+		System.out.println(charityid);
 		String needMessage = "What we need: " + need.getOriginalAmount() + " of " + need.getDescription() + " by "
 				+ need.getDateNeeded();
 
