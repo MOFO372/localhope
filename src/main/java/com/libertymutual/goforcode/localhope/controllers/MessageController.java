@@ -2,6 +2,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,12 @@ import com.twilio.type.PhoneNumber;
 @RequestMapping("")
 public class MessageController {
 
+	@Value("${TWILIO_KEY}")
+	private String key;
+	
+	@Value("${TWILIO_AUTH}")
+	private String auth;
+	
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
 
@@ -32,8 +39,9 @@ public class MessageController {
 
 	@PostMapping("message/{charityid}")
 	public String sendMessage(@PathVariable long charityid, @RequestBody long needid) {
-		String ACCOUNT_SID = "AC30b2203fa2ba1ca8bbec30eb6b90f28b";
-		String AUTH_TOKEN = "641d50e26cc03dba2048ec3a8cab7550";
+			
+		String ACCOUNT_SID = key;
+		String AUTH_TOKEN = auth;
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
 		Need need = needRepository.findOne(needid);

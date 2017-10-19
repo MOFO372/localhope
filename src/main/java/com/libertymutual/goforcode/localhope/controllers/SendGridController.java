@@ -5,6 +5,7 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 import com.sendgrid.*;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("sendgrid")
 public class SendGridController {
+	
+	@Value("${SENDGRID_KEY}")
+	private String key;
 	
 	private UserRepository userRepository;
 	
@@ -36,7 +40,8 @@ public class SendGridController {
 		
 		mail.addPersonalization(personalization);
 
-		SendGrid sg = new SendGrid("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");
+		SendGrid sg = new SendGrid(key);
+		
 		Request request = new Request();
 		try {
 			request.setMethod(Method.POST);
