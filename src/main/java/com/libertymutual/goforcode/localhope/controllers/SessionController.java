@@ -1,9 +1,11 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,15 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
+import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UniqueEinForCharitiesException;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
+
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("")
 public class SessionController {
 
+	private NeedRepository needRepository;
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
 	private SendGridController sendGridController; 

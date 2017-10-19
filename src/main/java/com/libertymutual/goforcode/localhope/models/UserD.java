@@ -197,7 +197,7 @@ public class UserD implements UserDetails {
 		ArrayList<UserD> users = new ArrayList<UserD>(); 
 		
 		for(int i = 0; i < userNames.length; i++) {
-							System.out.println(userRepository.findByUsername(userNames[i]));
+							System.out.println(userRepository.findByUsername(userNames[i]));  // delete
 			users.add(userRepository.findByUsername(userNames[i]));
 		}
 		return users;
@@ -209,8 +209,8 @@ public class UserD implements UserDetails {
 		String[] charityNames = followedCharities.trim().split("\\s+");		
 		ArrayList<UserD> charities = new ArrayList<UserD>(); 
 		
+		// For DoGooder who is not following any Charities return [] 
 		for(int i = 0; i < charityNames.length; i++) {
-			// For a DoGooder who is not following any Charities - return [] 
 			if (charityNames[i].length() > 0) {
 				charities.add(userRepository.findByEin(charityNames[i]));	
 			}
