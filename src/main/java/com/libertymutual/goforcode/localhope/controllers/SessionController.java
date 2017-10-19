@@ -1,14 +1,11 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 import java.util.List;
-=======
 import java.io.IOException;
->>>>>>> 1542c7075da1a09afdebf2897bf1cad01f4177c7
 
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;

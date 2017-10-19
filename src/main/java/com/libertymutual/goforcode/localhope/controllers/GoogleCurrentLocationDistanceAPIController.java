@@ -38,7 +38,7 @@ public class GoogleCurrentLocationDistanceAPIController {
 		this.needRepository = needRepository;
 	}
 
-	public double milesToKm(double range) {
+	public double milesToKm(Double range) {
 		range = range * 1.60934;
 		return range;
 	}
@@ -46,16 +46,15 @@ public class GoogleCurrentLocationDistanceAPIController {
 	
 	
 	
-	@PostMapping("distancecurrent/{userid}")
-	public List<Need> getCharitiesByDistanceFromCurrentLocation(@PathVariable long userid, @RequestBody double range) {
+	@PostMapping("distancecurrent")
+	public List<Need> getCharitiesByDistanceFromCurrentLocation
+		(@RequestBody Double range, Double latCurrent, Double longCurrent) {
 
 		range = milesToKm(range);
 
 		
 		final String MY_API_KEY = "AIzaSyDwJj-37b8SUeAdf1FBhqwObKCGroVhBdk";
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
-		
-		// UserD doGooder = userRepository.findOne(userid);
 
 		int repoSize 						= (int) userRepository.count();
 		ArrayList<UserD> nearbyCharities 	= new ArrayList<UserD>();
@@ -65,8 +64,11 @@ public class GoogleCurrentLocationDistanceAPIController {
 		UserD charity;
 		
 		
-		LatLng coordOr = new LatLng(47.7,-122.4);
-//	  LatLng coordDs = new LatLng(47.5,-122.3);
+//		Double latCurrent, Double longCurrent, 
+		
+		LatLng coordOr = new LatLng(latCurrent, longCurrent);
+//		LatLng coordOr = new LatLng(47.7,-122.4);
+//	    LatLng coordDs = new LatLng(47.5,-122.3);
 		
 		
 		for (int i = 0; i < repoSize; i++) {
@@ -81,20 +83,14 @@ public class GoogleCurrentLocationDistanceAPIController {
 						
 			try {
 				DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
-				
-					System.out.println(" TRY BLOCK ----------------------> " + charity.getStreetAddress());
 					
 				DistanceMatrix trix = 
 						req.origins(coordOr)
 						.destinations(charity.getStreetAddress(), charity.getCity())
 						.awaitIgnoreError();
 								
-				System.out.println(" Dist Object ---------------------> " + trix);
-								
 				String s = trix.rows[0].elements[0].distance.humanReadable;	
-					System.out.println(" --------------------------> " + s);
 				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
-					System.out.println(" --------------------------> " + distance);
 				
 				
 				if (distance <= range) {
@@ -104,7 +100,7 @@ public class GoogleCurrentLocationDistanceAPIController {
 
 						Need thisNeed = allNeeds.get(j);
 
-						if (thisNeed.getUsers().get(0).getId() == charity.getId()) {
+						if (thisNeed.getUsers().get(0).getId() == charity.getId() && !thisNeed.getNeedMet()) {
 							nearbyNeeds.add(thisNeed);
 						}
 					}
@@ -115,7 +111,6 @@ public class GoogleCurrentLocationDistanceAPIController {
 			catch (Exception e) {
 				System.out.println("CATCH");
 			}
-
 		}
 
 		return nearbyNeeds;

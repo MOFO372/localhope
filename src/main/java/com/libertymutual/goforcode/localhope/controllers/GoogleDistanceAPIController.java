@@ -91,7 +91,7 @@ public class GoogleDistanceAPIController {
 
 						Need thisNeed = allNeeds.get(j);
 
-						if (thisNeed.getUsers().get(0).getId() == charity.getId()) {
+						if (thisNeed.getUsers().get(0).getId() == charity.getId() && !thisNeed.getNeedMet()) {
 							nearbyNeeds.add(thisNeed);
 						}
 					}
@@ -102,7 +102,6 @@ public class GoogleDistanceAPIController {
 			catch (Exception e) {
 				System.out.println("CATCH");
 			}
-
 		}
 
 		return nearbyNeeds;
