@@ -3,6 +3,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,9 @@ import com.google.maps.model.DistanceMatrix;
 @RestController
 @RequestMapping("")
 public class GoogleDistanceAPIController {
+	
+	@Value("${GOOGLE_KEY}")
+	private String key;
 
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
@@ -44,7 +48,7 @@ public class GoogleDistanceAPIController {
 
 		range = milesToKm(range);
 
-		final String MY_API_KEY = "AIzaSyAxpehF6uSYc8LfvOnN83rYvIUwVbK5pyw";
+		final String MY_API_KEY = key;
 
 		UserD doGooder = userRepository.findOne(userid);
 

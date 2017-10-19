@@ -1,7 +1,11 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
+=======
+import java.io.IOException;
+>>>>>>> 1542c7075da1a09afdebf2897bf1cad01f4177c7
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,11 +36,12 @@ public class SessionController {
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
+	private SendGridController sendGridController; 
 
-	public SessionController(NeedRepository needRepository, UserRepository userRepository, PasswordEncoder encoder) {
-		this.needRepository = needRepository;
+	public SessionController (UserRepository userRepository, PasswordEncoder encoder, SendGridController sendGridController) {
 		this.userRepository = userRepository;
 		this.encoder = encoder;
+		this.sendGridController = sendGridController; 
 
 	}
 
@@ -49,7 +54,7 @@ public class SessionController {
 
 
 	@PostMapping("registration")
-	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException {
+	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -64,6 +69,7 @@ public class SessionController {
 				throw new UniqueEinForCharitiesException();
 			}
 			userRepository.save(user);
+			sendGridController.main(user.getUsername());
 			return user;
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");
