@@ -56,6 +56,7 @@ public class SessionController {
 				throw new UniqueEinForCharitiesException();
 			}
 			userRepository.save(user);
+			
 			return user;
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");
