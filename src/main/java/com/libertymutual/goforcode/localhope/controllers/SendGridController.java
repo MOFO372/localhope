@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,20 +69,29 @@ public class SendGridController {
 		}
 	}
 	
-	public void retrieve(String username) throws IOException {
+	@PostMapping("get_password")
+	public void retrieve(@RequestBody String username) throws IOException {
 		UserD user = userRepository.findByUsername(username);
 		Email from = new Email("rsoley92@gmail.com");
 		String subject = "Your LocalHope password";
 		Email to = new Email(user.getEmail());
+		System.out.println("email is " + user.getEmail());
 		Content content = new Content("text/html", " ");
 		Mail mail = new Mail(from, subject, to, content);
 		String dumbTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
 		mail.setTemplateId(dumbTemplate);
 		
+		//verification code fanciness
+		Integer reset = (int) Math.round(Math.random()*99999);
+		String resetCode = reset.toString().format("%05d", reset);
+		user.setResetNumber(resetCode);
+		System.out.println("your code is" + resetCode);
+		
+		// we personalize our emails because we love our users
 		Personalization personalization = new Personalization();
 		personalization.addTo(to);
 		personalization.addSubstitution("%first_name%", user.getFirstName());
-		
+		personalization.addSubstitution("%code%", user.getResetNumber());
 		mail.addPersonalization(personalization);
 
 		SendGrid sg = new SendGrid(key);

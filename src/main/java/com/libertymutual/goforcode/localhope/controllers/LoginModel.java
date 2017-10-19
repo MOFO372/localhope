@@ -3,6 +3,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 public class LoginModel {
 	private String username;
 	private String password;
+	private String resetNumber;
 	
 	public String getUsername() {
 		return username;
@@ -15,5 +16,11 @@ public class LoginModel {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getResetNumber() {
+		return resetNumber;
+	}
+	public void setResetNumber(String resetNumber) {
+		this.resetNumber = resetNumber;
 	}
 }
