@@ -145,7 +145,7 @@ public class SeedData {
 				// phone ***verified in Twilio***				
 	            "(206) 218-2753", 
 	    	    // email	            
-	            "rachel@if.you.can", 
+	            "rsoley92@gmail.com", 
 	    	    // donation preferences (do-gooders only)	            
 	            "", 
 	    	    // charity preferences (do-gooders only)	            
