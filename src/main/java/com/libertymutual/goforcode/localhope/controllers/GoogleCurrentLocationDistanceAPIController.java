@@ -21,6 +21,7 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 import com.google.maps.*;
 
 import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.LatLng;
 
 
 
@@ -51,7 +52,7 @@ public class GoogleCurrentLocationDistanceAPIController {
 		range = milesToKm(range);
 
 		
-		final String MY_API_KEY = "AIzaSyAqpPBdrYC6iqAlpbdvSY8etdH8mc1o8sw";
+		final String MY_API_KEY = "AIzaSyDwJj-37b8SUeAdf1FBhqwObKCGroVhBdk";
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
 		
 		// UserD doGooder = userRepository.findOne(userid);
@@ -62,7 +63,11 @@ public class GoogleCurrentLocationDistanceAPIController {
 		List<UserD> allCharities 			= userRepository.findAll();
 		List<Need> allNeeds 				= needRepository.findAll();
 		UserD charity;
-
+		
+		
+		LatLng coordOr = new LatLng(47.7,-122.4);
+//	  LatLng coordDs = new LatLng(47.5,-122.3);
+		
 		
 		for (int i = 0; i < repoSize; i++) {
 
@@ -72,25 +77,20 @@ public class GoogleCurrentLocationDistanceAPIController {
 		       !charity.getIsCharity().equals("Charity")) {
 				continue;
 			}
-			
+
+						
 			try {
 				DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
 				
 					System.out.println(" TRY BLOCK ----------------------> " + charity.getStreetAddress());
-				
-				DistanceMatrix trix = req.origins("47.7,-122.4")
+					
+				DistanceMatrix trix = 
+						req.origins(coordOr)
 						.destinations(charity.getStreetAddress(), charity.getCity())
-					//	.destinations("47.5,-122.3")
-						// .mode(TravelMode.DRIVING)
-						// .avoid(RouteRestriction.HIGHWAYS)
-						// .language("en-US")
-						.await();
-				
-				
-				System.out.println(" --------------------------> " + trix);
-				System.out.println(" --------------------------> " + trix.toString());
-				
-				
+						.awaitIgnoreError();
+								
+				System.out.println(" Dist Object ---------------------> " + trix);
+								
 				String s = trix.rows[0].elements[0].distance.humanReadable;	
 					System.out.println(" --------------------------> " + s);
 				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
