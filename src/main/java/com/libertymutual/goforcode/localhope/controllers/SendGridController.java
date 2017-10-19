@@ -70,7 +70,7 @@ public class SendGridController {
 	}
 	
 	@PostMapping("getpassword")
-	public void retrieve(@RequestBody String username) throws IOException {
+	public String retrieve(@RequestBody String username) throws IOException {
 		System.out.println("username is " + username);
 		UserD user = userRepository.findByUsername(username);
 		Email from = new Email("localhope17@gmail.com");
@@ -105,6 +105,7 @@ public class SendGridController {
 			System.out.println(response.getStatusCode());
 			System.out.println(response.getBody());
 			System.out.println(response.getHeaders());
+			return "Sent an e-mail to" + user.getEmail();
 		} catch (IOException ex) {
 			throw ex;
 		}

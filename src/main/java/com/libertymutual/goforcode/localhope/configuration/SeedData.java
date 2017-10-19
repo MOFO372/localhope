@@ -102,7 +102,7 @@ public class SeedData {
 				// phone ***verified in Twilio***
 	            "(501) 529-0281", 
 	            // email     
-	            "jasmine@if.you.can", 
+	            "jasminestotts@gmail.com", 
 	            // donation preferences (do-gooders only)
 	            "", 
 	            // charity preferences (do-gooders only)
