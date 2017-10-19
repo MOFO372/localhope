@@ -27,7 +27,7 @@ public class SendGridController {
 	@PostMapping("")
 	public void main(String username) throws IOException {
 		UserD user = userRepository.findByUsername(username);
-		Email from = new Email("rsoley92@gmail.com");
+		Email from = new Email("localhope17@gmail.com");
 		String subject = "Welcome to LocalHope!";
 		Email to = new Email(user.getEmail());
 		Content content = new Content("text/html", " ");
@@ -72,7 +72,7 @@ public class SendGridController {
 	@PostMapping("get_password")
 	public void retrieve(@RequestBody String username) throws IOException {
 		UserD user = userRepository.findByUsername(username);
-		Email from = new Email("rsoley92@gmail.com");
+		Email from = new Email("localhope17@gmail.com");
 		String subject = "Your LocalHope password";
 		Email to = new Email(user.getEmail());
 		System.out.println("email is " + user.getEmail());
@@ -108,4 +108,5 @@ public class SendGridController {
 			throw ex;
 		}
 	}
+
 }
