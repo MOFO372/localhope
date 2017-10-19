@@ -69,8 +69,9 @@ public class SendGridController {
 		}
 	}
 	
-	@PostMapping("get_password")
+	@PostMapping("getpassword")
 	public void retrieve(@RequestBody String username) throws IOException {
+		System.out.println("username is " + username);
 		UserD user = userRepository.findByUsername(username);
 		Email from = new Email("localhope17@gmail.com");
 		String subject = "Your LocalHope password";
