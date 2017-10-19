@@ -68,9 +68,6 @@ public class UserD implements UserDetails {
 	@Column(name="role_name", nullable = false)
 	private String isCharity;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-	private List<UserRole> roles;
-	
 	
 	// User only  -----------------------------------	
 	@Column(length=200)
@@ -413,14 +410,6 @@ public class UserD implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
-
-	public List<UserRole> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<UserRole> roles) {
-		this.roles = roles;
 	}
 
 	public String getFollowers() {
