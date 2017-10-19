@@ -49,9 +49,7 @@ public class GoogleCurrentLocationDistanceAPIController {
 	
 	@PostMapping("distancecurrent/{range}")
 	public List<Need> getCharitiesByDistanceFromCurrentLocation
-//		(@RequestBody double latCurrent, double longCurrent, double range) {
 		(@PathVariable double range, @RequestBody Coordinate coordinate) {
- // Coordinates
 
 		range = milesToKm(range);
 		double latCurrent  = coordinate.getLatitude();
@@ -68,12 +66,9 @@ public class GoogleCurrentLocationDistanceAPIController {
 		UserD charity;
 		
 		LatLng coordOr = new LatLng(latCurrent, longCurrent);
-//		LatLng coordOr = new LatLng(47.7,-122.4);
-//	    LatLng coordDs = new LatLng(47.5,-122.3);
 		
 		
 		for (int i = 0; i < repoSize; i++) {
-
 			charity = allCharities.get(i);
 
 			if (charity == null || charity.getStreetAddress().isEmpty() || charity.getCity().isEmpty() || 
@@ -98,7 +93,6 @@ public class GoogleCurrentLocationDistanceAPIController {
 					nearbyCharities.add(charity);
 
 					for (int j = 0; j < needRepository.count(); j++) {
-
 						Need thisNeed = allNeeds.get(j);
 
 						if (thisNeed.getUsers().get(0).getId() == charity.getId() && !thisNeed.getNeedMet()) {
