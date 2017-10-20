@@ -96,6 +96,7 @@ public class SessionController {
 
 		if (sentCode.equals(user.getResetNumber())) {
 			user.setPassword(encryptedPassword);
+			user.setResetNumber(null);
 			return user;
 		} else {
 			return null;

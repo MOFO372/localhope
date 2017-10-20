@@ -35,7 +35,6 @@ public class SendGridController {
 		String dumbTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
 		String charityTemplate = "782b277d-a9ba-4e28-8ba5-32638d8f4f31";
 		String dogooderTemplate = "68adc8d5-fe38-4f6d-9ff5-187c2a4eb775";
-		System.out.println("isCharity" + user.getIsCharity());
 		
 		if (user.getIsCharity().equals("Charity")) {
 			mail.setTemplateId(charityTemplate);
@@ -79,20 +78,24 @@ public class SendGridController {
 		System.out.println("email is " + user.getEmail());
 		Content content = new Content("text/html", " ");
 		Mail mail = new Mail(from, subject, to, content);
-		String dumbTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
-		mail.setTemplateId(dumbTemplate);
+		String resetTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
+		mail.setTemplateId(resetTemplate);
 		
 		//verification code fanciness
 		Integer reset = (int) Math.round(Math.random()*99999);
 		String resetCode = reset.toString().format("%05d", reset);
 		user.setResetNumber(resetCode);
-		System.out.println("your code is" + resetCode);
+		System.out.println("your code is " + resetCode);
+		System.out.println("your name is " + user.getFirstName());
+		System.out.println("your charity name is " + user.getCharityName());
 		
 		// we personalize our emails because we love our users
 		Personalization personalization = new Personalization();
 		personalization.addTo(to);
 		personalization.addSubstitution("%first_name%", user.getFirstName());
-		personalization.addSubstitution("%code%", user.getResetNumber());
+		personalization.addSubstitution("%city%", user.getCity());
+		personalization.addSubstitution("%code%", resetCode);
+		
 		mail.addPersonalization(personalization);
 
 		SendGrid sg = new SendGrid(key);
@@ -105,7 +108,7 @@ public class SendGridController {
 			System.out.println(response.getStatusCode());
 			System.out.println(response.getBody());
 			System.out.println(response.getHeaders());
-			return "Sent an e-mail to" + user.getEmail();
+			return "Sent an e-mail to " + user.getEmail();
 		} catch (IOException ex) {
 			throw ex;
 		}
