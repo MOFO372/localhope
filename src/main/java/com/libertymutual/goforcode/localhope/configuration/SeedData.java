@@ -2,6 +2,7 @@ package com.libertymutual.goforcode.localhope.configuration;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -77,7 +78,7 @@ public class SeedData {
 		needRepository.save(new Need(1L, "crib",  false, "We need those cribs!", 10, "units", sqlDate, users, false));
 		needRepository.save(new Need(2L, "money", true, "We need to buy more cribs.", 200, "units", sqlDate, users, false));
 		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, "units", sqlDate, users, false));
-		needRepository.save(new Need(4L, "money", false, "We need money for liquor.", 600, "dollars", sqlDate, users, true));
+	
 				
 		userRepository.save(new UserD(31L, 
 				
@@ -123,7 +124,7 @@ public class SeedData {
         		null));
 	
 		
-		userRepository.save(new UserD(32L, 
+		UserD user2 = userRepository.save(new UserD(32L, 
 				// username
 				"Mofo", 
 				// password				
@@ -165,6 +166,10 @@ public class SeedData {
 				// resetNumber (used for resetting password)
         		null));
 
+		List<UserD> stupidList = new ArrayList<UserD>();
+		stupidList.add(user2);
+		
+		needRepository.save(new Need(4L, "money", false, "We need money for liquor.", 600, "dollars", sqlDate, stupidList, true));
 
 		userRepository.save(new UserD(11L, 
 				// username		

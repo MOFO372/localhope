@@ -119,9 +119,12 @@ public class SendGridController {
 	}
 
 	
-	public void fulfill(String username, long needid) throws IOException {
-		UserD user = userRepository.findByUsername(username);
+	public void fulfill(FulfillModel fulfill, long needid) throws IOException {
+		long userId = fulfill.getUserid();
+		UserD user = userRepository.findOne(userId);
 		Need need = needRepository.findOne(needid);
+		int amountNumber = fulfill.getReduceBy();
+		String amount = String.valueOf(amountNumber);
 		
 		UserD charity = need.getUsers().get(0); 
 		
@@ -136,7 +139,13 @@ public class SendGridController {
 		
 		Personalization personalization = new Personalization();
 		personalization.addTo(to);
-		personalization.addSubstitution("%first_name%", user.getFirstName());
+		personalization.addSubstitution("%user_first_name%", user.getFirstName());
+		personalization.addSubstitution("%user_last_name%", user.getLastName());
+		personalization.addSubstitution("%user_email%", user.getEmail());
+		personalization.addSubstitution("%user_phone_number%", user.getPhone());
+		personalization.addSubstitution("%need_description%", need.getDescription());
+		personalization.addSubstitution("%need_amount%", amount);
+		personalization.addSubstitution("%need_unit%", need.getUnits());
 		personalization.addSubstitution("%city%", user.getCity());
 		personalization.addSubstitution("%charity_name%", user.getCharityName());
 		
