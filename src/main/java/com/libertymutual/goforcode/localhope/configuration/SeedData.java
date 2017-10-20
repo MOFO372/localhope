@@ -77,7 +77,7 @@ public class SeedData {
 		needRepository.save(new Need(1L, "crib",  false, "We need those cribs!", 10, "units", sqlDate, users, false));
 		needRepository.save(new Need(2L, "money", true, "We need to buy more cribs.", 200, "units", sqlDate, users, false));
 		needRepository.save(new Need(3L, "volunteer", false, "We need to deliver them cribs.", 6, "units", sqlDate, users, false));
-		
+		needRepository.save(new Need(4L, "money", false, "We need money for liquor.", 600, "dollars", sqlDate, users, true));
 				
 		userRepository.save(new UserD(31L, 
 				
@@ -108,7 +108,7 @@ public class SeedData {
 	            // charity preferences (do-gooders only)
 	            "", 
 	            // followed charities (do-gooders only)         
-	            "01-1234111", 
+	            "01-1234111 01-1234144", 
 	            // followers (charities only)    
 	            "", 
 	            // charity name (charities only)    
@@ -129,7 +129,7 @@ public class SeedData {
 				// password				
 				encoder.encode("bitch"), 
 				// user type				
-				"User", 
+				"Charity", 
 				// first name				
 				"Rachel", 
 				// last name				
@@ -151,13 +151,13 @@ public class SeedData {
 	    	    // charity preferences (do-gooders only)	            
 	            "", 
 	    	    // followed charities (do-gooders only)	            
-	            "01-1234111", 
+	            "", 
 	    	    // followers (charities only)	            
 	            "", 
 	    	    // charity name (charities only)        
-	            "", 
+	            "Fuck Swearington's School for Underpriviliged Girls", 
 	    	    // ein (charities only)	            
-	            "", 
+	            "01-1234144", 
 	    	    // charity user role (charities only)	            
 	            "", 
 	    	    // charity type (charities only)	            
