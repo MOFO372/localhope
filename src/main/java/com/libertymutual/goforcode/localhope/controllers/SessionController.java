@@ -11,7 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,12 +35,13 @@ public class SessionController {
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
-	private SendGridController sendGridController; 
+	private SendGridController sendGridController;
 
-	public SessionController (UserRepository userRepository, PasswordEncoder encoder, SendGridController sendGridController) {
+	public SessionController(UserRepository userRepository, PasswordEncoder encoder,
+			SendGridController sendGridController) {
 		this.userRepository = userRepository;
 		this.encoder = encoder;
-		this.sendGridController = sendGridController; 
+		this.sendGridController = sendGridController;
 
 	}
 
@@ -49,9 +52,9 @@ public class SessionController {
 		return mv;
 	}
 
-
 	@PostMapping("registration")
-	public UserD register(@RequestBody UserD user, HttpServletResponse response) throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
+	public UserD register(@RequestBody UserD user, HttpServletResponse response)
+			throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
 
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
@@ -59,7 +62,6 @@ public class SessionController {
 		user.setCharityPreference("");
 		user.setDonationPreferences("");
 		user.setFollowers("");
-		System.out.println("ein" + user.getEin());
 
 		try {
 			if (user.getEin() != null && !user.getEin().isEmpty() && userRepository.findByEin(user.getEin()) != null) {
@@ -80,6 +82,20 @@ public class SessionController {
 		String password = userLogin.getPassword();
 
 		if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+			return user;
+		} else {
+			return null;
+		}
+	}
+
+	@PutMapping("resetpassword")
+	public UserD getPassword(@RequestBody LoginModel userLogin) throws IOException {
+		UserD user = userRepository.findByUsername(userLogin.getUsername());
+		String encryptedPassword = encoder.encode(userLogin.getPassword());
+		String sentCode = userLogin.getResetNumber();
+
+		if (sentCode.equals(user.getResetNumber())) {
+			user.setPassword(encryptedPassword);
 			return user;
 		} else {
 			return null;

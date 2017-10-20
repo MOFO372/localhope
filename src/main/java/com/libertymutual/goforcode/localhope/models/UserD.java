@@ -26,7 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserD implements UserDetails {
 
 	@Transient
-	private UserRepository userRepository;
+	private UserRepository userRepository; 
 	
 	
 	@Id
@@ -98,6 +98,9 @@ public class UserD implements UserDetails {
 	@Column(length = 20)
 	private String charityType = "NA"; // Charity type/category?? {health, education, puppies... }
 
+	@Column(length = 5)
+	private String resetNumber;
+	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
 	private List<Need> needs;
@@ -109,7 +112,7 @@ public class UserD implements UserDetails {
 	public UserD(Long id, String username, String password, String isCharity, String firstName,
 			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
 			String email, String donationPreferences, String charityPreference, String followedCharities, String followers, 
-			String charityName, String ein, String charityUserRole, String charityType) {
+			String charityName, String ein, String charityUserRole, String charityType, String resetNumber) {
 
 		this.id = id;
 		this.username = username;
@@ -134,6 +137,7 @@ public class UserD implements UserDetails {
 		this.ein = ein;
 		this.charityUserRole = charityUserRole;
 		this.charityType = charityType;
+		this.resetNumber = resetNumber;
 
 	}
 
@@ -418,6 +422,14 @@ public class UserD implements UserDetails {
 
 	public void setFollowers(String followers) {
 		this.followers = followers;
+	}
+
+	public String getResetNumber() {
+		return resetNumber;
+	}
+
+	public void setResetNumber(String resetNumber) {
+		this.resetNumber = resetNumber;
 	}
 
 }

@@ -61,7 +61,10 @@ public class SeedData {
 	        // charity user role (charities only)    
 	            "Assistant", 
 	        // charity type (charities only)    
-        		"Human Rights"));
+        		"Human Rights", 
+        	// resetNumber (used for resetting password)
+        		null
+        		));
               
         // ???????
         ArrayList<UserD> users = new ArrayList<UserD>(); 
@@ -99,7 +102,7 @@ public class SeedData {
 				// phone ***verified in Twilio***
 	            "(501) 529-0281", 
 	            // email     
-	            "jasmine@if.you.can", 
+	            "jasminestotts@gmail.com", 
 	            // donation preferences (do-gooders only)
 	            "", 
 	            // charity preferences (do-gooders only)
@@ -115,7 +118,9 @@ public class SeedData {
 	            // charity user role (charities only)	            
 	            "", 
 	            // charity type (charities only)    	            
-				""));
+				"", 
+				// resetNumber (used for resetting password)
+        		null));
 	
 		
 		userRepository.save(new UserD(32L, 
@@ -140,7 +145,7 @@ public class SeedData {
 				// phone ***verified in Twilio***				
 	            "(206) 218-2753", 
 	    	    // email	            
-	            "rachel@if.you.can", 
+	            "rsoley92@gmail.com", 
 	    	    // donation preferences (do-gooders only)	            
 	            "", 
 	    	    // charity preferences (do-gooders only)	            
@@ -156,7 +161,9 @@ public class SeedData {
 	    	    // charity user role (charities only)	            
 	            "", 
 	    	    // charity type (charities only)	            
-				""));
+				"", 
+				// resetNumber (used for resetting password)
+        		null));
 
 
 		userRepository.save(new UserD(11L, 
@@ -197,7 +204,9 @@ public class SeedData {
 			    // charity user role (charities only)     
 			    "",
 				// charity type (charities only)    
-			    ""));	
+			    "", 
+			    // resetNumber (used for resetting password)
+        		null));	
 			
 
 		userRepository.save(new UserD(11L, 
@@ -238,7 +247,9 @@ public class SeedData {
 			    // charity user role (charities only)    
 			    "", 
 			    // charity type (charities only)
-			    ""));	
+			    "", 
+			    // resetNumber (used for resetting password)
+        		null));	
 		
 
 				    
@@ -283,7 +294,9 @@ public class SeedData {
 			    // charity user role (charities only)
 			    "Assistant", 
 			    // charity type (charities only)
-				"Health"));	
+				"Health", 
+				// resetNumber (used for resetting password)
+        		null));	
 		    
 		
 		//added to needs seed data
@@ -325,7 +338,9 @@ public class SeedData {
 			    // charity user role (charities only)    
 			    "Assistant", 
 			    // charity type (charities only)
-			    "Human Rights"));	
+			    "Human Rights", 
+			    // resetNumber (used for resetting password)
+        		null));	
 
 
 		userRepository.save(new UserD(14L, 
@@ -366,7 +381,9 @@ public class SeedData {
 			    // charity user role (charities only)    
 			    "Assistant", 
 			    // charity type (charities only)    
-				"Human Rights"));	
+				"Human Rights", 
+				// resetNumber (used for resetting password)
+        		null));	
 				    
 			    
 		userRepository.save(new UserD(15L, 
@@ -407,7 +424,9 @@ public class SeedData {
 			    // charity user role (charities only)    
 			    "Assistant", 
 			    // charity type (charities only)    
-				"Education"));	
+				"Education", 
+				// resetNumber (used for resetting password)
+        		null));	
 		
 					
 			    // actual live charities
@@ -449,7 +468,9 @@ public class SeedData {
 			    // charity user role (charities only)
 			    "Assistant", 
 			    // charity type (charities only)
-				"Health"));	
+				"Health", 
+				// resetNumber (used for resetting password)
+        		null));	
 
 		userRepository.save(new UserD(98L, 
 				// username	
@@ -489,7 +510,9 @@ public class SeedData {
 			    // charity user role (charities only)
 			    "Puppy Wrangler", 
 			    // charity type (charities only)
-				"Animals"));	
+				"Animals", 
+				// resetNumber (used for resetting password)
+        		null));	
 		
 		userRepository.save(new UserD(97L, 
 				// username	
@@ -529,7 +552,9 @@ public class SeedData {
 			    // charity user role (charities only)
 			    "Teacher", 
 			    // charity type (charities only)
-				"Education"));
+				"Education", 
+				// resetNumber (used for resetting password)
+        		null));
 	}
 }
 
