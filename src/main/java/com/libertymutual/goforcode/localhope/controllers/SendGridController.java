@@ -31,8 +31,8 @@ public class SendGridController {
 		String subject = "Welcome to LocalHope!";
 		Email to = new Email(user.getEmail());
 		Content content = new Content("text/html", " ");
-		Mail mail = new Mail(from, subject, to, content);
-		String dumbTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
+		Email temp = new Email("test@test");
+		Mail mail = new Mail(from, subject, temp, content);
 		String charityTemplate = "782b277d-a9ba-4e28-8ba5-32638d8f4f31";
 		String dogooderTemplate = "68adc8d5-fe38-4f6d-9ff5-187c2a4eb775";
 		
@@ -40,9 +40,7 @@ public class SendGridController {
 			mail.setTemplateId(charityTemplate);
 		} else if (user.getIsCharity().equals("User")) {
 			mail.setTemplateId(dogooderTemplate);
-		} else {
-			mail.setTemplateId(dumbTemplate);
-		}
+		} 
 		
 		Personalization personalization = new Personalization();
 		personalization.addTo(to);
@@ -60,9 +58,9 @@ public class SendGridController {
 			request.setEndpoint("mail/send");
 			request.setBody(mail.build());
 			Response response = sg.api(request);
-			System.out.println(response.getStatusCode());
-			System.out.println(response.getBody());
-			System.out.println(response.getHeaders());
+//			System.out.println(response.getStatusCode());
+//			System.out.println(response.getBody());
+//			System.out.println(response.getHeaders());
 		} catch (IOException ex) {
 			throw ex;
 		}
@@ -75,9 +73,10 @@ public class SendGridController {
 		Email from = new Email("localhope17@gmail.com");
 		String subject = "Your LocalHope password";
 		Email to = new Email(user.getEmail());
+		Email temp = new Email("test@test");
 		System.out.println("email is " + user.getEmail());
 		Content content = new Content("text/html", " ");
-		Mail mail = new Mail(from, subject, to, content);
+		Mail mail = new Mail(from, subject, temp, content);
 		String resetTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
 		mail.setTemplateId(resetTemplate);
 		
