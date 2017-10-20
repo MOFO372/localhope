@@ -99,6 +99,7 @@ public class SessionController {
 		if (sentCode.equals(user.getResetNumber())) {
 			user.setPassword(encryptedPassword);
 			user.setResetNumber(null);
+			userRepository.save(user);
 			return user;
 		} else {
 			return null;
