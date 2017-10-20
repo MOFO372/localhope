@@ -1,5 +1,6 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,10 +25,12 @@ public class NeedController {
 
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
+	private SendGridController sendGridController;
 
-	private NeedController(UserRepository userRepository, NeedRepository needRepository) {
+	private NeedController(UserRepository userRepository, NeedRepository needRepository, SendGridController sendGridController) {
 		this.userRepository = userRepository;
 		this.needRepository = needRepository;
+		this.sendGridController = sendGridController;
 
 	}
 
@@ -61,11 +64,19 @@ public class NeedController {
 	
 	// Decrements the need quantity when someone donates time/money/stuff 
 	@PostMapping("needreduce/{needid}") 
-	public void reduceNeedAmount(@PathVariable long needid, @RequestBody int reduceBy) {				
+	public void reduceNeedAmount(@PathVariable long needid, @RequestBody int reduceBy, long userid) throws IOException {				
 		Need need = needRepository.findOne(needid);		
+		UserD user = userRepository.findOne(userid);
+		String username = user.getUsername();
+
+		// decrement need count
 		need.setOriginalAmount(Math.max(need.getOriginalAmount() - reduceBy, 0));
 		if (need.getOriginalAmount() == 0) need.setNeedMet(true);
 		need = needRepository.save(need);		
+		
+		// send email
+		sendGridController.fulfill(username, needid);
+		
 	}
 	
 	

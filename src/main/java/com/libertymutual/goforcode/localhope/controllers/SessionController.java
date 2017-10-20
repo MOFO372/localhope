@@ -93,7 +93,9 @@ public class SessionController {
 		UserD user = userRepository.findByUsername(userLogin.getUsername());
 		String encryptedPassword = encoder.encode(userLogin.getPassword());
 		String sentCode = userLogin.getResetNumber();
-
+		System.out.println("tried to reset password");
+		System.out.println("new password is " + userLogin.getPassword());
+		
 		if (sentCode.equals(user.getResetNumber())) {
 			user.setPassword(encryptedPassword);
 			user.setResetNumber(null);

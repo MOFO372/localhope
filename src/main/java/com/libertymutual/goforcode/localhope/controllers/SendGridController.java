@@ -1,6 +1,8 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 import com.sendgrid.*;
 import java.io.IOException;
@@ -19,9 +21,11 @@ public class SendGridController {
 	private String key;
 	
 	private UserRepository userRepository;
+	private NeedRepository needRepository;
 	
-	public SendGridController (UserRepository userRepository) {
+	public SendGridController (UserRepository userRepository, NeedRepository needRepository) {
 		this.userRepository = userRepository;
+		this.needRepository = needRepository;
 	}
 	
 	@PostMapping("")
@@ -84,6 +88,7 @@ public class SendGridController {
 		Integer reset = (int) Math.round(Math.random()*99999);
 		String resetCode = reset.toString().format("%05d", reset);
 		user.setResetNumber(resetCode);
+		userRepository.save(user);
 		System.out.println("your code is " + resetCode);
 		System.out.println("your name is " + user.getFirstName());
 		System.out.println("your charity name is " + user.getCharityName());
@@ -113,4 +118,44 @@ public class SendGridController {
 		}
 	}
 
+	
+	public void fulfill(String username, long needid) throws IOException {
+		UserD user = userRepository.findByUsername(username);
+		Need need = needRepository.findOne(needid);
+		
+		UserD charity = need.getUsers().get(0); 
+		
+		Email from = new Email("localhope17@gmail.com");
+		String subject = "A need has been fulfilled!";
+		Email to = new Email(charity.getEmail());
+		Content content = new Content("text/html", " ");
+		Email temp = new Email("test@test");
+		Mail mail = new Mail(from, subject, temp, content);
+		String fulfillTemplate = "14e6588d-6c18-48e4-a2cd-fb779677c90c";
+		mail.setTemplateId(fulfillTemplate);
+		
+		Personalization personalization = new Personalization();
+		personalization.addTo(to);
+		personalization.addSubstitution("%first_name%", user.getFirstName());
+		personalization.addSubstitution("%city%", user.getCity());
+		personalization.addSubstitution("%charity_name%", user.getCharityName());
+		
+		mail.addPersonalization(personalization);
+
+		SendGrid sg = new SendGrid(key);
+		
+		Request request = new Request();
+		try {
+			request.setMethod(Method.POST);
+			request.setEndpoint("mail/send");
+			request.setBody(mail.build());
+			Response response = sg.api(request);
+//			System.out.println(response.getStatusCode());
+//			System.out.println(response.getBody());
+//			System.out.println(response.getHeaders());
+		} catch (IOException ex) {
+			throw ex;
+		}
+	}
+	
 }
