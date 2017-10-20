@@ -64,18 +64,18 @@ public class NeedController {
 	
 	// Decrements the need quantity when someone donates time/money/stuff 
 	@PostMapping("needreduce/{needid}") 
-	public void reduceNeedAmount(@PathVariable long needid, @RequestBody int reduceBy, long userid) throws IOException {				
+	public void reduceNeedAmount(@PathVariable long needid, @RequestBody FulfillModel fulfill) throws IOException {				
 		Need need = needRepository.findOne(needid);		
-		UserD user = userRepository.findOne(userid);
+		UserD user = userRepository.findOne(fulfill.getUserid());
 		String username = user.getUsername();
 
 		// decrement need count
-		need.setOriginalAmount(Math.max(need.getOriginalAmount() - reduceBy, 0));
+		need.setOriginalAmount(Math.max(need.getOriginalAmount() - fulfill.getReduceBy(), 0));
 		if (need.getOriginalAmount() == 0) need.setNeedMet(true);
 		need = needRepository.save(need);		
 		
 		// send email
-		sendGridController.fulfill(username, needid);
+		sendGridController.fulfill(fulfill, needid);
 		
 	}
 	
