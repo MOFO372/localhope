@@ -73,9 +73,10 @@ public class SendGridController {
 		Email from = new Email("localhope17@gmail.com");
 		String subject = "Your LocalHope password";
 		Email to = new Email(user.getEmail());
+		Email temp = new Email("test@test");
 		System.out.println("email is " + user.getEmail());
 		Content content = new Content("text/html", " ");
-		Mail mail = new Mail(from, subject, to, content);
+		Mail mail = new Mail(from, subject, temp, content);
 		String resetTemplate = "89de9d75-6e04-44d1-a11d-eaba98301eb9";
 		mail.setTemplateId(resetTemplate);
 		
