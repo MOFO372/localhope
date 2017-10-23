@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
 @Entity
-public  class UserD implements UserDetails {
+public abstract class UserD implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
