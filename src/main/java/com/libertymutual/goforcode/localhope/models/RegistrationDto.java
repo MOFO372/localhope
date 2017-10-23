@@ -43,6 +43,7 @@ public class RegistrationDto {
 			charity.setEmail(email);
 			charity.setIsCharity(isCharity);
 			charity.setEin(ein);
+			charity.setCharityName(charityName);
 			System.out.println("set values for a charity " + charity.getUsername());
 			return charity;
 		} else if (isCharity == "User") {

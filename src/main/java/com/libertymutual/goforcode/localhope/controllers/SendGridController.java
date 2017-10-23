@@ -36,7 +36,6 @@ public class SendGridController {
 	@PostMapping("")
 	public void main(String username) throws IOException {
 		UserD user = userRepository.findByUsername(username);
-		System.out.println("breakpoint");
 		Long id = user.getId(); 
 		
 		Email from = new Email("localhope17@gmail.com");
@@ -63,7 +62,7 @@ public class SendGridController {
 		
 		if (user.getIsCharity().equals("Charity")) {
 			Charity charity = charityRepository.findOne(id); 
-			System.out.println("id is " + id);
+			System.out.println("id is " + id + ", but charity name is " + charity.getCharityName());
 			personalization.addSubstitution("%charity_name%", charity.getCharityName());
 		}
 		

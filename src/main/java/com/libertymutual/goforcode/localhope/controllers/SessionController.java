@@ -57,13 +57,15 @@ public class SessionController {
 	@PostMapping("registration")
 	public UserD register(@RequestBody RegistrationDto dto, HttpServletResponse response)
 			throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
-			
+
 		System.out.println("what's up?" + dto.createUser().getUsername());
 		String password = dto.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		dto.setPassword(encryptedPassword);
 		UserD user = dto.createUser();
 
+		UserD user = dto.createUser();
+		
 		try {
 			if (dto.getEin() != null && !dto.getEin().isEmpty()
 					&& charityRepository.findByEin(dto.getEin()) != null) {
