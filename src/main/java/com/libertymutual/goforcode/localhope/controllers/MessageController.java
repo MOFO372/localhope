@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Charity;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 import com.twilio.Twilio;
@@ -31,10 +33,12 @@ public class MessageController {
 	
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
+	private CharityRepository charityRepository; 
 
-	public MessageController(NeedRepository needRepository, UserRepository userRepository) {
+	public MessageController(NeedRepository needRepository, UserRepository userRepository, CharityRepository charityRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
+		this.charityRepository = charityRepository;
 	}
 
 	@PostMapping("message/{charityid}")
@@ -47,7 +51,7 @@ public class MessageController {
 		
 		Need need = needRepository.findOne(needid);
 		System.out.println(needid);
-		UserD charity = userRepository.findOne(charityid);
+		Charity charity = charityRepository.findOne(charityid);
 		System.out.println(charityid);
 		String needMessage = "What we need: " + need.getOriginalAmount() + " of " + need.getDescription() + " by "
 				+ need.getDateNeeded();

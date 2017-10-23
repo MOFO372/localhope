@@ -1,4 +1,4 @@
-package com.libertymutual.goforcode.localhope.controllers;
+package com.libertymutual.goforcode.localhope.models;
 
 public class LoginModel {
 	private String username;
