@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Charity;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -22,6 +24,7 @@ public class CharityController {
 
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
+	private CharityRepository charityRepository; 
 
 	private CharityController(UserRepository userRepository, NeedRepository needRepository) {
 		this.userRepository = userRepository;
@@ -32,8 +35,9 @@ public class CharityController {
 	@GetMapping("charity/{userid}")
 	public List<Need> addCharityNeed(@PathVariable long userid) {
 		UserD user = userRepository.findOne(userid);
-		List<Need> needs = user.getNeeds();
-		int sizeFollowers = user.getFollowers().length();
+		Charity charity = charityRepository.findOne(userid);
+		List<Need> needs = charity.getNeeds();
+		int sizeFollowers = charity.getFollowers().length();
 		if (sizeFollowers == 0) {
 			for (int i = 0; i < needs.size(); i++) {
 				needs.get(i).setHasFollowers(false);
@@ -44,13 +48,13 @@ public class CharityController {
 			}
 		}
 
-		return user.getNeeds();
+		return charity.getNeeds();
 	}
 
 	// Provide a list of all users who have followed the charity
 	@GetMapping("followers/{charityid}")
 	public List<UserD> listFollowers(@PathVariable long charityid) {
-		UserD charity = userRepository.findOne(charityid);
+		Charity charity = charityRepository.findOne(charityid); 
 		List<UserD> followers = charity.listFollowers(userRepository);
 		return followers;
 	}
@@ -58,7 +62,7 @@ public class CharityController {
 	// Associate a newly-created Need with a Charity & display all Needs for this
 	@PostMapping("charity/{userid}") // this is the ID of the charity
 	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
-		UserD user = userRepository.findOne(userid);
+		Charity user = charityRepository.findOne(userid);
 		
 		int sizeFollowers = user.getFollowers().length();
 		if (sizeFollowers == 0) {

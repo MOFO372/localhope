@@ -1,5 +1,6 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.libertymutual.goforcode.localhope.models.FulfillModel;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.models.YouCannotDeleteThisNeedException;
@@ -24,10 +27,12 @@ public class NeedController {
 
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
+	private SendGridController sendGridController;
 
-	private NeedController(UserRepository userRepository, NeedRepository needRepository) {
+	private NeedController(UserRepository userRepository, NeedRepository needRepository, SendGridController sendGridController) {
 		this.userRepository = userRepository;
 		this.needRepository = needRepository;
+		this.sendGridController = sendGridController;
 
 	}
 
@@ -61,11 +66,19 @@ public class NeedController {
 	
 	// Decrements the need quantity when someone donates time/money/stuff 
 	@PostMapping("needreduce/{needid}") 
-	public void reduceNeedAmount(@PathVariable long needid, @RequestBody int reduceBy) {				
+	public void reduceNeedAmount(@PathVariable long needid, @RequestBody FulfillModel fulfill) throws IOException {				
 		Need need = needRepository.findOne(needid);		
-		need.setOriginalAmount(Math.max(need.getOriginalAmount() - reduceBy, 0));
+		UserD user = userRepository.findOne(fulfill.getUserid());
+		String username = user.getUsername();
+
+		// decrement need count
+		need.setOriginalAmount(Math.max(need.getOriginalAmount() - fulfill.getReduceBy(), 0));
 		if (need.getOriginalAmount() == 0) need.setNeedMet(true);
 		need = needRepository.save(need);		
+		
+		// send email
+		sendGridController.fulfill(fulfill, needid);
+		
 	}
 	
 	
