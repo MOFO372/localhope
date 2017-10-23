@@ -62,7 +62,6 @@ public class SendGridController {
 		
 		if (user.getIsCharity().equals("Charity")) {
 			Charity charity = charityRepository.findOne(id); 
-			System.out.println("id is " + id + ", but charity name is " + charity.getCharityName());
 			personalization.addSubstitution("%charity_name%", charity.getCharityName());
 		}
 		
@@ -77,9 +76,6 @@ public class SendGridController {
 			request.setEndpoint("mail/send");
 			request.setBody(mail.build());
 			Response response = sg.api(request);
-//			System.out.println(response.getStatusCode());
-//			System.out.println(response.getBody());
-//			System.out.println(response.getHeaders());
 		} catch (IOException ex) {
 			throw ex;
 		}
@@ -121,9 +117,6 @@ public class SendGridController {
 			request.setEndpoint("mail/send");
 			request.setBody(mail.build());
 			Response response = sg.api(request);
-			System.out.println(response.getStatusCode());
-			System.out.println(response.getBody());
-			System.out.println(response.getHeaders());
 			return "Sent an e-mail to " + user.getEmail();
 		} catch (IOException ex) {
 			throw ex;
@@ -176,9 +169,6 @@ public class SendGridController {
 			request.setEndpoint("mail/send");
 			request.setBody(mail.build());
 			Response response = sg.api(request);
-//			System.out.println(response.getStatusCode());
-//			System.out.println(response.getBody());
-//			System.out.println(response.getHeaders());
 		} catch (IOException ex) {
 			throw ex;
 		}

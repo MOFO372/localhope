@@ -70,7 +70,6 @@ public class Charity extends UserD {
 		ArrayList<UserD> users = new ArrayList<UserD>();
 
 		for (int i = 0; i < userNames.length; i++) {
-			System.out.println(userRepository.findByUsername(userNames[i])); // delete
 			users.add(userRepository.findByUsername(userNames[i]));
 		}
 		return users;
