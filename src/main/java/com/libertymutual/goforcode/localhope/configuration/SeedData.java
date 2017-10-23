@@ -15,6 +15,7 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 @Configuration
 @Profile("development")
+// spring.profiles.active=development
 public class SeedData {
 	
 	// PasswordEncoder encoder
