@@ -19,6 +19,7 @@ import com.libertymutual.goforcode.localhope.models.Charity;
 import com.libertymutual.goforcode.localhope.models.DoGooder;
 import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
 import com.libertymutual.goforcode.localhope.models.LoginModel;
+import com.libertymutual.goforcode.localhope.models.RegistrationDto;
 import com.libertymutual.goforcode.localhope.models.UniqueEinForCharitiesException;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
@@ -54,35 +55,29 @@ public class SessionController {
 	}
 
 	@PostMapping("registration")
-	public UserD register(@RequestBody UserD user, HttpServletResponse response)
+	public UserD register(@RequestBody RegistrationDto dto, HttpServletResponse response)
 			throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
-
-		DoGooder dogooder = new DoGooder();
-		Charity charity = new Charity();
-
-		String password = user.getPassword();
+		UserD user = dto.createUser();
+		
+		System.out.println("what's up?" + dto.createUser().getUsername());
+		String password = dto.getPassword();
 		String encryptedPassword = encoder.encode(password);
-		user.setPassword(encryptedPassword);
-
-		if (user.getIsCharity().equals("Charity")) {
-			charity.setFollowers("");
-		} else {
-			dogooder.setCharityPreference("");
-			dogooder.setDonationPreferences("");
-		}
+		dto.setPassword(encryptedPassword);
 
 		try {
-			if (charity.getEin() != null && !charity.getEin().isEmpty()
-					&& charityRepository.findByEin(charity.getEin()) != null) {
+			if (dto.getEin() != null && !dto.getEin().isEmpty()
+					&& charityRepository.findByEin(dto.getEin()) != null) {
 				throw new UniqueEinForCharitiesException();
 			}
+			System.out.println("this is where it breaks");
+			System.out.println("see?");
 			userRepository.save(user);
-			sendGridController.main(user.getUsername());
-			return user;
+			sendGridController.main(dto.getUsername());
 		} catch (DataIntegrityViolationException dive) {
 			System.out.println("there was an error");
 			return null;
 		}
+		return user;
 	}
 
 	@PostMapping("sessions")
