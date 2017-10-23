@@ -44,6 +44,7 @@ public class RegistrationDto {
 			charity.setIsCharity(isCharity);
 			charity.setEin(ein);
 			charity.setCharityName(charityName);
+			charity.setFollowers("");
 			System.out.println("set values for a charity " + charity.getUsername());
 			return charity;
 		} else if (isCharity == "User") {

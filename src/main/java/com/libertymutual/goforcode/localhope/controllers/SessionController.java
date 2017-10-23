@@ -58,7 +58,6 @@ public class SessionController {
 	public UserD register(@RequestBody RegistrationDto dto, HttpServletResponse response)
 			throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
 
-		System.out.println("what's up?" + dto.createUser().getUsername());
 		String password = dto.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		dto.setPassword(encryptedPassword);
@@ -69,8 +68,6 @@ public class SessionController {
 					&& charityRepository.findByEin(dto.getEin()) != null) {
 				throw new UniqueEinForCharitiesException();
 			}
-			System.out.println("this is where it breaks");
-			System.out.println("see?");
 			userRepository.save(user);
 			sendGridController.main(dto.getUsername());
 		} catch (DataIntegrityViolationException dive) {
