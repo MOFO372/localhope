@@ -1,21 +1,24 @@
 package com.libertymutual.goforcode.localhope.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 
+@SuppressWarnings("serial")
 @Entity
 public class DoGooder extends UserD {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected static Long id;
+//	@OneToOne
+//	protected static Long id;
 
 	@Column(length = 200)
 	private String donationPreference;
@@ -29,8 +32,9 @@ public class DoGooder extends UserD {
 	public DoGooder() {
 	}
 
-	public DoGooder(String donationPreference, String charityPreference, String followedCharities) {
-		super(id, username, password, isCharity, firstName, lastName, streetAddress, city, state, zipCode, phone, email,
+	public DoGooder(String username, String password, String isCharity, String firstName, String lastName, String streetAddress, String city, String state, String zipCode, String phone, String email,
+			String resetNumber, String donationPreference, String charityPreference, String followedCharities) {
+		super(username, password, isCharity, firstName, lastName, streetAddress, city, state, zipCode, phone, email,
 				resetNumber);
 		this.donationPreference = donationPreference;
 		this.charityPreference = charityPreference;
@@ -79,6 +83,14 @@ public class DoGooder extends UserD {
 			}
 		}
 		return charities;
+	}
+
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
+		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+		return roles;
 	}
 
 	public String getDonationPreferences() {
