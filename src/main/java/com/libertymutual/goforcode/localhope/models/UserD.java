@@ -20,14 +20,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class UserD implements UserDetails {
+public abstract class UserD implements UserDetails {
 
-//	@Transient
-//	private UserRepository userRepository; 
+	@Transient
+	private UserRepository userRepository; 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected static Long id;
+	protected Long id;
 
 	@Column(nullable = false, unique = true)
 	protected static String username;
@@ -260,6 +260,14 @@ public class UserD implements UserDetails {
 
 	public void setNeeds(List<Need> needs) {
 		this.needs = needs;
+	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
 }

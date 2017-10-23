@@ -12,11 +12,13 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 @Entity
 public class Charity extends UserD {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected static Long id;
-
+	@Column
+	public Long getId() {
+		return id;
+	}
+	
 	// Charity only -----------------------------------
 	@Column(length = 200)
 	private String charityName = "NA"; // VALIDATION? TODO if(ein != null && !ein.isEmpty()) --> charityName has to be
@@ -40,7 +42,7 @@ public class Charity extends UserD {
 	}
 
 	public Charity(String followers, String charityName, String ein, String charityUserRole, String charityType) {
-
+		
 		this.followers = followers;
 		this.charityName = charityName;
 		this.ein = ein;
@@ -110,5 +112,4 @@ public class Charity extends UserD {
 	public void setFollowers(String followers) {
 		this.followers = followers;
 	}
-
 }
