@@ -123,5 +123,4 @@ public class Charity extends UserD {
 	public void setFollowers(String followers) {
 		this.followers = followers;
 	}
-
 }

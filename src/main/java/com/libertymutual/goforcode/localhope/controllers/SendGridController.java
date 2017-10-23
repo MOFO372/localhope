@@ -36,7 +36,9 @@ public class SendGridController {
 	@PostMapping("")
 	public void main(String username) throws IOException {
 		UserD user = userRepository.findByUsername(username);
+		System.out.println("breakpoint");
 		Long id = user.getId(); 
+		
 		Email from = new Email("localhope17@gmail.com");
 		String subject = "Welcome to LocalHope!";
 		Email to = new Email(user.getEmail());
@@ -46,11 +48,13 @@ public class SendGridController {
 		String charityTemplate = "782b277d-a9ba-4e28-8ba5-32638d8f4f31";
 		String dogooderTemplate = "68adc8d5-fe38-4f6d-9ff5-187c2a4eb775";
 		
+		
 		if (user.getIsCharity().equals("Charity")) {
 			mail.setTemplateId(charityTemplate);
 		} else if (user.getIsCharity().equals("User")) {
 			mail.setTemplateId(dogooderTemplate);
 		} 
+		
 		
 		Personalization personalization = new Personalization();
 		personalization.addTo(to);
@@ -59,6 +63,7 @@ public class SendGridController {
 		
 		if (user.getIsCharity().equals("Charity")) {
 			Charity charity = charityRepository.findOne(id); 
+			System.out.println("id is " + id);
 			personalization.addSubstitution("%charity_name%", charity.getCharityName());
 		}
 		
