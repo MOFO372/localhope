@@ -10,65 +10,59 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+@SuppressWarnings("serial")
 @Entity
 public abstract class UserD implements UserDetails {
-
-//	@Transient
-//	private UserRepository userRepository; 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected  Long id;
+	protected Long id;
 
 	@Column(nullable = false, unique = true)
-	protected  String username;
+	protected String username;
 
 	@Column(nullable = false)
-	protected  String password;
+	protected String password;
 
 	@Column(length = 200, nullable = false)
-	protected  String firstName;
+	protected String firstName;
 
 	@Column(length = 200, nullable = false)
-	protected  String lastName;
+	protected String lastName;
 
 	@Column(length = 200, nullable = false)
-	protected  String streetAddress;
+	protected String streetAddress;
 
 	@Column(length = 50, nullable = false)
-	protected  String city;
+	protected String city;
 
 
 	@Column(length = 2, nullable = false) // ??
-	protected  String state;
+	protected String state;
 
 	@Column(length = 10, nullable = false)
-	protected  String zipCode;
+	protected String zipCode;
 
 	@Column(length = 15, nullable = false)
-	protected  String phone;
+	protected String phone;
 
 	
 	@Column(length = 100, nullable = false)
-	protected  String email;
+	protected String email;
 
 	@Column(name="role_name", nullable = false)
-	protected  String isCharity;
+	protected String isCharity;
 
 
 	@Column(length = 5)
-	protected  String resetNumber;
+	protected String resetNumber;
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
@@ -83,8 +77,6 @@ public abstract class UserD implements UserDetails {
 	public UserD(String username, String password, String isCharity, String firstName,
 			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
 			String email, String resetNumber) {
-	
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.isCharity = isCharity;
@@ -208,16 +200,10 @@ public abstract class UserD implements UserDetails {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 	@JsonIgnore
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-
-		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
-		roles.add(new SimpleGrantedAuthority("ROLE_" + isCharity));
-
-		return roles;
-	}
+	public abstract Collection<? extends GrantedAuthority> getAuthorities();
 
 	@Override
 	public boolean isAccountNonExpired() {
