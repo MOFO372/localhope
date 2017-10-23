@@ -26,9 +26,12 @@ import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
+import io.swagger.annotations.Api;
+
 
 @RestController
 @CrossOrigin(origins = "*")
+@Api(description = "Logins, registrations, and password resets.")
 @RequestMapping("")
 public class SessionController {
 
@@ -93,8 +96,6 @@ public class SessionController {
 		UserD user = userRepository.findByUsername(userLogin.getUsername());
 		String encryptedPassword = encoder.encode(userLogin.getPassword());
 		String sentCode = userLogin.getResetNumber();
-		System.out.println("tried to reset password");
-		System.out.println("new password is " + userLogin.getPassword());
 		
 		if (sentCode.equals(user.getResetNumber())) {
 			user.setPassword(encryptedPassword);

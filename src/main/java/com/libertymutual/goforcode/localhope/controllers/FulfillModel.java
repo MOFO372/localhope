@@ -3,6 +3,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 public class FulfillModel {
 	private int reduceBy;
 	private long userid;
+	
 	public int getReduceBy() {
 		return reduceBy;
 	}

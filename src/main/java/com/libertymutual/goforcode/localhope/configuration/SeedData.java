@@ -1,29 +1,31 @@
-package com.libertymutual.goforcode.localhope.configuration;
 
+//package com.libertymutual.goforcode.localhope.configuration;
+//
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.context.annotation.Profile;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//
+//import com.libertymutual.goforcode.localhope.models.Need;
+//import com.libertymutual.goforcode.localhope.models.UserD;
+//import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
+//import com.libertymutual.goforcode.localhope.repositories.UserRepository;
+//
+//
+//@Configuration
+//@Profile("development")
+//public class SeedData {
+//	
+//	// PasswordEncoder encoder
+//	public SeedData(UserRepository userRepository, NeedRepository needRepository, PasswordEncoder encoder) {
+//	
+//        UserD user1 = new UserD();
+//    
+//    // why is this one separate from the rest?
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.libertymutual.goforcode.localhope.models.Need;
-import com.libertymutual.goforcode.localhope.models.UserD;
-import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
-import com.libertymutual.goforcode.localhope.repositories.UserRepository;
-
-
-@Configuration
-@Profile("development")
-public class SeedData {
-	
-	// PasswordEncoder encoder
-	public SeedData(UserRepository userRepository, NeedRepository needRepository, PasswordEncoder encoder) {
-	
-        UserD user1 = new UserD();
-    
-    // why is this one separate from the rest?
 //        user1 = userRepository.save(new UserD(13L,
 //        	// username
 //        		"PeterTheGreat2", 
@@ -560,8 +562,10 @@ public class SeedData {
 //				"Education", 
 //				// resetNumber (used for resetting password)
 //        		null));
-	}
-}
+
+//	}
+//}
+
 
 
 
