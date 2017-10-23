@@ -47,8 +47,9 @@ public class RegistrationDto {
 			charity.setFollowers("");
 			System.out.println("set values for a charity " + charity.getUsername());
 			return charity;
-		} else if (isCharity == "User") {
+		} else if (isCharity.equals("User")) {
 			DoGooder dogooder = new DoGooder();
+			System.out.println("tried to create a user");
 			dogooder.setUsername(username);
 			dogooder.setPassword(password);
 			dogooder.setFirstName(firstName);
