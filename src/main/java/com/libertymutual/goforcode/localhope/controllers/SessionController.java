@@ -64,7 +64,6 @@ public class SessionController {
 		dto.setPassword(encryptedPassword);
 		UserD user = dto.createUser();
 
-		UserD user = dto.createUser();
 		
 		try {
 			if (dto.getEin() != null && !dto.getEin().isEmpty()
