@@ -76,13 +76,13 @@ public class Charity extends UserD {
 		return users;
 	}
 
-//	@JsonIgnore
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
-//		roles.add(new SimpleGrantedAuthority("ROLE_CHARITY"));
-//		return roles;
-//	}
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
+		roles.add(new SimpleGrantedAuthority("ROLE_CHARITY"));
+		return roles;
+	}
 
 	public String getCharityName() {
 		return charityName;
