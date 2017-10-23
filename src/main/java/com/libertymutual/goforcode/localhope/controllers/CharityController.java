@@ -26,12 +26,14 @@ public class CharityController {
 	private NeedRepository needRepository;
 	private CharityRepository charityRepository; 
 
-	private CharityController(UserRepository userRepository, NeedRepository needRepository) {
+	private CharityController(UserRepository userRepository, CharityRepository charityRepository, NeedRepository needRepository) {
 		this.userRepository = userRepository;
+		this.charityRepository = charityRepository;
 		this.needRepository = needRepository;
 
 	}
 
+	// Gets needs for a charity
 	@GetMapping("charity/{userid}")
 	public List<Need> addCharityNeed(@PathVariable long userid) {
 		Charity charity = charityRepository.findOne(userid);
@@ -53,7 +55,9 @@ public class CharityController {
 	// Provide a list of all users who have followed the charity
 	@GetMapping("followers/{charityid}")
 	public List<UserD> listFollowers(@PathVariable long charityid) {
-		Charity charity = charityRepository.findOne(charityid); 
+		System.out.println("tried to list followers");
+		Charity charity = charityRepository.findOne(charityid);
+		System.out.println(charity.getUsername());
 		List<UserD> followers = charity.listFollowers(userRepository);
 		return followers;
 	}
