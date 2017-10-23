@@ -19,54 +19,56 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
+
 @Entity
-public class UserD implements UserDetails {
+public abstract class UserD implements UserDetails {
 
 //	@Transient
 //	private UserRepository userRepository; 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected static Long id;
+	protected  Long id;
 
 	@Column(nullable = false, unique = true)
-	protected static String username;
+	protected  String username;
 
 	@Column(nullable = false)
-	protected static String password;
+	protected  String password;
 
 	@Column(length = 200, nullable = false)
-	protected static String firstName;
+	protected  String firstName;
 
 	@Column(length = 200, nullable = false)
-	protected static String lastName;
+	protected  String lastName;
 
 	@Column(length = 200, nullable = false)
-	protected static String streetAddress;
+	protected  String streetAddress;
 
 	@Column(length = 50, nullable = false)
-	protected static String city;
+	protected  String city;
 
 
 	@Column(length = 2, nullable = false) // ??
-	protected static String state;
+	protected  String state;
 
 	@Column(length = 10, nullable = false)
-	protected static String zipCode;
+	protected  String zipCode;
 
 	@Column(length = 15, nullable = false)
-	protected static String phone;
+	protected  String phone;
 
 	
 	@Column(length = 100, nullable = false)
-	protected static String email;
+	protected  String email;
 
 	@Column(name="role_name", nullable = false)
-	protected static String isCharity;
+	protected  String isCharity;
 
 
 	@Column(length = 5)
-	protected static String resetNumber;
+	protected  String resetNumber;
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
@@ -78,10 +80,10 @@ public class UserD implements UserDetails {
 	}
 
 	// List<Need> needs
-	public UserD(Long id, String username, String password, String isCharity, String firstName,
+	public UserD(String username, String password, String isCharity, String firstName,
 			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
 			String email, String resetNumber) {
-
+	
 		this.id = id;
 		this.username = username;
 		this.password = password;

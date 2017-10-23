@@ -13,9 +13,9 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 @Entity
 public class Charity extends UserD {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected static Long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	protected static Long id;
 
 	// Charity only -----------------------------------
 	@Column(length = 200)
@@ -40,7 +40,7 @@ public class Charity extends UserD {
 	}
 
 	public Charity(String followers, String charityName, String ein, String charityUserRole, String charityType) {
-
+		super(username, password, isCharity, firstName, lastName, streetAddress, city, state, zipCode, phone, email, resetNumber);
 		this.followers = followers;
 		this.charityName = charityName;
 		this.ein = ein;

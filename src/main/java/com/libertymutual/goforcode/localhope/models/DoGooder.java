@@ -13,9 +13,9 @@ import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 @Entity
 public class DoGooder extends UserD {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected static Long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	protected static Long id;
 
 	@Column(length = 200)
 	private String donationPreference;
@@ -30,7 +30,7 @@ public class DoGooder extends UserD {
 	}
 
 	public DoGooder(String donationPreference, String charityPreference, String followedCharities) {
-		super(id, username, password, isCharity, firstName, lastName, streetAddress, city, state, zipCode, phone, email,
+		super(username, password, isCharity, firstName, lastName, streetAddress, city, state, zipCode, phone, email,
 				resetNumber);
 		this.donationPreference = donationPreference;
 		this.charityPreference = charityPreference;
