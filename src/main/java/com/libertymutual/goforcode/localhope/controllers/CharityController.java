@@ -34,7 +34,6 @@ public class CharityController {
 
 	@GetMapping("charity/{userid}")
 	public List<Need> addCharityNeed(@PathVariable long userid) {
-		UserD user = userRepository.findOne(userid);
 		Charity charity = charityRepository.findOne(userid);
 		List<Need> needs = charity.getNeeds();
 		int sizeFollowers = charity.getFollowers().length();
