@@ -1,7 +1,10 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
+import com.libertymutual.goforcode.localhope.models.Charity;
+import com.libertymutual.goforcode.localhope.models.FulfillModel;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 import com.sendgrid.*;
@@ -22,15 +25,20 @@ public class SendGridController {
 	
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
+	private CharityRepository charityRepository; 
 	
-	public SendGridController (UserRepository userRepository, NeedRepository needRepository) {
+	public SendGridController (UserRepository userRepository, NeedRepository needRepository, CharityRepository charityRepository) {
 		this.userRepository = userRepository;
 		this.needRepository = needRepository;
+		this.charityRepository = charityRepository;
 	}
 	
 	@PostMapping("")
 	public void main(String username) throws IOException {
 		UserD user = userRepository.findByUsername(username);
+		System.out.println("breakpoint");
+		Long id = user.getId(); 
+		
 		Email from = new Email("localhope17@gmail.com");
 		String subject = "Welcome to LocalHope!";
 		Email to = new Email(user.getEmail());
@@ -40,17 +48,25 @@ public class SendGridController {
 		String charityTemplate = "782b277d-a9ba-4e28-8ba5-32638d8f4f31";
 		String dogooderTemplate = "68adc8d5-fe38-4f6d-9ff5-187c2a4eb775";
 		
+		
 		if (user.getIsCharity().equals("Charity")) {
 			mail.setTemplateId(charityTemplate);
 		} else if (user.getIsCharity().equals("User")) {
 			mail.setTemplateId(dogooderTemplate);
 		} 
 		
+		
 		Personalization personalization = new Personalization();
 		personalization.addTo(to);
 		personalization.addSubstitution("%first_name%", user.getFirstName());
 		personalization.addSubstitution("%city%", user.getCity());
-		personalization.addSubstitution("%charity_name%", user.getCharityName());
+		
+		if (user.getIsCharity().equals("Charity")) {
+			Charity charity = charityRepository.findOne(id); 
+			System.out.println("id is " + id);
+			personalization.addSubstitution("%charity_name%", charity.getCharityName());
+		}
+		
 		
 		mail.addPersonalization(personalization);
 
@@ -89,9 +105,6 @@ public class SendGridController {
 		String resetCode = reset.toString().format("%05d", reset);
 		user.setResetNumber(resetCode);
 		userRepository.save(user);
-		System.out.println("your code is " + resetCode);
-		System.out.println("your name is " + user.getFirstName());
-		System.out.println("your charity name is " + user.getCharityName());
 		
 		// we personalize our emails because we love our users
 		Personalization personalization = new Personalization();
@@ -147,7 +160,12 @@ public class SendGridController {
 		personalization.addSubstitution("%need_amount%", amount);
 		personalization.addSubstitution("%need_unit%", need.getUnits());
 		personalization.addSubstitution("%city%", user.getCity());
-		personalization.addSubstitution("%charity_name%", user.getCharityName());
+		
+		if (user.getIsCharity().equals("Charity")) {
+			Charity charity7 = charityRepository.findOne(userId); 
+			personalization.addSubstitution("%charity_name%", charity7.getCharityName());
+		}
+		
 		
 		mail.addPersonalization(personalization);
 

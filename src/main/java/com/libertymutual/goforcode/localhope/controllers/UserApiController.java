@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Charity;
+import com.libertymutual.goforcode.localhope.models.DoGooder;
 import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.ThisIsNotACharityException;
@@ -17,6 +18,8 @@ import com.libertymutual.goforcode.localhope.models.ThisIsNotADogooderException;
 import com.libertymutual.goforcode.localhope.models.ThisIsNotAUserException;
 import com.libertymutual.goforcode.localhope.models.UnableToDeFollowThisCharityException;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
+import com.libertymutual.goforcode.localhope.repositories.DoGooderRepository;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -27,10 +30,14 @@ public class UserApiController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
+	private CharityRepository charityRepository;
+	private DoGooderRepository dogooderRepository; 
 
-	public UserApiController(NeedRepository needRepository, UserRepository userRepository) {
+	public UserApiController(NeedRepository needRepository, UserRepository userRepository, CharityRepository charityRepository, DoGooderRepository dogooderRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
+		this.dogooderRepository = dogooderRepository; 
+		this.charityRepository = charityRepository; 
 	}
 
 	
@@ -54,8 +61,8 @@ public class UserApiController {
 	@PostMapping("followcharity/{dogooderid}")
 	public UserD associateDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
 			throws ThisIsNotACharityException, ThisIsNotAUserException, FollowUniqueCharitiesOnlyException {
-		UserD user = userRepository.findOne(dogooderid);
-		UserD charity = userRepository.findOne(charityid);
+		DoGooder user = dogooderRepository.findOne(dogooderid);
+		Charity charity = charityRepository.findOne(charityid);
 		user.addFollowedCharity(charity);
 		charity.addFollowers(user);
 		userRepository.save(user);
@@ -67,8 +74,8 @@ public class UserApiController {
 	@PostMapping("unfollowcharity/{dogooderid}")
 	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
 			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
-		UserD user = userRepository.findOne(dogooderid);
-		UserD charity = userRepository.findOne(charityid);
+		DoGooder user = dogooderRepository.findOne(dogooderid);
+		Charity charity = charityRepository.findOne(charityid);
 
 		user.removeFollowedCharity(charity);
 		userRepository.save(user);
@@ -83,10 +90,10 @@ public class UserApiController {
 
 	
 	@GetMapping("followedcharities/{dogooderid}")
-	public List<UserD> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
+	public List<Charity> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
 			throws ThisIsNotACharityException {
-		UserD user = userRepository.findOne(dogooderid);
-		List<UserD> followedCharities = user.listFollowedCharities(userRepository);
+		DoGooder user = dogooderRepository.findOne(dogooderid);
+		List<Charity> followedCharities = user.listFollowedCharities(charityRepository);
 		return followedCharities;
 	}
 

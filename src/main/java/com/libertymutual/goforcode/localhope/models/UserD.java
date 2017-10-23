@@ -4,117 +4,79 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
-public class UserD implements UserDetails {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
-	@Transient
-	private UserRepository userRepository; 
-	
+@SuppressWarnings("serial")
+@Entity
+public abstract class UserD implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	protected Long id;
 
 	@Column(nullable = false, unique = true)
-	private String username;
+	protected String username;
 
 	@Column(nullable = false)
-	private String password;
+	protected String password;
 
 	@Column(length = 200, nullable = false)
-	private String firstName;
+	protected String firstName;
 
 	@Column(length = 200, nullable = false)
-	private String lastName;
+	protected String lastName;
 
 	@Column(length = 200, nullable = false)
-	private String streetAddress;
+	protected String streetAddress;
 
 	@Column(length = 50, nullable = false)
-	private String city;
+	protected String city;
 
-
-	@Column(length = 2, nullable = false) // ??
-	private String state;
+	@Column(length = 2, nullable = false)
+	protected String state;
 
 	@Column(length = 10, nullable = false)
-	private String zipCode;
+	protected String zipCode;
 
 	@Column(length = 15, nullable = false)
-	private String phone;
-
+	protected String phone;
 	
 	@Column(length = 100, nullable = false)
-	private String email;
+	protected String email;
 
 	@Column(name="role_name", nullable = false)
-	private String isCharity;
-
-	
-	// User only  -----------------------------------	
-	@Column(length=200)
-	private String donationPreferences;      
-	
-	@Column(length=100)						
-	private String charityPreference;	
-	
-	// Followed Charities   
-	@Column
-	private String followedCharities= "";
-	
-	// Followers
-	@Column
-	private String followers;
-	
-	// Charity only  -----------------------------------
-	@Column(length=200)					
-	private String charityName = "NA"; // VALIDATION?  TODO if(ein != null && !ein.isEmpty()) --> charityName has to be populated ??
-	
-	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
-	@Column(length = 10)
-	private String ein;
-
-	@Column(length = 20)
-	private String charityUserRole = "NA";
-
-	@Column(length = 20)
-	private String charityType = "NA"; // Charity type/category?? {health, education, puppies... }
+	protected String isCharity;
 
 	@Column(length = 5)
-	private String resetNumber;
+	protected String resetNumber;
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
 	private List<Need> needs;
+	
+
 
 	public UserD() {
 	}
 
 	// List<Need> needs
-	public UserD(Long id, String username, String password, String isCharity, String firstName,
+	public UserD(String username, String password, String isCharity, String firstName,
 			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
-			String email, String donationPreferences, String charityPreference, String followedCharities, String followers, 
-			String charityName, String ein, String charityUserRole, String charityType, String resetNumber) {
+			String email, String resetNumber) {
 
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.isCharity = isCharity;
@@ -126,21 +88,10 @@ public class UserD implements UserDetails {
 		this.zipCode = zipCode;
 		this.phone = phone;
 		this.email = email;
-		// this.role = role;
-
-		this.donationPreferences = donationPreferences;
-		this.charityPreference = charityPreference;
-		this.followedCharities = followedCharities;
-		this.followers = followers;
-
-		this.charityName = charityName;
-		this.ein = ein;
-		this.charityUserRole = charityUserRole;
-		this.charityType = charityType;
 		this.resetNumber = resetNumber;
+				
 
 	}
-
 	
 	// Associate a Need with a User (either DoGooder or Charity)
 	public void addNeed(Need need) {
@@ -151,79 +102,6 @@ public class UserD implements UserDetails {
 		needs.add(need);			
 		need.getUsers().add(this);
 	}
-
-	
-	// Add a Charity to the list of followed charities
-	public void addFollowedCharity(UserD charity) throws ThisIsNotACharityException, FollowUniqueCharitiesOnlyException {
-		
-		if (!charity.getIsCharity().equals("Charity")) {
-			throw new ThisIsNotACharityException();
-		}
-		if (followedCharities.indexOf(charity.getEin()) > -1) {
-			throw new FollowUniqueCharitiesOnlyException();
-		}
-		followedCharities +=  " " + charity.getEin();
-		followedCharities.trim();
-	}
-
-	
-	// Add a DoGooder to the list of a charity's followers
-	public void addFollowers(UserD user) throws ThisIsNotAUserException {
-		if (!user.getIsCharity().equals("User")) {
-			throw new ThisIsNotAUserException();
-		}		
-		followers += " " + user.getUsername();
-		followers.trim();
-	}
-	
-	
-	// Remove a Charity from the list of followed charities
-	public void removeFollowedCharity(UserD charity)
-			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
-		
-		if (!charity.getIsCharity().equals("Charity")) {
-			throw new ThisIsNotACharityException();
-		}
-		if (followedCharities.indexOf(charity.getEin()) < 0) {
-			throw new UnableToDeFollowThisCharityException();
-		}
-		
-		String temp = charity.getEin(); // redo
-		followedCharities = followedCharities.replace(temp.trim(), ""); // redo
-		followedCharities.trim();
-	}
-
-	
-	// Returns an ArrayList populated with Users who have followed this charity 
-	public ArrayList<UserD> listFollowers(UserRepository userRepository)  {				
-		String[] userNames = followers.trim().split("\\s+");
-		
-		ArrayList<UserD> users = new ArrayList<UserD>(); 
-		
-		for(int i = 0; i < userNames.length; i++) {
-							System.out.println(userRepository.findByUsername(userNames[i]));  // delete
-			users.add(userRepository.findByUsername(userNames[i]));
-		}
-		return users;
-	}
-	
-	
-	// Returns an ArrayList populated with EINs from the followedCharities Strings 
-	public ArrayList<UserD> listFollowedCharities(UserRepository userRepository)  {		
-		String[] charityNames = followedCharities.trim().split("\\s+");		
-		ArrayList<UserD> charities = new ArrayList<UserD>(); 
-		
-		// For DoGooder who is not following any Charities return [] 
-		for(int i = 0; i < charityNames.length; i++) {
-			if (charityNames[i].length() > 0) {
-				charities.add(userRepository.findByEin(charityNames[i]));	
-			}
-		}
-		return charities;
-	}
-	
-
-	
 	
 	public Long getId() {
 		return id;
@@ -304,69 +182,6 @@ public class UserD implements UserDetails {
 		this.isCharity = isCharity;
 	}
 
-	public String getCharityName() {
-		return charityName;
-	}
-
-	public void setCharityName(String charityName) {
-		this.charityName = charityName;
-	}
-
-	public String getEin() {
-		return ein;
-	}
-
-	public void setEin(String ein) {
-		this.ein = ein;
-	}
-
-	public String getCharityUserRole() {
-		return charityUserRole;
-	}
-
-	public void setCharityUserRole(String charityUserRole) {
-		this.charityUserRole = charityUserRole;
-	}
-
-	public List<Need> getNeeds() {
-		return needs;
-	}
-
-	public void setNeeds(List<Need> needs) {
-		this.needs = needs;
-	}
-
-	public String getCharityType() {
-		return charityType;
-	}
-
-	public void setCharityType(String charityType) {
-		this.charityType = charityType;
-	}
-
-	public String getDonationPreferences() {
-		return donationPreferences;
-	}
-
-	public void setDonationPreferences(String donationPreferences) {
-		this.donationPreferences = donationPreferences;
-	}
-
-	public String getCharityPreference() {
-		return charityPreference;
-	}
-
-	public void setCharityPreference(String charityPreference) {
-		this.charityPreference = charityPreference;
-	}
-
-	public String getFollowedCharities() {
-		return followedCharities;
-	}
-
-	public void setFollowedCharities(String followedCharities) {
-		this.followedCharities = followedCharities;
-	}
 
 	@Override
 	public String getPassword() {
@@ -385,16 +200,10 @@ public class UserD implements UserDetails {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 	@JsonIgnore
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-
-		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
-		roles.add(new SimpleGrantedAuthority("ROLE_" + isCharity));
-
-		return roles;
-	}
+	public abstract Collection<? extends GrantedAuthority> getAuthorities();
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -416,14 +225,7 @@ public class UserD implements UserDetails {
 		return true;
 	}
 
-	public String getFollowers() {
-		return followers;
-	}
-
-	public void setFollowers(String followers) {
-		this.followers = followers;
-	}
-
+	
 	public String getResetNumber() {
 		return resetNumber;
 	}
@@ -431,5 +233,23 @@ public class UserD implements UserDetails {
 	public void setResetNumber(String resetNumber) {
 		this.resetNumber = resetNumber;
 	}
+
+//	public UserRepository getUserRepository() {
+//		return userRepository;
+//	}
+//
+//	public void setUserRepository(UserRepository userRepository) {
+//		this.userRepository = userRepository;
+//	}
+
+	public List<Need> getNeeds() {
+		return needs;
+	}
+
+	public void setNeeds(List<Need> needs) {
+		this.needs = needs;
+	}
+
+
 
 }
