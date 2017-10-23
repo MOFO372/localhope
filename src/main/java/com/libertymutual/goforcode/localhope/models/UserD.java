@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
 @Entity
-public abstract class UserD implements UserDetails {
+public  class UserD implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -201,9 +201,9 @@ public abstract class UserD implements UserDetails {
 		this.username = username;
 	}
 	
-	@JsonIgnore
-	@Override
-	public abstract Collection<? extends GrantedAuthority> getAuthorities();
+//	@JsonIgnore
+//	@Override
+//	public abstract Collection<? extends GrantedAuthority> getAuthorities();
 
 	@Override
 	public boolean isAccountNonExpired() {
