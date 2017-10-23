@@ -62,6 +62,17 @@ public class Charity extends UserD {
 		followers += " " + user.getUsername();
 		followers.trim();
 	}
+	
+	// Add a DoGooder to the list of a charity's followers
+	public void removeFollowers(UserD user) throws ThisIsNotAUserException {
+		if (!user.getIsCharity().equals("User")) {
+			throw new ThisIsNotAUserException();
+		}
+		
+		String temp = user.getUsername();
+		followers = followers.replace(temp.trim(), "");
+		followers.trim();
+	}
 
 	// Returns an ArrayList populated with Users who have followed this charity
 	public ArrayList<UserD> listFollowers(UserRepository userRepository) {
