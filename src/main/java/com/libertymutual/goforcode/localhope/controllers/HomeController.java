@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Charity;
 import com.libertymutual.goforcode.localhope.models.Need;
 
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -24,10 +26,12 @@ public class HomeController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
+	private CharityRepository charityRepository; 
 
-	public HomeController(NeedRepository needRepository, UserRepository userRepository) {
+	public HomeController(NeedRepository needRepository, UserRepository userRepository, CharityRepository charityRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
+		this.charityRepository = charityRepository;
 	}
 
 	
@@ -41,7 +45,7 @@ public class HomeController {
 	
 	@PostMapping("need/{userid}")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need) {
-		UserD user = userRepository.findOne(userid);
+		Charity user = charityRepository.findOne(userid);
 		need = needRepository.findOne(need.getId());
 		user.addNeed(need);
 		userRepository.save(user);
@@ -50,7 +54,7 @@ public class HomeController {
 
 	
 	@GetMapping("charity")
-	public List<UserD> getCharities() {
-		return userRepository.findByIsCharity("Charity");
+	public List<Charity> getCharities() {
+		return charityRepository.findAll(); 
 	}
 }

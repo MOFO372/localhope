@@ -23,6 +23,7 @@ import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyExc
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UniqueEinForCharitiesException;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.DoGooderRepository;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -39,9 +40,10 @@ public class SessionController {
 	private UserRepository userRepository;
 	private PasswordEncoder encoder;
 	private SendGridController sendGridController;
+	private DoGooderRepository dogooderRepository; 
 
 	public SessionController(UserRepository userRepository, PasswordEncoder encoder,
-			SendGridController sendGridController) {
+			SendGridController sendGridController, DoGooderRepository dogooderRepository) {
 		this.userRepository = userRepository;
 		this.encoder = encoder;
 		this.sendGridController = sendGridController;
