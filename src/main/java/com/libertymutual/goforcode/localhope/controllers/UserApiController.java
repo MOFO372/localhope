@@ -73,11 +73,12 @@ public class UserApiController {
 	// Dis-associates the DoGooder from a Charity (by removing the EIN in DoGooder followCharity property)
 	@PostMapping("unfollowcharity/{dogooderid}")
 	public UserD removeDogooderAndCharity(@PathVariable long dogooderid, @RequestBody long charityid)
-			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException {
+			throws ThisIsNotACharityException, UnableToDeFollowThisCharityException, ThisIsNotAUserException {
 		DoGooder user = dogooderRepository.findOne(dogooderid);
 		Charity charity = charityRepository.findOne(charityid);
 
 		user.removeFollowedCharity(charity);
+		charity.removeFollowers(user);
 		userRepository.save(user);
 		return user;
 	}
