@@ -1,118 +1,114 @@
 package com.libertymutual.goforcode.localhope.models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 @Entity
 public class Charity extends UserD {
-	
 
-	
-	// Charity only  -----------------------------------
-		@Column(length=200)					
-		private String charityName = "NA"; // VALIDATION?  TODO if(ein != null && !ein.isEmpty()) --> charityName has to be populated ??
-		
-		// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
-		@Column(length = 10)
-		private String ein;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected static Long id;
 
-		@Column(length = 20)
-		private String charityUserRole = "NA";
+	// Charity only -----------------------------------
+	@Column(length = 200)
+	private String charityName = "NA"; // VALIDATION? TODO if(ein != null && !ein.isEmpty()) --> charityName has to be
+										// populated ??
 
-		@Column(length = 20)
-		private String charityType = "NA"; // Charity type/category?? {health, education, puppies... }
-		
-		// Followers
-		@Column
-		private String followers;
-		
-	
-	public Charity() {} 
-	
+	// IRS: "EIN is a unique 9-digit number", e.g. 01-0553690
+	@Column(length = 10)
+	private String ein;
+
+	@Column(length = 20)
+	private String charityUserRole = "NA";
+
+	@Column(length = 20)
+	private String charityType = "NA"; // Charity type/category?? {health, education, puppies... }
+
+	// Followers
+	@Column
+	private String followers;
+
+	public Charity() {
+	}
+
 	public Charity(String followers, String charityName, String ein, String charityUserRole, String charityType) {
-		
+
 		this.followers = followers;
 		this.charityName = charityName;
 		this.ein = ein;
 		this.charityUserRole = charityUserRole;
 		this.charityType = charityType;
-		
-		
 
 	}
-	
+
 	// Add a DoGooder to the list of a charity's followers
-		public void addFollowers(UserD user) throws ThisIsNotAUserException {
-			if (!user.getIsCharity().equals("User")) {
-				throw new ThisIsNotAUserException();
-			}		
-			followers += " " + user.getUsername();
-			followers.trim();
+	public void addFollowers(UserD user) throws ThisIsNotAUserException {
+		if (!user.getIsCharity().equals("User")) {
+			throw new ThisIsNotAUserException();
 		}
-		
-		
+		followers += " " + user.getUsername();
+		followers.trim();
+	}
 
+	// Returns an ArrayList populated with Users who have followed this charity
+	public ArrayList<UserD> listFollowers(UserRepository userRepository) {
+		String[] userNames = followers.trim().split("\\s+");
 
-		// Returns an ArrayList populated with Users who have followed this charity 
-		public ArrayList<UserD> listFollowers(UserRepository userRepository)  {				
-			String[] userNames = followers.trim().split("\\s+");
-			
-			ArrayList<UserD> users = new ArrayList<UserD>(); 
-			
-			for(int i = 0; i < userNames.length; i++) {
-								System.out.println(userRepository.findByUsername(userNames[i]));  // delete
-				users.add(userRepository.findByUsername(userNames[i]));
-			}
-			return users;
+		ArrayList<UserD> users = new ArrayList<UserD>();
+
+		for (int i = 0; i < userNames.length; i++) {
+			System.out.println(userRepository.findByUsername(userNames[i])); // delete
+			users.add(userRepository.findByUsername(userNames[i]));
 		}
+		return users;
+	}
 
-		public String getCharityName() {
-			return charityName;
-		}
+	public String getCharityName() {
+		return charityName;
+	}
 
-		public void setCharityName(String charityName) {
-			this.charityName = charityName;
-		}
+	public void setCharityName(String charityName) {
+		this.charityName = charityName;
+	}
 
-		public String getEin() {
-			return ein;
-		}
+	public String getEin() {
+		return ein;
+	}
 
-		public void setEin(String ein) {
-			this.ein = ein;
-		}
+	public void setEin(String ein) {
+		this.ein = ein;
+	}
 
-		public String getCharityUserRole() {
-			return charityUserRole;
-		}
+	public String getCharityUserRole() {
+		return charityUserRole;
+	}
 
-		public void setCharityUserRole(String charityUserRole) {
-			this.charityUserRole = charityUserRole;
-		}
+	public void setCharityUserRole(String charityUserRole) {
+		this.charityUserRole = charityUserRole;
+	}
 
-		public String getCharityType() {
-			return charityType;
-		}
+	public String getCharityType() {
+		return charityType;
+	}
 
-		public void setCharityType(String charityType) {
-			this.charityType = charityType;
-		}
+	public void setCharityType(String charityType) {
+		this.charityType = charityType;
+	}
 
-		public String getFollowers() {
-			return followers;
-		}
+	public String getFollowers() {
+		return followers;
+	}
 
-		public void setFollowers(String followers) {
-			this.followers = followers;
-		}
-
-		
+	public void setFollowers(String followers) {
+		this.followers = followers;
+	}
 
 }

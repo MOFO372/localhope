@@ -1,6 +1,7 @@
 package com.libertymutual.goforcode.localhope.controllers;
 
 import com.libertymutual.goforcode.localhope.models.Charity;
+import com.libertymutual.goforcode.localhope.models.FulfillModel;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
