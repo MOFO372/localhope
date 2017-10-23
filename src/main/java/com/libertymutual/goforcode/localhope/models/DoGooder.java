@@ -85,13 +85,13 @@ public class DoGooder extends UserD {
 		return charities;
 	}
 
-	@JsonIgnore
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
-		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-		return roles;
-	}
+//	@JsonIgnore
+//	@Override
+//	public Collection<? extends GrantedAuthority> getAuthorities() {
+//		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
+//		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+//		return roles;
+//	}
 
 	public String getDonationPreferences() {
 		return donationPreference;
@@ -115,14 +115,6 @@ public class DoGooder extends UserD {
 
 	public void setFollowedCharities(String followedCharities) {
 		this.followedCharities = followedCharities;
-	}
-
-	public String getDonationPreference() {
-		return donationPreference;
-	}
-
-	public void setDonationPreference(String donationPreference) {
-		this.donationPreference = donationPreference;
 	}
 
 }
