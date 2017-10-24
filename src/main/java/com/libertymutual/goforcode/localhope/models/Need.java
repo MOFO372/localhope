@@ -47,13 +47,13 @@ public class Need {
 	
 	// Owner of the rel'p
 	@ManyToMany
-	private List<UserD> users;
+	private List<Charity> users;
 
 	
 	public Need () {
 	}
 	
-	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units, Date dateNeeded, List<UserD> users, Boolean hasFollowers) {
+	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units, Date dateNeeded, List<Charity> users, Boolean hasFollowers) {
 		//super();
 		this.id = id;
 		this.type = type;
@@ -116,14 +116,14 @@ public class Need {
 	}
 
 	// Create User(s), if there are none 
-	public List<UserD> getUsers() {
+	public List<Charity> getUsers() {
 		if (users == null) {
-			users = new ArrayList<UserD>();
+			users = new ArrayList<Charity>();
 		}
 		return users;
 	}
 
-	public void setUsers(List<UserD> users) {
+	public void setUsers(List<Charity> users) {
 		this.users = users;
 	}
 

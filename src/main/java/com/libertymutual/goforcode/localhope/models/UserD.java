@@ -100,7 +100,7 @@ public abstract class UserD implements UserDetails {
 		}
 
 		needs.add(need);			
-		need.getUsers().add(this);
+		need.getUsers().add((Charity) this);
 	}
 	
 	public Long getId() {

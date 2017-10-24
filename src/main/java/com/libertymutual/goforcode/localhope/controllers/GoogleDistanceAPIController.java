@@ -48,15 +48,16 @@ public class GoogleDistanceAPIController {
 		return range;
 	}
 
+	// Returns nearby needs for a given do-gooder within a given range
 	@PostMapping("distance/{userid}")
 	public List<Need> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
 
 		range = milesToKm(range);
+		System.out.println(range);
 
 		final String MY_API_KEY = key;
 
 		UserD doGooder = userRepository.findOne(userid);
-		
 
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
 

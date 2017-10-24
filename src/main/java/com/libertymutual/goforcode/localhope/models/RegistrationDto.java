@@ -20,6 +20,8 @@ public class RegistrationDto {
 	protected String ein;
 	protected String charityUserRole = "NA";
 	protected String charityType = "NA";
+	protected String donationPreference;
+	protected String charityPreference;
 	private CharityRepository charityRepository;
 
 	public RegistrationDto() {}
@@ -28,7 +30,6 @@ public class RegistrationDto {
 //		Charity charity = null;
 //		DoGooder dogooder = null;
 //		UserD user = null;
-		System.out.println("name? " + username);
 		if (isCharity.equals("Charity")) {
 			Charity charity = new Charity();		
 			charity.setUsername(username);
@@ -45,11 +46,9 @@ public class RegistrationDto {
 			charity.setEin(ein);
 			charity.setCharityName(charityName);
 			charity.setFollowers("");
-			System.out.println("set values for a charity " + charity.getUsername());
 			return charity;
 		} else if (isCharity.equals("User")) {
 			DoGooder dogooder = new DoGooder();
-			System.out.println("tried to create a user");
 			dogooder.setUsername(username);
 			dogooder.setPassword(password);
 			dogooder.setFirstName(firstName);
@@ -61,6 +60,8 @@ public class RegistrationDto {
 			dogooder.setPhone(phone);
 			dogooder.setEmail(email);
 			dogooder.setIsCharity(isCharity);
+			dogooder.setDonationPreference(donationPreference);
+			dogooder.setCharityPreference(charityPreference);
 			return dogooder;
 		}
 		return null;
@@ -184,6 +185,30 @@ public class RegistrationDto {
 
 	public void setCharityType(String charityType) {
 		this.charityType = charityType;
+	}
+
+	public String getDonationPreference() {
+		return donationPreference;
+	}
+
+	public void setDonationPreference(String donationPreference) {
+		this.donationPreference = donationPreference;
+	}
+
+	public String getCharityPreference() {
+		return charityPreference;
+	}
+
+	public void setCharityPreference(String charityPreference) {
+		this.charityPreference = charityPreference;
+	}
+
+	public CharityRepository getCharityRepository() {
+		return charityRepository;
+	}
+
+	public void setCharityRepository(CharityRepository charityRepository) {
+		this.charityRepository = charityRepository;
 	}
 
 }

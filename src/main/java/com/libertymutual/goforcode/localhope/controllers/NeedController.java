@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Charity;
 import com.libertymutual.goforcode.localhope.models.FulfillModel;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
@@ -86,7 +87,7 @@ public class NeedController {
 	@PutMapping("updateneed/{needid}")
 	public Need update(@RequestBody Need need, @PathVariable long needid) {
 		Need thisNeed = needRepository.findOne(needid);
-		List<UserD> thisUser = thisNeed.getUsers();
+		List<Charity> thisUser = thisNeed.getUsers();
 		need.setId(needid);
 		need.setUsers(thisUser);
 		return needRepository.save(need);	
@@ -96,7 +97,7 @@ public class NeedController {
 	// Delete a Need  
 	//Changed to a Put mapping so that front-end can send a message body
 	@PutMapping("deleteneed/{needid}")
-	public String deleteA(@PathVariable long needid, @RequestBody long userid) throws YouCannotDeleteThisNeedException {
+	public String deleteANeed(@PathVariable long needid, @RequestBody long userid) throws YouCannotDeleteThisNeedException {
 		Need  need = needRepository.findOne(needid);
 
 		if (userid != need.getUsers().get(0).getId()) {
