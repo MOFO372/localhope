@@ -37,13 +37,13 @@ public class Charity extends UserD {
 
 	// Followers
 	@Column
-	private String followers;
+	private ArrayList<UserD> followers;
 
 	public Charity() {
 	}
 
 	public Charity(String username, String password, String isCharity, String firstName, String lastName, String streetAddress, String city, String state, String zipCode, String phone, String email,
-			String resetNumber, String followers, String charityName, String ein, String charityUserRole, String charityType) {
+			String resetNumber, ArrayList<UserD> followers, String charityName, String ein, String charityUserRole, String charityType) {
 		super(username, password, isCharity, firstName, lastName, streetAddress, city, state, zipCode, phone, email,
 				resetNumber);
 		this.followers = followers;
@@ -59,8 +59,7 @@ public class Charity extends UserD {
 		if (!user.getIsCharity().equals("User")) {
 			throw new ThisIsNotAUserException();
 		}
-		followers += " " + user.getUsername();
-		followers.trim();
+		followers.add(user);
 	}
 	
 	// Add a DoGooder to the list of a charity's followers
@@ -70,20 +69,13 @@ public class Charity extends UserD {
 		}
 		
 		String temp = user.getUsername();
-		followers = followers.replace(temp.trim(), "");
-		followers.trim();
+		int index = followers.indexOf(user);
+		followers.remove(index);
 	}
 
 	// Returns an ArrayList populated with Users who have followed this charity
 	public ArrayList<UserD> listFollowers(UserRepository userRepository) {
-		String[] userNames = followers.trim().split("\\s+");
-
-		ArrayList<UserD> users = new ArrayList<UserD>();
-
-		for (int i = 0; i < userNames.length; i++) {
-			users.add(userRepository.findByUsername(userNames[i]));
-		}
-		return users;
+		return followers;
 	}
 
 	@JsonIgnore
@@ -126,12 +118,14 @@ public class Charity extends UserD {
 		this.charityType = charityType;
 	}
 
-	public String getFollowers() {
+	public ArrayList<UserD> getFollowers() {
 		return followers;
 	}
 
-	public void setFollowers(String followers) {
+	public void setFollowers(ArrayList<UserD> followers) {
 		this.followers = followers;
 	}
+
+
 
 }

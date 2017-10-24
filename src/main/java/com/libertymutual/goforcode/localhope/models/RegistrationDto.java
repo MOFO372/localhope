@@ -1,5 +1,7 @@
 package com.libertymutual.goforcode.localhope.models;
 
+import java.util.ArrayList;
+
 import org.springframework.dao.DataIntegrityViolationException;
 
 import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
@@ -45,7 +47,8 @@ public class RegistrationDto {
 			charity.setIsCharity(isCharity);
 			charity.setEin(ein);
 			charity.setCharityName(charityName);
-			charity.setFollowers("");
+			ArrayList<UserD> followers = new ArrayList<UserD>();
+			charity.setFollowers(followers);
 			return charity;
 		} else if (isCharity.equals("User")) {
 			DoGooder dogooder = new DoGooder();

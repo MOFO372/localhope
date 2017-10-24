@@ -38,7 +38,7 @@ public class CharityController {
 	public List<Need> addCharityNeed(@PathVariable long userid) {
 		Charity charity = charityRepository.findOne(userid);
 		List<Need> needs = charity.getNeeds();
-		int sizeFollowers = charity.getFollowers().length();
+		int sizeFollowers = charity.getFollowers().size();
 		if (sizeFollowers == 0) {
 			for (int i = 0; i < needs.size(); i++) {
 				needs.get(i).setHasFollowers(false);
@@ -67,7 +67,7 @@ public class CharityController {
 	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
 		Charity user = charityRepository.findOne(userid);
 		
-		int sizeFollowers = user.getFollowers().length();
+		int sizeFollowers = user.getFollowers().size();
 		if (sizeFollowers == 0) {
 			need.setHasFollowers(false);
 			}
