@@ -97,7 +97,7 @@ public class DoGooder extends UserD {
 		return donationPreference;
 	}
 
-	public void setDonationPreferences(String donationPreferences) {
+	public void setDonationPreference(String donationPreferences) {
 		this.donationPreference = donationPreferences;
 	}
 
