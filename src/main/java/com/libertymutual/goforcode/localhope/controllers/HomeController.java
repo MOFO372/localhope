@@ -35,14 +35,14 @@ public class HomeController {
 	}
 
 	
-	// show all charities
+	// show all charities and do-gooders
 	@GetMapping("")
 	public List<UserD> getAll() {
 		System.out.println("in mappint");
 		return userRepository.findAll();
 	}
 
-	
+	// add need to do-gooder- used when a do-gooder helps fulfill a need
 	@PostMapping("need/{userid}")
 	public UserD associateDogooderAndNeed(@PathVariable long userid, @RequestBody Need need) {
 		Charity user = charityRepository.findOne(userid);
@@ -52,7 +52,7 @@ public class HomeController {
 		return user;
 	}
 
-	
+	// show all charities
 	@GetMapping("charity")
 	public List<Charity> getCharities() {
 		return charityRepository.findAll(); 
