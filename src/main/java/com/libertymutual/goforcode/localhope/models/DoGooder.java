@@ -117,12 +117,4 @@ public class DoGooder extends UserD {
 		this.followedCharities = followedCharities;
 	}
 
-	public String getDonationPreference() {
-		return donationPreference;
-	}
-
-	public void setDonationPreference(String donationPreference) {
-		this.donationPreference = donationPreference;
-	}
-
 }

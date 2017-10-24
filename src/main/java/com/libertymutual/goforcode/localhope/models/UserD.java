@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +16,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 @SuppressWarnings("serial")
 @Entity
@@ -45,7 +43,8 @@ public abstract class UserD implements UserDetails {
 	@Column(length = 50, nullable = false)
 	protected String city;
 
-	@Column(length = 2, nullable = false)
+
+	@Column(length = 2, nullable = false) // ??
 	protected String state;
 
 	@Column(length = 10, nullable = false)
@@ -53,12 +52,14 @@ public abstract class UserD implements UserDetails {
 
 	@Column(length = 15, nullable = false)
 	protected String phone;
+
 	
 	@Column(length = 100, nullable = false)
 	protected String email;
 
 	@Column(name="role_name", nullable = false)
 	protected String isCharity;
+
 
 	@Column(length = 5)
 	protected String resetNumber;
@@ -76,7 +77,6 @@ public abstract class UserD implements UserDetails {
 	public UserD(String username, String password, String isCharity, String firstName,
 			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
 			String email, String resetNumber) {
-
 		this.username = username;
 		this.password = password;
 		this.isCharity = isCharity;
@@ -201,10 +201,17 @@ public abstract class UserD implements UserDetails {
 		this.username = username;
 	}
 	
-	@JsonIgnore
-	@Override
-	public abstract Collection<? extends GrantedAuthority> getAuthorities();
+//	@JsonIgnore
+//	@Override
+//	public abstract Collection<? extends GrantedAuthority> getAuthorities();
 
+	@JsonIgnore
+	//@Override
+	public Collection<? extends GrantedAuthority> getAuthorities(String type) {
+		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
+		roles.add(new SimpleGrantedAuthority(type));
+		return roles;
+	}
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -249,7 +256,5 @@ public abstract class UserD implements UserDetails {
 	public void setNeeds(List<Need> needs) {
 		this.needs = needs;
 	}
-
-
 
 }

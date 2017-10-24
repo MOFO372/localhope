@@ -71,7 +71,6 @@ public class SessionController {
 			userRepository.save(user);
 			sendGridController.main(dto.getUsername());
 		} catch (DataIntegrityViolationException dive) {
-			System.out.println("there was an error");
 			return null;
 		}
 		return user;

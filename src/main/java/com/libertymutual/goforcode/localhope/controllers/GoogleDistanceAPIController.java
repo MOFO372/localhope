@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.localhope.models.Charity;
 import com.libertymutual.goforcode.localhope.models.Need;
 import com.libertymutual.goforcode.localhope.models.UserD;
+import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
 import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
@@ -32,10 +34,13 @@ public class GoogleDistanceAPIController {
 
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
+	private CharityRepository charityRepository;
 
-	public GoogleDistanceAPIController(UserRepository userRepository, NeedRepository needRepository) {
+	public GoogleDistanceAPIController(UserRepository userRepository, NeedRepository needRepository,
+			                           CharityRepository charityRepository) {
 		this.userRepository = userRepository;
 		this.needRepository = needRepository;
+		this.charityRepository = charityRepository;
 	}
 
 	public double milesToKm(double range) {
@@ -53,16 +58,15 @@ public class GoogleDistanceAPIController {
 		final String MY_API_KEY = key;
 
 		UserD doGooder = userRepository.findOne(userid);
-		System.out.println(doGooder.getUsername());
 
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
 
-		int repoSize = (int) userRepository.count();
-		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
+		int repoSize = (int) charityRepository.count();					// user
+		ArrayList<Charity> nearbyCharities = new ArrayList<Charity>();   // UserD
 		ArrayList<Need> nearbyNeeds = new ArrayList<Need>();
-		List<UserD> allCharities = userRepository.findAll();
-		List<Need> allNeeds = needRepository.findAll();
-		UserD charity;
+		List<Charity> allCharities 	= charityRepository.findAll();  // UserD
+		List<Need> allNeeds 		= needRepository.findAll();
+		Charity charity;											// UserD
 
 		
 		for (int i = 0; i < repoSize; i++) {
@@ -86,10 +90,12 @@ public class GoogleDistanceAPIController {
 
 				String s = trix.rows[0].elements[0].distance.humanReadable;
 				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
+				
+				System.out.println(" --------------->" + distance);
 
 				if (distance <= range) {
 					nearbyCharities.add(charity);
-
+					System.out.println(" Charity --------------->" + charity);
 					for (int j = 0; j < needRepository.count(); j++) {
 
 						Need thisNeed = allNeeds.get(j);
