@@ -91,11 +91,11 @@ public class GoogleDistanceAPIController {
 				String s = trix.rows[0].elements[0].distance.humanReadable;
 				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
 				
-				System.out.println(" --------------->" + distance);
+				//System.out.println(" --------------->" + distance);
 
 				if (distance <= range) {
 					nearbyCharities.add(charity);
-					System.out.println(" Charity --------------->" + charity);
+					//System.out.println(" Charity --------------->" + charity);
 					for (int j = 0; j < needRepository.count(); j++) {
 
 						Need thisNeed = allNeeds.get(j);
