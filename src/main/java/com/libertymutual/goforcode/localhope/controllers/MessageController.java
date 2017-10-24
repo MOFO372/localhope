@@ -53,7 +53,7 @@ public class MessageController {
 		System.out.println(needid);
 		Charity charity = charityRepository.findOne(charityid);
 		System.out.println(charityid);
-		String needMessage = "What we need: " + need.getOriginalAmount() + " of " + need.getDescription() + " by "
+		String needMessage = "What we need: " + need.getOriginalAmount() + need.getUnits() + " of " + need.getDescription() + " by "
 				+ need.getDateNeeded();
 
 		ArrayList<UserD> followers = charity.listFollowers(userRepository);
