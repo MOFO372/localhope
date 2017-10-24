@@ -20,6 +20,8 @@ public class RegistrationDto {
 	protected String ein;
 	protected String charityUserRole = "NA";
 	protected String charityType = "NA";
+	protected String donationpreference;
+	protected String charitypreference;
 	private CharityRepository charityRepository;
 
 	public RegistrationDto() {}
@@ -61,6 +63,8 @@ public class RegistrationDto {
 			dogooder.setPhone(phone);
 			dogooder.setEmail(email);
 			dogooder.setIsCharity(isCharity);
+			dogooder.setDonationPreference(donationpreference);
+			dogooder.setCharityPreference(charitypreference);
 			return dogooder;
 		}
 		return null;

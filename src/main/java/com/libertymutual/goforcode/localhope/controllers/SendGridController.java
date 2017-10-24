@@ -131,7 +131,9 @@ public class SendGridController {
 		int amountNumber = fulfill.getReduceBy();
 		String amount = String.valueOf(amountNumber);
 		
-		UserD charity = need.getUsers().get(0); 
+		Charity charity = need.getUsers().get(0);
+		
+		
 		
 		Email from = new Email("localhope17@gmail.com");
 		String subject = "A need has been fulfilled!";
@@ -152,11 +154,12 @@ public class SendGridController {
 		personalization.addSubstitution("%need_amount%", amount);
 		personalization.addSubstitution("%need_unit%", need.getUnits());
 		personalization.addSubstitution("%city%", user.getCity());
+		personalization.addSubstitution("%charity_name%", charity.getCharityName());
 		
-		if (user.getIsCharity().equals("Charity")) {
-			Charity charity7 = charityRepository.findOne(userId); 
-			personalization.addSubstitution("%charity_name%", charity7.getCharityName());
-		}
+//		if (user.getIsCharity().equals("Charity")) {
+//			Charity charity7 = charityRepository.findOne(userId); 
+//			personalization.addSubstitution("%charity_name%", charity7.getCharityName());
+//		}
 		
 		
 		mail.addPersonalization(personalization);
