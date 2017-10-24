@@ -58,7 +58,6 @@ public class GoogleDistanceAPIController {
 		final String MY_API_KEY = key;
 
 		UserD doGooder = userRepository.findOne(userid);
-		System.out.println(doGooder.getUsername());
 
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
 
