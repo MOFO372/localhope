@@ -1,7 +1,5 @@
 package com.libertymutual.goforcode.localhope.models;
 
-import org.springframework.dao.DataIntegrityViolationException;
-
 import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 
 public class RegistrationDto {
@@ -24,14 +22,12 @@ public class RegistrationDto {
 	protected String charityPreference;
 	private CharityRepository charityRepository;
 
-	public RegistrationDto() {}
-	
+	public RegistrationDto() {
+	}
+
 	public UserD createUser() throws UniqueEinForCharitiesException {
-//		Charity charity = null;
-//		DoGooder dogooder = null;
-//		UserD user = null;
 		if (isCharity.equals("Charity")) {
-			Charity charity = new Charity();		
+			Charity charity = new Charity();
 			charity.setUsername(username);
 			charity.setPassword(password);
 			charity.setFirstName(firstName);

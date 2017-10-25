@@ -3,10 +3,7 @@ package com.libertymutual.goforcode.localhope.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +20,6 @@ import com.google.maps.*;
 
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.LatLng;
-
-//import com.google.code.gwt.geolocation.client.Coordinates;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,51 +39,43 @@ public class GoogleCurrentLocationDistanceAPIController {
 		return range;
 	}
 
-	
-	
-	
 	@PostMapping("distancecurrent/{range}")
-	public List<Need> getCharitiesByDistanceFromCurrentLocation
-		(@PathVariable double range, @RequestBody Coordinate coordinate) {
+	public List<Need> getCharitiesByDistanceFromCurrentLocation(@PathVariable double range,
+			@RequestBody Coordinate coordinate) {
 
 		range = milesToKm(range);
-		double latCurrent  = coordinate.getLatitude();
+		double latCurrent = coordinate.getLatitude();
 		double longCurrent = coordinate.getLongitude();
-		
+
 		final String MY_API_KEY = "AIzaSyDwJj-37b8SUeAdf1FBhqwObKCGroVhBdk";
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
 
-		int repoSize 						= (int) userRepository.count();
-		ArrayList<UserD> nearbyCharities 	= new ArrayList<UserD>();
-		ArrayList<Need> nearbyNeeds 		= new ArrayList<Need>();
-		List<UserD> allCharities 			= userRepository.findAll();
-		List<Need> allNeeds 				= needRepository.findAll();
+		int repoSize = (int) userRepository.count();
+		ArrayList<UserD> nearbyCharities = new ArrayList<UserD>();
+		ArrayList<Need> nearbyNeeds = new ArrayList<Need>();
+		List<UserD> allCharities = userRepository.findAll();
+		List<Need> allNeeds = needRepository.findAll();
 		UserD charity;
-		
+
 		LatLng coordOr = new LatLng(latCurrent, longCurrent);
-		
-		
+
 		for (int i = 0; i < repoSize; i++) {
 			charity = allCharities.get(i);
 
-			if (charity == null || charity.getStreetAddress().isEmpty() || charity.getCity().isEmpty() || 
-		       !charity.getIsCharity().equals("Charity")) {
+			if (charity == null || charity.getStreetAddress().isEmpty() || charity.getCity().isEmpty()
+					|| !charity.getIsCharity().equals("Charity")) {
 				continue;
 			}
 
-						
 			try {
 				DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
-					
-				DistanceMatrix trix = 
-						req.origins(coordOr)
-						.destinations(charity.getStreetAddress(), charity.getCity())
+
+				DistanceMatrix trix = req.origins(coordOr).destinations(charity.getStreetAddress(), charity.getCity())
 						.awaitIgnoreError();
-								
-				String s = trix.rows[0].elements[0].distance.humanReadable;	
+
+				String s = trix.rows[0].elements[0].distance.humanReadable;
 				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
-				
-				
+
 				if (distance <= range) {
 					nearbyCharities.add(charity);
 

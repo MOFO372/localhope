@@ -22,13 +22,11 @@ import com.google.maps.*;
 
 import com.google.maps.model.DistanceMatrix;
 
-
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
 public class GoogleDistanceAPIController {
-	
+
 	@Value("${GOOGLE_KEY}")
 	private String key;
 
@@ -37,7 +35,7 @@ public class GoogleDistanceAPIController {
 	private CharityRepository charityRepository;
 
 	public GoogleDistanceAPIController(UserRepository userRepository, NeedRepository needRepository,
-			                           CharityRepository charityRepository) {
+			CharityRepository charityRepository) {
 		this.userRepository = userRepository;
 		this.needRepository = needRepository;
 		this.charityRepository = charityRepository;
@@ -53,7 +51,6 @@ public class GoogleDistanceAPIController {
 	public List<Need> getCharitiesByDistance(@PathVariable long userid, @RequestBody double range) {
 
 		range = milesToKm(range);
-		System.out.println(range);
 
 		final String MY_API_KEY = key;
 
@@ -61,14 +58,13 @@ public class GoogleDistanceAPIController {
 
 		GeoApiContext context = new GeoApiContext().setApiKey(MY_API_KEY).setQueryRateLimit(10);
 
-		int repoSize = (int) charityRepository.count();					// user
-		ArrayList<Charity> nearbyCharities = new ArrayList<Charity>();   // UserD
+		int repoSize = (int) charityRepository.count(); // user
+		ArrayList<Charity> nearbyCharities = new ArrayList<Charity>(); // UserD
 		ArrayList<Need> nearbyNeeds = new ArrayList<Need>();
-		List<Charity> allCharities 	= charityRepository.findAll();  // UserD
-		List<Need> allNeeds 		= needRepository.findAll();
-		Charity charity;											// UserD
+		List<Charity> allCharities = charityRepository.findAll(); // UserD
+		List<Need> allNeeds = needRepository.findAll();
+		Charity charity; // UserD
 
-		
 		for (int i = 0; i < repoSize; i++) {
 
 			charity = allCharities.get(i);
@@ -83,19 +79,13 @@ public class GoogleDistanceAPIController {
 
 				DistanceMatrix trix = req.origins(doGooder.getStreetAddress(), doGooder.getCity())
 						.destinations(charity.getStreetAddress(), charity.getCity())
-						// .mode(TravelMode.DRIVING)
-						// .avoid(RouteRestriction.HIGHWAYS)
-						// .language("en-US")
 						.await();
 
 				String s = trix.rows[0].elements[0].distance.humanReadable;
 				double distance = Double.parseDouble(s.substring(0, s.indexOf(" ")));
-				
-				System.out.println(" --------------->" + distance);
 
 				if (distance <= range) {
 					nearbyCharities.add(charity);
-					System.out.println(" Charity --------------->" + charity);
 					for (int j = 0; j < needRepository.count(); j++) {
 
 						Need thisNeed = allNeeds.get(j);

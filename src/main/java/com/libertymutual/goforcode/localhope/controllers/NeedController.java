@@ -30,7 +30,8 @@ public class NeedController {
 	private NeedRepository needRepository;
 	private SendGridController sendGridController;
 
-	private NeedController(UserRepository userRepository, NeedRepository needRepository, SendGridController sendGridController) {
+	private NeedController(UserRepository userRepository, NeedRepository needRepository,
+			SendGridController sendGridController) {
 		this.userRepository = userRepository;
 		this.needRepository = needRepository;
 		this.sendGridController = sendGridController;
@@ -40,49 +41,47 @@ public class NeedController {
 	// Get a Need, by id
 	@GetMapping("need/{needid}")
 	public Need listANeed(@PathVariable long needid) {
-		return needRepository.findOne(needid);	
+		return needRepository.findOne(needid);
 	}
-		
-	
-	// Get all unfulfilled needs 
+
+	// Get all unfulfilled needs
 	@GetMapping("dogooder")
 	public List<Need> getAllNeeds() {
 		return needRepository.findByNeedMet(false);
-	}	
-	
+	}
 
-	// Change the needMet status of a Need to its opposite  
-	@PostMapping("needstatus/{needid}") 
-	public String resetNeedMetStatus(@PathVariable long needid, @RequestBody long id) {				
-		Need need = needRepository.findOne(needid);		
-		// To be possibly used later if we want to return a list of needs the user has filled
+	// Change the needMet status of a Need to its opposite
+	@PostMapping("needstatus/{needid}")
+	public String resetNeedMetStatus(@PathVariable long needid, @RequestBody long id) {
+		Need need = needRepository.findOne(needid);
+		// To be possibly used later if we want to return a list of needs the user has
+		// filled
 		UserD user = userRepository.findOne(id);
-		
-		need.setNeedMet(!need.getNeedMet());			
+
+		need.setNeedMet(!need.getNeedMet());
 		need = needRepository.save(need);
-		
+
 		return "Ok it worked!";
 	}
-	
-	
-	// Decrements the need quantity when someone donates time/money/stuff 
-	@PostMapping("needreduce/{needid}") 
-	public void reduceNeedAmount(@PathVariable long needid, @RequestBody FulfillModel fulfill) throws IOException {				
-		Need need = needRepository.findOne(needid);		
+
+	// Decrements the need quantity when someone donates time/money/stuff
+	@PostMapping("needreduce/{needid}")
+	public void reduceNeedAmount(@PathVariable long needid, @RequestBody FulfillModel fulfill) throws IOException {
+		Need need = needRepository.findOne(needid);
 		UserD user = userRepository.findOne(fulfill.getUserid());
 		String username = user.getUsername();
 
 		// decrement need count
 		need.setOriginalAmount(Math.max(need.getOriginalAmount() - fulfill.getReduceBy(), 0));
-		if (need.getOriginalAmount() == 0) need.setNeedMet(true);
-		need = needRepository.save(need);		
-		
+		if (need.getOriginalAmount() == 0)
+			need.setNeedMet(true);
+		need = needRepository.save(need);
+
 		// send email
 		sendGridController.fulfill(fulfill, needid);
-		
+
 	}
-	
-	
+
 	// Update a Need
 	@PutMapping("updateneed/{needid}")
 	public Need update(@RequestBody Need need, @PathVariable long needid) {
@@ -90,25 +89,28 @@ public class NeedController {
 		List<Charity> thisUser = thisNeed.getUsers();
 		need.setId(needid);
 		need.setUsers(thisUser);
-		return needRepository.save(need);	
+		return needRepository.save(need);
 	}
 
-	
-	// Delete a Need  
-	//Changed to a Put mapping so that front-end can send a message body
+	// Delete a Need
+	// Changed to a Put mapping so that front-end can send a message body
 	@PutMapping("deleteneed/{needid}")
-	public String deleteANeed(@PathVariable long needid, @RequestBody long userid) throws YouCannotDeleteThisNeedException {
-		Need  need = needRepository.findOne(needid);
+	public String deleteANeed(@PathVariable long needid, @RequestBody long userid)
+			throws YouCannotDeleteThisNeedException {
+		Need need = needRepository.findOne(needid);
 
 		if (userid != need.getUsers().get(0).getId()) {
-			throw new YouCannotDeleteThisNeedException();};
-				
-		try{needRepository.delete(needid);	
+			throw new YouCannotDeleteThisNeedException();
+		}
+		;
+
+		try {
+			needRepository.delete(needid);
 		} catch (EmptyResultDataAccessException err) {
 			System.out.println("You cannot delete a Need you did not create.");
-		}			
-		
+		}
+
 		return "Your need has been deleted.  Have a nice day!";
-	}	
+	}
 
 }

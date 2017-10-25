@@ -25,16 +25,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/**").permitAll()
 				.antMatchers("/charity/**").hasRole("Charity")
-//				.antMatchers("/deleteneed/**").hasRole("Charity")
 				.antMatchers("/updateneed/**").hasRole("Charity")
 				.antMatchers("/message/**").hasRole("Charity")
 				.antMatchers("/user/need/**").hasRole("User")
 				.antMatchers("/user/followcharity/**").hasRole("User")
 				.antMatchers("/user/unfollowcharity/**").hasRole("User")
 				.anyRequest().authenticated()
-//			.and()
-//			.formLogin()
-				// this forces the /login path to go into UserDetailsService and try to find the user that you entered
 			.and()
 			.csrf()
 			.disable();

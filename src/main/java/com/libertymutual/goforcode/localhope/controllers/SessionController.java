@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.libertymutual.goforcode.localhope.models.Charity;
-import com.libertymutual.goforcode.localhope.models.DoGooder;
 import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
 import com.libertymutual.goforcode.localhope.models.LoginModel;
 import com.libertymutual.goforcode.localhope.models.RegistrationDto;
@@ -62,10 +60,9 @@ public class SessionController {
 		String encryptedPassword = encoder.encode(password);
 		dto.setPassword(encryptedPassword);
 		UserD user = dto.createUser();
-		
+
 		try {
-			if (dto.getEin() != null && !dto.getEin().isEmpty()
-					&& charityRepository.findByEin(dto.getEin()) != null) {
+			if (dto.getEin() != null && !dto.getEin().isEmpty() && charityRepository.findByEin(dto.getEin()) != null) {
 				throw new UniqueEinForCharitiesException();
 			}
 			userRepository.save(user);
