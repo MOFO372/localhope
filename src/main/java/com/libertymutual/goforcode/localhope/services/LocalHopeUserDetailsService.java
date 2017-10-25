@@ -21,9 +21,6 @@ public class LocalHopeUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserD user = userRepository.findByUsername(username);
 		UserD thisUser = userRepository.findOne(user.getId());
-		if (user == null) {
-			throw new UsernameNotFoundException(username);
-		}
 		return thisUser;
 	}
 }
