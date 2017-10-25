@@ -26,19 +26,18 @@ public class HomeController {
 
 	private NeedRepository needRepository;
 	private UserRepository userRepository;
-	private CharityRepository charityRepository; 
+	private CharityRepository charityRepository;
 
-	public HomeController(NeedRepository needRepository, UserRepository userRepository, CharityRepository charityRepository) {
+	public HomeController(NeedRepository needRepository, UserRepository userRepository,
+			CharityRepository charityRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 		this.charityRepository = charityRepository;
 	}
 
-	
 	// show all charities and do-gooders
 	@GetMapping("")
 	public List<UserD> getAll() {
-		System.out.println("in mappint");
 		return userRepository.findAll();
 	}
 
@@ -55,6 +54,6 @@ public class HomeController {
 	// show all charities
 	@GetMapping("charity")
 	public List<Charity> getCharities() {
-		return charityRepository.findAll(); 
+		return charityRepository.findAll();
 	}
 }

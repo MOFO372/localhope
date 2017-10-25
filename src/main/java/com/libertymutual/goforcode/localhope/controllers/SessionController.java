@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.libertymutual.goforcode.localhope.models.Charity;
-import com.libertymutual.goforcode.localhope.models.DoGooder;
 import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
 import com.libertymutual.goforcode.localhope.models.LoginModel;
 import com.libertymutual.goforcode.localhope.models.RegistrationDto;
@@ -47,6 +45,7 @@ public class SessionController {
 
 	}
 
+	//home page for registering
 	@GetMapping("registration")
 	public ModelAndView registration() {
 		ModelAndView mv = new ModelAndView();
@@ -54,6 +53,7 @@ public class SessionController {
 		return mv;
 	}
 
+	//allows a user to register
 	@PostMapping("registration")
 	public UserD register(@RequestBody RegistrationDto dto, HttpServletResponse response)
 			throws FollowUniqueCharitiesOnlyException, UniqueEinForCharitiesException, IOException {
@@ -62,10 +62,9 @@ public class SessionController {
 		String encryptedPassword = encoder.encode(password);
 		dto.setPassword(encryptedPassword);
 		UserD user = dto.createUser();
-		
+
 		try {
-			if (dto.getEin() != null && !dto.getEin().isEmpty()
-					&& charityRepository.findByEin(dto.getEin()) != null) {
+			if (dto.getEin() != null && !dto.getEin().isEmpty() && charityRepository.findByEin(dto.getEin()) != null) {
 				throw new UniqueEinForCharitiesException();
 			}
 			userRepository.save(user);
@@ -76,6 +75,7 @@ public class SessionController {
 		return user;
 	}
 
+	//allows the user to log in
 	@PostMapping("sessions")
 	public UserD login(@RequestBody LoginModel userLogin, HttpServletResponse response) {
 		UserD user = userRepository.findByUsername(userLogin.getUsername());
@@ -88,6 +88,7 @@ public class SessionController {
 		}
 	}
 
+	//allows to user to reset password after receiving reset code email
 	@PutMapping("resetpassword")
 	public UserD getPassword(@RequestBody LoginModel userLogin) throws IOException {
 		UserD user = userRepository.findByUsername(userLogin.getUsername());
