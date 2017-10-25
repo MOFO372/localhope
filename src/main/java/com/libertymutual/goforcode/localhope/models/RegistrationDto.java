@@ -14,7 +14,7 @@ public class RegistrationDto {
 	protected String phone;
 	protected String email;
 	protected String isCharity;
-	protected String charityName = "NA"; // VALIDATION? TODO if(ein != null && !ein.isEmpty()) --> charityName has to be
+	protected String charityName = "NA"; 
 	protected String ein;
 	protected String charityUserRole = "NA";
 	protected String charityType = "NA";

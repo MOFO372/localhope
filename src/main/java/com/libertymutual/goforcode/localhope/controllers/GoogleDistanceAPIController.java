@@ -41,6 +41,7 @@ public class GoogleDistanceAPIController {
 		this.charityRepository = charityRepository;
 	}
 
+	//converts Google's default KM measurements into miles
 	public double milesToKm(double range) {
 		range = range * 1.60934;
 		return range;

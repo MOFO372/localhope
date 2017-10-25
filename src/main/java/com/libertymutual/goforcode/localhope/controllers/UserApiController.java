@@ -40,6 +40,7 @@ public class UserApiController {
 		this.charityRepository = charityRepository;
 	}
 
+	//finds one user based on user ID
 	@GetMapping("{userid}")
 	public UserD getOneUser(@PathVariable long userid) {
 		return userRepository.findOne(userid);
@@ -82,11 +83,13 @@ public class UserApiController {
 		return user;
 	}
 
+	//creates a user in the user repo
 	@PostMapping("")
 	public UserD createUser(@RequestBody UserD user) {
 		return userRepository.save(user);
 	}
 
+	//shows the dogooder's followed charities 
 	@GetMapping("followedcharities/{dogooderid}")
 	public List<Charity> displayAssociatedCharitiesForDoGooder(@PathVariable long dogooderid)
 			throws ThisIsNotACharityException {

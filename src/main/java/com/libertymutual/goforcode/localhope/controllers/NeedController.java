@@ -16,23 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.libertymutual.goforcode.localhope.models.Charity;
 import com.libertymutual.goforcode.localhope.models.FulfillModel;
 import com.libertymutual.goforcode.localhope.models.Need;
-import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.models.YouCannotDeleteThisNeedException;
 import com.libertymutual.goforcode.localhope.repositories.NeedRepository;
-import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
 public class NeedController {
 
-	private UserRepository userRepository;
 	private NeedRepository needRepository;
 	private SendGridController sendGridController;
 
-	private NeedController(UserRepository userRepository, NeedRepository needRepository,
-			SendGridController sendGridController) {
-		this.userRepository = userRepository;
+	private NeedController( NeedRepository needRepository, SendGridController sendGridController) {
 		this.needRepository = needRepository;
 		this.sendGridController = sendGridController;
 
@@ -54,13 +49,8 @@ public class NeedController {
 	@PostMapping("needstatus/{needid}")
 	public String resetNeedMetStatus(@PathVariable long needid, @RequestBody long id) {
 		Need need = needRepository.findOne(needid);
-		// To be possibly used later if we want to return a list of needs the user has
-		// filled
-		UserD user = userRepository.findOne(id);
-
 		need.setNeedMet(!need.getNeedMet());
 		need = needRepository.save(need);
-
 		return "Ok it worked!";
 	}
 
@@ -68,9 +58,7 @@ public class NeedController {
 	@PostMapping("needreduce/{needid}")
 	public void reduceNeedAmount(@PathVariable long needid, @RequestBody FulfillModel fulfill) throws IOException {
 		Need need = needRepository.findOne(needid);
-		UserD user = userRepository.findOne(fulfill.getUserid());
-		String username = user.getUsername();
-
+		
 		// decrement need count
 		need.setOriginalAmount(Math.max(need.getOriginalAmount() - fulfill.getReduceBy(), 0));
 		if (need.getOriginalAmount() == 0)

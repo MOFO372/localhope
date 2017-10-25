@@ -51,7 +51,6 @@ public class Need {
 
 	public Need(Long id, String type, Boolean needMet, String description, int originalAmount, String units,
 			Date dateNeeded, List<Charity> users, Boolean hasFollowers) {
-		// super();
 		this.id = id;
 		this.type = type;
 		this.needMet = needMet;

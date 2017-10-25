@@ -79,6 +79,7 @@ public class SendGridController {
 		}
 	}
 
+	//sends user reset password email with code
 	@PostMapping("getpassword")
 	public String retrieve(@RequestBody String username) throws IOException {
 		UserD user = userRepository.findByUsername(username);
@@ -119,6 +120,7 @@ public class SendGridController {
 		}
 	}
 
+	//emails a charity when one of their needs is fulfilled by a dogooder
 	public void fulfill(FulfillModel fulfill, long needid) throws IOException {
 		long userId = fulfill.getUserid();
 		UserD user = userRepository.findOne(userId);

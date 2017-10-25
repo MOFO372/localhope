@@ -17,7 +17,6 @@ import com.libertymutual.goforcode.localhope.repositories.UserRepository;
 @Entity
 public class Charity extends UserD {
 
-	// Charity only -----------------------------------
 	@Column(length = 200)
 	private String charityName = "NA";
 
