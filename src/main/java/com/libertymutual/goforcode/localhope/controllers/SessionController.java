@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.libertymutual.goforcode.localhope.models.FollowUniqueCharitiesOnlyException;
 import com.libertymutual.goforcode.localhope.models.LoginModel;
 import com.libertymutual.goforcode.localhope.models.RegistrationDto;
+import com.libertymutual.goforcode.localhope.models.ThisIsNotAUserException;
 import com.libertymutual.goforcode.localhope.models.UniqueEinForCharitiesException;
 import com.libertymutual.goforcode.localhope.models.UserD;
 import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
@@ -77,14 +78,14 @@ public class SessionController {
 
 	//allows the user to log in
 	@PostMapping("sessions")
-	public UserD login(@RequestBody LoginModel userLogin, HttpServletResponse response) {
+	public UserD login(@RequestBody LoginModel userLogin, HttpServletResponse response) throws ThisIsNotAUserException {
 		UserD user = userRepository.findByUsername(userLogin.getUsername());
 		String password = userLogin.getPassword();
 
 		if (user != null && BCrypt.checkpw(password, user.getPassword())) {
 			return user;
 		} else {
-			return null;
+			throw new ThisIsNotAUserException();
 		}
 	}
 
