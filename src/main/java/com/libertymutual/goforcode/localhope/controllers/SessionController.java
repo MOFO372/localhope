@@ -91,7 +91,7 @@ public class SessionController {
 
 	//allows to user to reset password after receiving reset code email
 	@PutMapping("resetpassword")
-	public UserD getPassword(@RequestBody LoginModel userLogin) throws IOException {
+	public UserD getPassword(@RequestBody LoginModel userLogin) throws IOException, ThisIsNotAUserException {
 		UserD user = userRepository.findByUsername(userLogin.getUsername());
 		String encryptedPassword = encoder.encode(userLogin.getPassword());
 		String sentCode = userLogin.getResetNumber();
@@ -102,7 +102,7 @@ public class SessionController {
 			userRepository.save(user);
 			return user;
 		} else {
-			return null;
+			throw new ThisIsNotAUserException();
 		}
 	}
 
