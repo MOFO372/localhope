@@ -42,6 +42,7 @@ public class MessageController {
 		this.charityRepository = charityRepository;
 	}
 
+	//send a text to charity followers with specific need info
 	@PostMapping("message/{charityid}")
 	public String sendMessage(@PathVariable long charityid, @RequestBody long needid) {
 

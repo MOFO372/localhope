@@ -34,11 +34,13 @@ public class GoogleCurrentLocationDistanceAPIController {
 		this.needRepository = needRepository;
 	}
 
+	//converts Google's default KM measurements into miles
 	public double milesToKm(Double range) {
 		range = range * 1.60934;
 		return range;
 	}
 
+	//finds charities near a user's current location
 	@PostMapping("distancecurrent/{range}")
 	public List<Need> getCharitiesByDistanceFromCurrentLocation(@PathVariable double range,
 			@RequestBody Coordinate coordinate) {
