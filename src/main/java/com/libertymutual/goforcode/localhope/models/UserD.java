@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @SuppressWarnings("serial")
 @Entity
 public abstract class UserD implements UserDetails {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
@@ -43,7 +43,6 @@ public abstract class UserD implements UserDetails {
 	@Column(length = 50, nullable = false)
 	protected String city;
 
-
 	@Column(length = 2, nullable = false) // ??
 	protected String state;
 
@@ -53,30 +52,26 @@ public abstract class UserD implements UserDetails {
 	@Column(length = 15, nullable = false)
 	protected String phone;
 
-	
 	@Column(length = 100, nullable = false)
 	protected String email;
 
-	@Column(name="role_name", nullable = false)
+	@Column(name = "role_name", nullable = false)
 	protected String isCharity;
-
 
 	@Column(length = 5)
 	protected String resetNumber;
-	
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
 	private List<Need> needs;
-	
-
 
 	public UserD() {
 	}
 
 	// List<Need> needs
-	public UserD(String username, String password, String isCharity, String firstName,
-			String lastName, String streetAddress, String city, String state, String zipCode, String phone,
-			String email, String resetNumber) {
+	public UserD(String username, String password, String isCharity, String firstName, String lastName,
+			String streetAddress, String city, String state, String zipCode, String phone, String email,
+			String resetNumber) {
 		this.username = username;
 		this.password = password;
 		this.isCharity = isCharity;
@@ -89,23 +84,23 @@ public abstract class UserD implements UserDetails {
 		this.phone = phone;
 		this.email = email;
 		this.resetNumber = resetNumber;
-				
 
 	}
-	
+
 	// Associate a Need with a User (either DoGooder or Charity)
 	public void addNeed(Need need) {
 		if (needs == null) {
 			needs = new ArrayList<Need>();
 		}
 
-		needs.add(need);			
+		needs.add(need);
 		need.getUsers().add((Charity) this);
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -182,7 +177,6 @@ public abstract class UserD implements UserDetails {
 		this.isCharity = isCharity;
 	}
 
-
 	@Override
 	public String getPassword() {
 		return password;
@@ -200,18 +194,14 @@ public abstract class UserD implements UserDetails {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-//	@JsonIgnore
-//	@Override
-//	public abstract Collection<? extends GrantedAuthority> getAuthorities();
 
 	@JsonIgnore
-	//@Override
 	public Collection<? extends GrantedAuthority> getAuthorities(String type) {
-		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
+		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		roles.add(new SimpleGrantedAuthority(type));
 		return roles;
 	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -232,7 +222,6 @@ public abstract class UserD implements UserDetails {
 		return true;
 	}
 
-	
 	public String getResetNumber() {
 		return resetNumber;
 	}
@@ -240,14 +229,6 @@ public abstract class UserD implements UserDetails {
 	public void setResetNumber(String resetNumber) {
 		this.resetNumber = resetNumber;
 	}
-
-//	public UserRepository getUserRepository() {
-//		return userRepository;
-//	}
-//
-//	public void setUserRepository(UserRepository userRepository) {
-//		this.userRepository = userRepository;
-//	}
 
 	public List<Need> getNeeds() {
 		return needs;

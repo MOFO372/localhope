@@ -24,9 +24,10 @@ public class CharityController {
 
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
-	private CharityRepository charityRepository; 
+	private CharityRepository charityRepository;
 
-	private CharityController(UserRepository userRepository, CharityRepository charityRepository, NeedRepository needRepository) {
+	private CharityController(UserRepository userRepository, CharityRepository charityRepository,
+			NeedRepository needRepository) {
 		this.userRepository = userRepository;
 		this.charityRepository = charityRepository;
 		this.needRepository = needRepository;
@@ -55,9 +56,7 @@ public class CharityController {
 	// Provide a list of all users who have followed the charity
 	@GetMapping("followers/{charityid}")
 	public List<UserD> listFollowers(@PathVariable long charityid) {
-		System.out.println("tried to list followers");
 		Charity charity = charityRepository.findOne(charityid);
-		System.out.println(charity.getUsername());
 		List<UserD> followers = charity.listFollowers(userRepository);
 		return followers;
 	}
@@ -66,15 +65,14 @@ public class CharityController {
 	@PostMapping("charity/{userid}") // this is the ID of the charity
 	public List<Need> getCharityNeeds(@PathVariable long userid, @RequestBody Need need) {
 		Charity user = charityRepository.findOne(userid);
-		
+
 		int sizeFollowers = user.getFollowers().length();
 		if (sizeFollowers == 0) {
 			need.setHasFollowers(false);
-			}
-		else {
+		} else {
 			need.setHasFollowers(true);
-			}
-		
+		}
+
 		need = needRepository.save(need);
 		user.addNeed(need);
 		userRepository.save(user);

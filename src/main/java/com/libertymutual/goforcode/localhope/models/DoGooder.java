@@ -17,9 +17,6 @@ import com.libertymutual.goforcode.localhope.repositories.CharityRepository;
 @Entity
 public class DoGooder extends UserD {
 
-//	@OneToOne
-//	protected static Long id;
-
 	@Column(length = 200)
 	private String donationPreference;
 
@@ -32,7 +29,8 @@ public class DoGooder extends UserD {
 	public DoGooder() {
 	}
 
-	public DoGooder(String username, String password, String isCharity, String firstName, String lastName, String streetAddress, String city, String state, String zipCode, String phone, String email,
+	public DoGooder(String username, String password, String isCharity, String firstName, String lastName,
+			String streetAddress, String city, String state, String zipCode, String phone, String email,
 			String resetNumber, String donationPreference, String charityPreference, String followedCharities) {
 		super(username, password, isCharity, firstName, lastName, streetAddress, city, state, zipCode, phone, email,
 				resetNumber);
@@ -88,7 +86,7 @@ public class DoGooder extends UserD {
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(); 
+		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return roles;
 	}

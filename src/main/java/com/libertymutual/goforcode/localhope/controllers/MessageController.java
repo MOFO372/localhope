@@ -27,34 +27,33 @@ public class MessageController {
 
 	@Value("${TWILIO_KEY}")
 	private String key;
-	
+
 	@Value("${TWILIO_AUTH}")
 	private String auth;
-	
+
 	private UserRepository userRepository;
 	private NeedRepository needRepository;
-	private CharityRepository charityRepository; 
+	private CharityRepository charityRepository;
 
-	public MessageController(NeedRepository needRepository, UserRepository userRepository, CharityRepository charityRepository) {
+	public MessageController(NeedRepository needRepository, UserRepository userRepository,
+			CharityRepository charityRepository) {
 		this.needRepository = needRepository;
 		this.userRepository = userRepository;
 		this.charityRepository = charityRepository;
 	}
 
+	//send a text to charity followers with specific need info
 	@PostMapping("message/{charityid}")
 	public String sendMessage(@PathVariable long charityid, @RequestBody long needid) {
-		
-		
+
 		String ACCOUNT_SID = auth;
 		String AUTH_TOKEN = key;
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-		
+
 		Need need = needRepository.findOne(needid);
-		System.out.println(needid);
 		Charity charity = charityRepository.findOne(charityid);
-		System.out.println(charityid);
-		String needMessage = "What we need: " + need.getOriginalAmount() + " " + need.getUnits() + " for " + need.getDescription() + " by "
-				+ need.getDateNeeded();
+		String needMessage = "What we need: " + need.getOriginalAmount() + " " + need.getUnits() + " for "
+				+ need.getDescription() + " by " + need.getDateNeeded();
 
 		ArrayList<UserD> followers = charity.listFollowers(userRepository);
 
